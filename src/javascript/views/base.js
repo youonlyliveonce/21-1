@@ -2,9 +2,7 @@
 // base view for page
 import View from 'ampersand-view';
 import _ from 'underscore';
-// import Flickity from 'Flickity';
 import Swiper from 'swiper';
-import 'modernizr';
 
 let Base = View.extend({
 

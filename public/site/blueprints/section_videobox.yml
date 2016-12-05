@@ -1,0 +1,16 @@
+title: Section Videobox
+
+pages: false
+
+fields:
+  title: title
+  section: section
+
+  coverimage:
+    label: Cover Image
+    type: image
+
+  covervideo:
+    label: Cover Video
+    type: text
+    help: Add Vimeo ID

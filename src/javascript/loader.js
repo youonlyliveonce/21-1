@@ -32,7 +32,7 @@ class Loader {
 				setTimeout(function(){
 				 document.body.setAttribute("class", document.body.getAttribute("class").split("loaded").join("hideloader") );
 				}, 500);
-				setTimeout(function(){ CM.Loader.removeGFX(); }, 1000);
+				setTimeout(function(){ CM.Loader.removeGFX(); }, 1750);
 		}
 	}
 };

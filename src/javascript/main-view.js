@@ -6,7 +6,6 @@ import ViewSwitcher from 'ampersand-view-switcher';
 
 import "ScrollToPlugin";
 import "TweenMax";
-import 'modernizr';
 
 var MainView = View.extend({
 

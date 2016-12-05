@@ -4,7 +4,6 @@ import AmpersandRouter from 'ampersand-router';
 import ContentView from './views/content';
 import ContentModel from './models/content';
 import FormModel from './features/form/form-model';
-// import MapModel from './features/mapbox/mapbox-model';
 
 
 let Router = AmpersandRouter.extend({
@@ -15,7 +14,7 @@ let Router = AmpersandRouter.extend({
 		// ------- ROUTE HANDLERS ---------
 		// Handelt alle Links und übergibt alle Parameter über den Event an die App
 		content: function (value, params) {
-			
+
 			// catalog.json
 			if(value == null) value = "";
 

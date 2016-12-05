@@ -1,7 +1,7 @@
 {
 	"root": {
-		"domain": "http://cadman.de",
-		"appName": "cadman",
+		"domain": "http://21-1.de",
+		"appName": "21-1",
 		"appDescription": "-",
 		"src": "./src",
 		"dest": "./public/assets",
@@ -10,7 +10,7 @@
 
 	"tasks": {
 		"browserSync": {
-			"proxy": "cadman.dev"
+			"proxy": "21-1.dev"
 		},
 
 		"js": {
