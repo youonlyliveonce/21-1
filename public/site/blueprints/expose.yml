@@ -1,0 +1,48 @@
+title: Expose
+
+pages:
+  template:
+    - section_billboard
+
+fields:
+  title:
+    label: Title
+    type:  text
+  headline:
+    label: Überschrift
+    type:  text
+  description:
+    label: Beschreibung
+    type:  textarea
+  logo:
+    label: Logo
+    type: text
+    help: "Gesucht wird auf dem media.cadman.de Server. Daher reicht zum Beispiel: /axis/logo die Erweiterung .png wird im Template ergänzt"
+    width: 1/2
+  poster:
+    label: Posterbild
+    type: text
+    help: "Gesucht wird auf dem media.cadman.de Server. Daher reicht zum Beispiel: /axis/poster die Erweiterung -s.jpg, -m.jpg und -l.jpg wird im Template ergänzt"
+    width: 1/2
+  facts:
+    label: Fakten
+    type:  textarea
+  label:
+    label: Kachelunterzeile
+    type:  text
+  related:
+    label: Links
+    type: structure
+    modalsize: large
+    entry: >
+      {{link}} : {{label}}
+    fields:
+      label:
+        label: Beschriftung
+        type: text
+      link:
+        label: Link
+        type: url
+  tags:
+    label: Tags
+    type: tags

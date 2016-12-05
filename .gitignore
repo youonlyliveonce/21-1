@@ -1,3 +1,7 @@
+# Kirby Content
+public/content/*
+public/content
+
 # Logs
 logs
 *.log

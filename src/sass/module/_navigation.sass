@@ -1,0 +1,79 @@
+.Navigation--show
+	.Button--toggle
+		span
+			+transform(rotate(90deg))
+			&:before
+				+transform(rotate(90deg))
+			&:after
+				+transform(rotate(90deg))
+	.Navigation
+		+transform(translateX(0%))
+
+.Navigation
+	z-index: 9999
+	position: absolute
+	+transition(all, 0.25s)
+	+transform(translateX(-100%))
+	background-color: $color-content
+	left: 0
+	right: 50%
+	+bp('large')
+		background-color: transparent
+		top: 0.71428571em
+		right: 0.71428571em
+		left: 0.71428571em
+		z-index: 1
+	ul
+		text-align: left
+		padding-top: 3.4em
+		padding-bottom: 1em
+		overflow: hidden
+		+bp('large')
+			height: auto
+			text-align: center
+			margin: 0 10.71428571em
+			top: 0
+			padding: 0
+		li
+			letter-spacing: 0.1rem
+			cursor: pointer
+			padding-left: 1.85em
+			+bp('large')
+				position: relative
+				display: inline-block
+				margin: 0
+				padding: 0 10px
+			a
+				+fontbold
+				color: white
+				display: block
+				position: relative
+				text-transform: uppercase
+				+transition(color, 0.25s)
+				padding: 0.2em 0
+				+bp('large')
+					padding: 0.66666667em 0.55555556em 0.72222222em
+				&:before
+					content: ''
+					position: absolute
+					top: 0
+					left: 50%
+					+transform(translateY(-100%))
+					margin-left: -0.3333333em
+					border-width: 0.3333333em
+					border-style: solid
+					border-color: $color-background transparent transparent transparent
+					visibility: hidden
+					+transition(transform, 0.25s)
+				&.active,
+				&:hover
+					color: $color-highlight
+					&:before
+						+transform(translateY(-0%))
+						visibility: visible
+				+bp('large')
+					font-size: 1.28571429em
+					line-height: 1.38889em
+					letter-spacing: 0.222em
+					&:after
+						display: none

@@ -1,0 +1,14 @@
+title: Page
+
+pages:
+  template:
+    - section_billboard
+
+fields:
+  title:
+    label: Title
+    type:  text
+
+  text:
+    label: Text
+    type:  textarea
