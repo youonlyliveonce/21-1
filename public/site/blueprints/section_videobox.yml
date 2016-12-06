@@ -4,13 +4,10 @@ pages: false
 
 fields:
   title: title
+
   section: section
 
-  coverimage:
-    label: Cover Image
-    type: image
-
-  covervideo:
+  videoid:
     label: Cover Video
     type: text
-    help: Add Vimeo ID
+    help: Add Youtube ID

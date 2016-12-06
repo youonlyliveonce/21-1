@@ -76,6 +76,16 @@ class App {
 
 				// we have what we need, we can now start our router and show the appropriate page
 				this.router.history.start();
+				if(window.attachEvent) {
+					window.attachEvent('onresize', function() {
+							self.mainView.handleResize();
+					});
+				}
+				else if(window.addEventListener) {
+						window.addEventListener('resize', function() {
+							self.mainView.handleResize();
+						}, true);
+				}
 
 		}
 

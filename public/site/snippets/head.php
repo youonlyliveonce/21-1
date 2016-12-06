@@ -38,6 +38,12 @@
 				height: 100%;
 				z-index: 111110;
 			}
+			.Page {
+				-webkit-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
+				-moz-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
+				-ms-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
+				transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
+			}
 			.preloader .curtain {
 				background-color: #000;
 				position: absolute;
@@ -52,6 +58,14 @@
 				-moz-transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
 				-ms-transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
 				transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
+			}
+			.newload .Page,
+			.loading .Page,
+			.hideloader .Page {
+				-ms-transform: scale(.75, .75);
+				-webkit-transform: scale(.75, .75);
+				-moz-transform: scale(.75, .75);
+				transform: scale(.75, .75);
 			}
 			.newload {
 				overflow: hidden

@@ -1,0 +1,60 @@
+.Videobox
+	position: absolute
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
+	overflow: hidden
+	iframe
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		display: block
+		border: 0
+	&-background
+		position: absolute
+		height: 100%
+		top: 50%
+		left: 50%
+		+transform(translateX(-50%) translateY(-50%))
+	&-body
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		background-color: transparent
+		text-align: center
+		>div
+			position: absolute
+			border: 0
+
+
+		a
+			position: relative
+			width: 100%
+			margin-top: 0em
+			font-family: Georgia, serif
+			font-style: italic
+			font-size: 0.5em
+			+bp(smaller)
+				margin-top: 1em
+				font-size: 0.7em
+			+bp(medium)
+				margin-top: 1.5em
+				font-size: 0.85em
+			+bp(large)
+				font-size: 1.05em
+			+bp(hugest)
+				font-size: 1.25em
+		h1
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			margin-top: -2.575em
+			margin-bottom: 0
+		.line
+			opacity: 0

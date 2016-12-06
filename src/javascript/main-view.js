@@ -101,6 +101,8 @@ var MainView = View.extend({
 				// Handle active stuff in navigation
 				this.updateActiveNav();
 
+				// Handle resize
+				view.handleResize();
 
 				// Scroll to paramter 'section'
 				TweenMax.delayedCall(0.15, function(){ self.handleUpdateView() });
@@ -162,6 +164,12 @@ var MainView = View.extend({
 		handleClickOpen: function (e){
 			var body = document.body;
 			dom.addClass(body, 'Navigation--show');
+		},
+
+		handleResize: function(e){
+			if(this && this.pageSwitcher.current){
+				this.pageSwitcher.current.handleResize();
+			}
 		},
 
 		handleScrollNavigation: function (){

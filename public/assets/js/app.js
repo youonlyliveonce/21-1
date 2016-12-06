@@ -162,6 +162,15 @@
 	
 							// we have what we need, we can now start our router and show the appropriate page
 							this.router.history.start();
+							if (window.attachEvent) {
+									window.attachEvent('onresize', function () {
+											self.mainView.handleResize();
+									});
+							} else if (window.addEventListener) {
+									window.addEventListener('resize', function () {
+											self.mainView.handleResize();
+									}, true);
+							}
 					}
 	
 					// This is how you navigate around the app.
@@ -7380,7 +7389,6 @@
 		props: {
 			isInitial: ['boolean', true, false],
 			isScrollTop: ['boolean', true, false]
-			// ,mapModel: 'object'
 		},
 	
 		events: {},
@@ -7389,95 +7397,24 @@
 	
 		hookInRender: function hookInRender() {
 			var self = this;
-			// this.initResponsimg();
 			this.cacheElements({
-				billboard: '.Billboard video'
+				ratio: '.Videobox--video div'
 			});
 			TweenMax.delayedCall(0.8, function () {
 				self.bindSlider('.swiper-container', 'basic');
 			});
-			// TweenMax.delayedCall(0.15, function(){
-			// 	self._renderMap( document.querySelector('#mapbox') );
-			// })
 		},
-		hookAfterShow: function hookAfterShow() {
-			console.log("hookAfterShow");
-			if (this.billboard) {
-				this.billboard.play();
-				this._animateTypo();
-			}
-		},
-		_animateTypo: function _animateTypo() {
-			var typos = this.queryAll(".Billboard-body h1"),
-			    animateitem,
-			    lineobjects,
-			    animats = [],
-			    all = [],
-			    i = 0,
-			    j = 0,
-			    k = 0,
-			    tl = new TimelineMax({ repeat: -1, repeatDelay: 0.1 }),
-			    objectIn,
-			    objectOut,
-			    objectStart,
-			    parentSetting;
-	
-			parentSetting = { perspective: 500 };
-			objectIn = {
-				textShadow: "0px 0px 0px rgb(255,255,255)",
-				color: "transparent",
-				opacity: 1,
-				scaleX: 1,
-				scaleY: 1,
-				rotationY: 0,
-				display: "block",
-				ease: "Cubic.easeOut"
-			};
-			objectOut = {
-				textShadow: "0px 0px 100px rgb(255,0,106)",
-				color: "transparent",
-				opacity: 0,
-				rotationY: -90,
-				scaleX: 1.8,
-				scaleY: 0.8,
-				zIndex: 10,
-				display: "",
-				delay: 2
-			};
-			objectStart = {
-				textShadow: "0px 0px 100px rgb(255,0,106)",
-				color: "transparent",
-				opacity: 0,
-				rotationY: 90,
-				scaleX: 1.8,
-				scaleY: 0.8
-			};
-			console.log(typos);
-			for (i; i < typos.length; i++) {
-				animats[i] = [];
-				animateitem = typos[i];
-				lineobjects = animateitem.getElementsByClassName("line");
-	
-				TweenMax.set(animateitem, parentSetting);
-				for (j = 0; j < lineobjects.length; j++) {
-					animats[i][j] = lineobjects[j];
-					all.push(lineobjects[j]);
+		handleResize: function handleResize() {
+			if (this && this.ratio) {
+				var newWidth = document.body.clientHeight / 9 * 16,
+				    newHeight = document.body.clientHeight;
+				if (newWidth < document.body.clientWidth) {
+					newWidth = document.body.clientWidth, newHeight = document.body.clientWidth / 16 * 9;
 				}
+				this.ratio.setAttribute("style", "width:" + newWidth + "px; height:" + newHeight + "px;");
 			}
-	
-			// all.shift();
-			console.log(all);
-	
-			tl.to(all, 0.01, objectStart);
-	
-			for (k; k < animats.length; k++) {
-				tl.staggerTo(animats[k], 2, objectIn, 0.3);
-				tl.staggerTo(animats[k], 1, objectOut, 0.3);
-			}
-	
-			tl.play();
-		}
-	
+		},
+		hookAfterShow: function hookAfterShow() {}
 	});
 	
 	exports.default = Content;
@@ -23264,6 +23201,9 @@
 					// Handle active stuff in navigation
 					this.updateActiveNav();
 	
+					// Handle resize
+					view.handleResize();
+	
 					// Scroll to paramter 'section'
 					TweenMax.delayedCall(0.15, function () {
 							self.handleUpdateView();
@@ -23323,6 +23263,12 @@
 			handleClickOpen: function handleClickOpen(e) {
 					var body = document.body;
 					_ampersandDom2.default.addClass(body, 'Navigation--show');
+			},
+	
+			handleResize: function handleResize(e) {
+					if (this && this.pageSwitcher.current) {
+							this.pageSwitcher.current.handleResize();
+					}
 			},
 	
 			handleScrollNavigation: function handleScrollNavigation() {
