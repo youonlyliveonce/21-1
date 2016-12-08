@@ -1,10 +1,5 @@
 .Videobox
-	position: absolute
-	top: 0
-	bottom: 0
-	left: 0
-	right: 0
-	overflow: hidden
+	position: relative
 	iframe
 		position: absolute
 		top: 0
@@ -13,13 +8,12 @@
 		height: 100%
 		display: block
 		border: 0
-	&-background
+	&__background
 		position: absolute
-		height: 100%
 		top: 50%
 		left: 50%
 		+transform(translateX(-50%) translateY(-50%))
-	&-body
+	&__body
 		position: absolute
 		top: 0
 		left: 0

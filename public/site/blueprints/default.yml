@@ -3,6 +3,7 @@ title: Page
 pages:
   template:
     - section_videobox
+    - section_portfolio
 
 fields:
   title:

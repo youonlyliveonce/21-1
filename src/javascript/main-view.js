@@ -3,6 +3,7 @@ import _ from 'underscore';
 import View from 'ampersand-view';
 import dom from 'ampersand-dom';
 import ViewSwitcher from 'ampersand-view-switcher';
+import Hammer from 'hammerjs';
 
 import "ScrollToPlugin";
 import "TweenMax";
@@ -11,7 +12,8 @@ var MainView = View.extend({
 
 		/* Set Properties */
 		props: {
-			isSticky: ['boolean', true, false]
+			isSticky: ['boolean', true, false],
+			hammerSwipe: ['object', true, function(){ return []; } ],
 		},
 
 		/* Bind basic Events, all link clicks, toggle Navigation, etc. */
@@ -29,18 +31,16 @@ var MainView = View.extend({
 
 				/* Cache Elements */
 				this.cacheElements({
-						page: '#page',
-						main: '#main',
-						footer: '#footer',
-						header: '#header',
-						nav: '.nav',
-						navmain: '.nav-main',
+						page: '.Page',
+						main: '[role="main"]',
+						header: '.Header',
+						nav: '.Navigation',
 						switcher: '[data-hook=switcher]'
 				});
 
 				this.handleScrollNavigation();
 				// Init and configure our page switcher
-				this.pageSwitcher = new ViewSwitcher(this.queryByHook('switcher'), {
+				this.pageSwitcher = new ViewSwitcher(this.main, {
 						waitForRemove: false,
 						hide: function (oldView, cb) {
 								// Set scope for callback of TweenMax
@@ -71,6 +71,7 @@ var MainView = View.extend({
 						}
 				});
 				return this;
+
 		},
 
 		/*
@@ -139,7 +140,7 @@ var MainView = View.extend({
 		*/
 		handleUpdateView: function(){
 			this.scrollTo();
-			this.overlayerTo();
+			// this.overlayerTo();
 		},
 
 		/*
@@ -219,8 +220,12 @@ var MainView = View.extend({
 
 		scrollTo: function(){
 				if (CM.App._params != {} && CM.App._params.section != null){
-						var id = this.query('#'+CM.App._params.section);
-						TweenMax.to(window, 1.2, {scrollTo:{x:0, y:id.offsetTop}, overwrite:true, ease:Power2.easeOut});
+						let id = this.query('#'+CM.App._params.section);
+						let self = this;
+						TweenMax.to(this.main, 1.2, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+							console.log("finished");
+							self.pageSwitcher.current.updateActiveView();
+						}});
 				}
 		},
 		overlayerTo: function (){
@@ -238,9 +243,12 @@ var MainView = View.extend({
 						let data = xhr.responseText;
 						dom.removeClass(self.overlayerWrapper, 'Overlayer-loader');
 						self.overlayerInner.innerHTML = data;
-						// self.pageSwitcher.current.bindSlider('.galleryslider', 'gallery');
 					}
 					xhr.send("action=read");
+			} else {
+				dom.removeClass(body, 'Overlayer_open');
+				dom.removeClass(self.overlayer, 'active');
+				self.overlayerInner.innerHTML = "";
 			}
 		},
 		updateActiveNav: function () {

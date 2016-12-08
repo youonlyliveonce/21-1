@@ -7,17 +7,17 @@ class Loader {
 				window.CM = {};
 		}
 		window.CM.Loader = this;
-
+		window.onYouTubeIframeAPIReady = function(){console.log("ready");}
 		let scope = this;
 		head.ready(document, function() {
-				head.load(["/assets/css/app.css",
-									"/assets/js/app.js",
-									"//fast.fonts.com/cssapi/6536d2ad-a624-4b33-9405-4c303cfb6253.css"
+				head.load([	"/assets/css/app.css",
+										"/assets/js/app.js",
+										"//fast.fonts.com/cssapi/6536d2ad-a624-4b33-9405-4c303cfb6253.css"
 								], CM.Loader.startApplication);
 		});
 	}
 	removeGFX (){
-		document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join(""));
+		document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join("run"));
 		let preloader = document.getElementsByClassName("preloader")[0];
 		if(preloader && preloader.parentNode){
 				preloader.parentNode.removeChild(preloader);

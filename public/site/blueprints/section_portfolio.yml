@@ -1,0 +1,12 @@
+title: Section Portfolio
+
+pages:
+  template:
+    - portfolio
+
+fields:
+  title: title
+  headline:
+    label: Filter und Inhalte definieren sich durch die Unterseiten
+    type: headline
+  section: section

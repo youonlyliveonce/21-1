@@ -39,10 +39,10 @@
 				z-index: 111110;
 			}
 			.Page {
-				-webkit-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
-				-moz-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
-				-ms-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
-				transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085);
+				-ms-transform: scale(.75, .75);
+				-webkit-transform: scale(.75, .75);
+				-moz-transform: scale(.75, .75);
+				transform: scale(.75, .75);
 			}
 			.preloader .curtain {
 				background-color: #000;
@@ -54,21 +54,32 @@
 				width: 100%;
 				height: 100%;
 				opacity: 1;
-				-webkit-transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
-				-moz-transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
-				-ms-transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
-				transition: all 1.25s cubic-bezier(0.395, 0.060, 0.610, 0.925);
+				-webkit-transition: all 0.75s cubic-bezier(0.395, 0.060, 0.610, 0.925);
+				-moz-transition: all 0.75s cubic-bezier(0.395, 0.060, 0.610, 0.925);
+				-ms-transition: all 0.75s cubic-bezier(0.395, 0.060, 0.610, 0.925);
+				transition: all 0.75s cubic-bezier(0.395, 0.060, 0.610, 0.925);
+			}
+			.run .Page {
+				-webkit-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
+				-moz-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
+				-ms-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
+				transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
+				-ms-transform: scale(1, 1);
+				-webkit-transform: scale(1, 1);
+				-moz-transform: scale(1, 1);
+				transform: scale(1, 1);
+			}
+			.newload {
+				overflow: hidden
 			}
 			.newload .Page,
 			.loading .Page,
-			.hideloader .Page {
+			.hideloader .Page,
+			.loaded .Page {
 				-ms-transform: scale(.75, .75);
 				-webkit-transform: scale(.75, .75);
 				-moz-transform: scale(.75, .75);
 				transform: scale(.75, .75);
-			}
-			.newload {
-				overflow: hidden
 			}
 			.newload .preloader,
 			.loading .preloader,

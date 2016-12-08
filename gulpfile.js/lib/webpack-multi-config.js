@@ -21,7 +21,7 @@ module.exports = function(env) {
       extensions: ['', '.js'],
       alias: {
         webworkify: 'webworkify-webpack',
-        'mapbox-gl': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
+        'hammerjs': path.resolve('./src/javascript/vendor/hammer.min.js'),
         'ScrollMagic': path.resolve('./node_modules/scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'),
         'animationGsap': path.resolve('./node_modules/scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'),
         'ScrollToPlugin': path.resolve('./node_modules/gsap/src/uncompressed/plugins/ScrollToPlugin.js'),

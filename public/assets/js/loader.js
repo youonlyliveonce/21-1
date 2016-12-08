@@ -45,12 +45,12 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(314);
+	module.exports = __webpack_require__(315);
 
 
 /***/ },
 
-/***/ 314:
+/***/ 315:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -61,7 +61,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _head = __webpack_require__(315);
+	var _head = __webpack_require__(316);
 	
 	var _head2 = _interopRequireDefault(_head);
 	
@@ -78,7 +78,9 @@
 							window.CM = {};
 					}
 					window.CM.Loader = this;
-	
+					window.onYouTubeIframeAPIReady = function () {
+							console.log("ready");
+					};
 					var scope = this;
 					head.ready(document, function () {
 							head.load(["/assets/css/app.css", "/assets/js/app.js", "//fast.fonts.com/cssapi/6536d2ad-a624-4b33-9405-4c303cfb6253.css"], CM.Loader.startApplication);
@@ -88,7 +90,7 @@
 			_createClass(Loader, [{
 					key: "removeGFX",
 					value: function removeGFX() {
-							document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join(""));
+							document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join("run"));
 							var preloader = document.getElementsByClassName("preloader")[0];
 							if (preloader && preloader.parentNode) {
 									preloader.parentNode.removeChild(preloader);
@@ -121,7 +123,7 @@
 
 /***/ },
 
-/***/ 315:
+/***/ 316:
 /***/ function(module, exports) {
 
 	"use strict";

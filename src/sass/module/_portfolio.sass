@@ -1,0 +1,24 @@
+.Portfolio
+	background-color: lighten($color-background, 20%)
+	position: relative
+	&__body
+		@extend .Section__body--small
+	&__item
+		position: relative
+		background-color: rgba(255,255,255,0.25)
+		+bp(medium)
+			float: left
+		width: 100%
+		padding-bottom: +unit(9,16)
+		&--medium
+			+bp(medium)
+				width: 50%
+				padding-bottom: +unit(8,16)
+		&--small
+			+bp(medium)
+				width: 50%
+				padding-bottom: +unit(4,16)
+		&--tiny
+			+bp(medium)
+				width: 25%
+				padding-bottom: +unit(2,16)
