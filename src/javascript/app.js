@@ -114,7 +114,7 @@ class App {
 			if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1)
 				{
 						var args = [
-								'\n %c %c ### CADMAN Webapp ' + this._version + '	- ♥♥♥ -	http://cadman.de/ %c - ♥♥♥ -	%c\n\n',
+								'\n %c %c ### YOLO Webapp by DK for - ♥♥♥ - http://matteng.de/ %c - ♥♥♥ -	%c\n\n',
 								'background: #000; padding:15px 0;',
 								'color: #e400ff; background: #000; padding:15px 0px;',
 								'color: #e400ff; background: #000; padding:15px 0px;',
@@ -125,7 +125,7 @@ class App {
 				}
 				else if (window.console)
 				{
-						window.console.log('CADMAN Webapp ' + this._version+ ' - // // // - http://cadman.de/'); //jshint ignore:line
+						window.console.log('YOLO Webapp by DK for - // // // - http://matteng.de/'); //jshint ignore:line
 				}
 		}
 

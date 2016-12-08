@@ -6,6 +6,7 @@ let YoutubePlayer = Base.extend({
 		,player: ['object', true, function(){ return {}; }]
 		,active: ['boolean', true, false]
 		,ready: ['boolean', true, false]
+		,isscrollable: ['boolean', true, false]
 	},
 	events: {},
 

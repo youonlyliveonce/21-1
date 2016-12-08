@@ -38,7 +38,6 @@ var MainView = View.extend({
 						switcher: '[data-hook=switcher]'
 				});
 
-				this.handleScrollNavigation();
 				// Init and configure our page switcher
 				this.pageSwitcher = new ViewSwitcher(this.main, {
 						waitForRemove: false,
@@ -171,23 +170,10 @@ var MainView = View.extend({
 			if(this && this.pageSwitcher.current){
 				this.pageSwitcher.current.handleResize();
 			}
-		},
-
-		handleScrollNavigation: function (){
-			// window.addEventListener('scroll', function() {
-			// 	if(window.scrollY >= 0){
-			// 		let self = this,
-			// 				height = 160,
-			// 				navigationscroll = document.querySelector('.Navigation-sticky');
-			// 		if(window.scrollY > height && !self.isSticky){
-			// 			self.isSticky = true;
-			// 			dom.addClass(navigationscroll, 'active');
-			// 		} else if(window.scrollY < height && self.isSticky){
-			// 			self.isSticky = false;
-			// 			dom.removeClass(navigationscroll, 'active');
-			// 		}
-			// 	}
-			// });
+			if (CM.App._params != {} && CM.App._params.section != null){
+					let id = this.query('#'+CM.App._params.section);
+					TweenMax.set(this.main, {y:-1*id.offsetTop, overwrite:true});
+			}
 		},
 
 
@@ -223,7 +209,6 @@ var MainView = View.extend({
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
 						TweenMax.to(this.main, 1.2, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
-							console.log("finished");
 							self.pageSwitcher.current.updateActiveView();
 						}});
 				}

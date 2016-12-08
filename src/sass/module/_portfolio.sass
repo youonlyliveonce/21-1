@@ -3,13 +3,22 @@
 	position: relative
 	&__body
 		@extend .Section__body--small
+		padding-bottom: $gap-size-medium
 	&__item
 		position: relative
-		background-color: rgba(255,255,255,0.25)
+		>div
+			position: absolute
+			left: 5px
+			top: 5px
+			right: 5px
+			bottom: 5px
+			background-color: rgba(255,255,255,0.25)
 		+bp(medium)
 			float: left
 		width: 100%
 		padding-bottom: +unit(9,16)
+		&--right
+			float: right
 		&--medium
 			+bp(medium)
 				width: 50%
@@ -21,4 +30,4 @@
 		&--tiny
 			+bp(medium)
 				width: 25%
-				padding-bottom: +unit(2,16)
+				padding-bottom: +unit(4,16)

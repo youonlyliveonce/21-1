@@ -201,11 +201,11 @@
 					key: '_sayHello',
 					value: function _sayHello() {
 							if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-									var args = ['\n %c %c ### CADMAN Webapp ' + this._version + '	- ♥♥♥ -	http://cadman.de/ %c - ♥♥♥ -	%c\n\n', 'background: #000; padding:15px 0;', 'color: #e400ff; background: #000; padding:15px 0px;', 'color: #e400ff; background: #000; padding:15px 0px;', 'color: #e400ff; background: #000; padding:15px 0px;'];
+									var args = ['\n %c %c ### YOLO Webapp by DK for - ♥♥♥ - http://matteng.de/ %c - ♥♥♥ -	%c\n\n', 'background: #000; padding:15px 0;', 'color: #e400ff; background: #000; padding:15px 0px;', 'color: #e400ff; background: #000; padding:15px 0px;', 'color: #e400ff; background: #000; padding:15px 0px;'];
 	
 									window.console.log.apply(console, args); //jshint ignore:line
 							} else if (window.console) {
-									window.console.log('CADMAN Webapp ' + this._version + ' - // // // - http://cadman.de/'); //jshint ignore:line
+									window.console.log('YOLO Webapp by DK for - // // // - http://matteng.de/'); //jshint ignore:line
 							}
 					}
 			}]);
@@ -7406,10 +7406,15 @@
 			}],
 			activeElement: ['object', true, function () {
 				return {};
+			}],
+			functionStore: ['function', true, function () {
+				return "";
 			}]
 		},
 	
-		events: {},
+		events: {
+			'click .Button--down': 'handleDownClick'
+		},
 	
 		hookBeforeHide: function hookBeforeHide() {},
 	
@@ -7447,27 +7452,40 @@
 			this.hammerSwipe.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 			this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
 			this.hammerSwipe.on('swipedown', this.handleSwipeDown.bind(this));
+	
+			this.functionStore = this.handleMouseWheel.bind(this);
 		},
 		handleResize: function handleResize() {
-			console.log("handleResize");
 			this.subViews.forEach(function (element) {
 				element.view.handleResize();
 			});
 		},
 		hookAfterShow: function hookAfterShow() {},
+		handleMouseWheel: function handleMouseWheel(event) {
+			this.activeElement.view.handleScrollWheel(event);
+		},
+		handleDownClick: function handleDownClick(event) {
+			this.nextSlide();
+		},
 		handleSwipeUp: function handleSwipeUp(event) {
+			this.nextSlide();
+		},
+		handleSwipeDown: function handleSwipeDown(event) {
+			this.previousSlide();
+		},
+		previousSlide: function previousSlide() {
+			var index = this.subViews.indexOf(this.activeElement);
+			if (index != 0) {
+				this.activeElement.view.active = false;
+				CM.App.navigate('/?section=' + this.subViews[index - 1].view.el.getAttribute('id'));
+			}
+		},
+		nextSlide: function nextSlide() {
 			// nächstes Element ermitteln
 			var index = this.subViews.indexOf(this.activeElement);
 			if (index != this.subViews.length - 1) {
 				this.activeElement.view.active = false;
 				CM.App.navigate('/?section=' + this.subViews[index + 1].view.el.getAttribute('id'));
-			}
-		},
-		handleSwipeDown: function handleSwipeDown(event) {
-			var index = this.subViews.indexOf(this.activeElement);
-			if (index != 0) {
-				this.activeElement.view.active = false;
-				CM.App.navigate('/?section=' + this.subViews[index - 1].view.el.getAttribute('id'));
 			}
 		},
 		updateActiveView: function updateActiveView() {
@@ -7479,6 +7497,12 @@
 				this.activeElement = this.subViews[0];
 			}
 			this.activeElement.view.active = true;
+	
+			if (this.activeElement.view.isScrollAble) {
+				document.body.addEventListener('mousewheel', this.functionStore, false);
+			} else {
+				document.body.removeEventListener('mousewheel', this.functionStore, false);
+			}
 		}
 	
 	});
@@ -23210,7 +23234,6 @@
 							switcher: '[data-hook=switcher]'
 					});
 	
-					this.handleScrollNavigation();
 					// Init and configure our page switcher
 					this.pageSwitcher = new _ampersandViewSwitcher2.default(this.main, {
 							waitForRemove: false,
@@ -23339,23 +23362,10 @@
 					if (this && this.pageSwitcher.current) {
 							this.pageSwitcher.current.handleResize();
 					}
-			},
-	
-			handleScrollNavigation: function handleScrollNavigation() {
-					// window.addEventListener('scroll', function() {
-					// 	if(window.scrollY >= 0){
-					// 		let self = this,
-					// 				height = 160,
-					// 				navigationscroll = document.querySelector('.Navigation-sticky');
-					// 		if(window.scrollY > height && !self.isSticky){
-					// 			self.isSticky = true;
-					// 			dom.addClass(navigationscroll, 'active');
-					// 		} else if(window.scrollY < height && self.isSticky){
-					// 			self.isSticky = false;
-					// 			dom.removeClass(navigationscroll, 'active');
-					// 		}
-					// 	}
-					// });
+					if (CM.App._params != {} && CM.App._params.section != null) {
+							var id = this.query('#' + CM.App._params.section);
+							TweenMax.set(this.main, { y: -1 * id.offsetTop, overwrite: true });
+					}
 			},
 	
 			/*
@@ -23391,7 +23401,6 @@
 									var id = _this.query('#' + CM.App._params.section);
 									var self = _this;
 									TweenMax.to(_this.main, 1.2, { y: -1 * id.offsetTop, overwrite: true, ease: Power2.easeOut, onComplete: function onComplete() {
-													console.log("finished");
 													self.pageSwitcher.current.updateActiveView();
 											} });
 							})();
@@ -34366,7 +34375,8 @@
 				return {};
 			}],
 			active: ['boolean', true, false],
-			ready: ['boolean', true, false]
+			ready: ['boolean', true, false],
+			isscrollable: ['boolean', true, false]
 		},
 		events: {},
 	
@@ -34453,16 +34463,40 @@
 			id: ['string', true, ''],
 			filter: ['object', true, function () {
 				return {};
-			}]
+			}],
+			isScrollAble: ['boolean', true, true],
+			scrollTimer: ['number', true, 0]
 		},
+	
 		events: {},
 	
 		render: function render() {
-			this.on('change:active', this.onActiveChange, this);
-		},
+			// this.on('change:active', this.onActiveChange, this);
+			this.cacheElements({
+				gridBody: '.Portfolio__body'
+			});
 	
+			return this;
+		},
 		onActiveChange: function onActiveChange(value) {
-			console.log(value);
+			// console.log(value);
+		},
+		handleScrollWheel: function handleScrollWheel(event) {
+			var self = this;
+	
+			if (event.deltaY < 0) {
+				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y + -1 * event.deltaY > 0) {
+					TweenMax.to(self.gridBody, 0.2, { y: 0, overwrite: true });
+				} else {
+					TweenMax.set(this.gridBody, { y: '+=' + -1 * event.deltaY });
+				}
+			} else {
+				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - event.deltaY < document.body.clientHeight - self.gridBody.clientHeight) {
+					TweenMax.to(self.gridBody, 0.2, { y: document.body.clientHeight - self.gridBody.clientHeight, overwrite: true });
+				} else {
+					TweenMax.set(this.gridBody, { y: '-=' + event.deltaY });
+				}
+			}
 		}
 	});
 	
@@ -34487,7 +34521,8 @@
 	var Base = _ampersandView2.default.extend({
 		props: {
 			id: ['string', true, ''],
-			active: ['boolean', true, true]
+			active: ['boolean', true, true],
+			isscrollable: ['boolean', true, false]
 		},
 		events: {},
 	

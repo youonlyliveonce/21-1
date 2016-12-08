@@ -10,10 +10,11 @@ let Content = PageView.extend({
 		,isScrollTop: ['boolean', true, false]
 		,subViews: ['array', true, function(){ return []; }]
 		,activeElement: ['object', true, function(){ return {}; }]
+		,functionStore: ['function', true, function(){ return ""; }]
 	},
 
 	events: {
-
+		'click .Button--down' : 'handleDownClick'
 	},
 
 	hookBeforeHide: function() {
@@ -55,9 +56,10 @@ let Content = PageView.extend({
 		this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
 		this.hammerSwipe.on('swipedown', this.handleSwipeDown.bind(this));
 
+		this.functionStore = this.handleMouseWheel.bind(this);
+
 	},
 	handleResize: function(){
-		console.log("handleResize");
 		this.subViews.forEach(function(element){
 			element.view.handleResize();
 		});
@@ -65,19 +67,31 @@ let Content = PageView.extend({
 	hookAfterShow: function(){
 
 	},
+	handleMouseWheel: function(event){
+		this.activeElement.view.handleScrollWheel(event);
+	},
+	handleDownClick: function(event){
+		this.nextSlide();
+	},
 	handleSwipeUp: function(event){
-		// nächstes Element ermitteln
-		let index  = this.subViews.indexOf(this.activeElement);
-		if(index != this.subViews.length -1){
-			this.activeElement.view.active = false;
-			CM.App.navigate(`/?section=${this.subViews[index+1].view.el.getAttribute('id')}`);
-		}
+		this.nextSlide();
 	},
 	handleSwipeDown: function(event){
+		this.previousSlide();
+	},
+	previousSlide: function(){
 		let index  = this.subViews.indexOf(this.activeElement);
 		if(index != 0){
 			this.activeElement.view.active = false;
 			CM.App.navigate(`/?section=${this.subViews[index-1].view.el.getAttribute('id')}`);
+		}
+	},
+	nextSlide: function(){
+		// nächstes Element ermitteln
+		let index  = this.subViews.indexOf(this.activeElement);
+		if(index != this.subViews.length-1){
+			this.activeElement.view.active = false;
+			CM.App.navigate(`/?section=${this.subViews[index+1].view.el.getAttribute('id')}`);
 		}
 	},
 	updateActiveView: function(){
@@ -87,6 +101,13 @@ let Content = PageView.extend({
 			this.activeElement = this.subViews[0]
 		}
 		this.activeElement.view.active = true;
+
+		if(this.activeElement.view.isScrollAble){
+			document.body.addEventListener('mousewheel', this.functionStore, false);
+		}else{
+			document.body.removeEventListener('mousewheel', this.functionStore, false);
+		}
+
 	}
 
 });

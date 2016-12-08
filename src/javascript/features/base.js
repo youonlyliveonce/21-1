@@ -4,6 +4,7 @@ let Base = View.extend({
 	props: {
 		id: ['string', true, '']
 		,active: ['boolean', true, true]
+		,isscrollable: ['boolean', true, false]
 	},
 	events: {},
 
