@@ -10,3 +10,4 @@ fields:
     label: Filter und Inhalte definieren sich durch die Unterseiten
     type: headline
   section: section
+  scrollable: scrollable

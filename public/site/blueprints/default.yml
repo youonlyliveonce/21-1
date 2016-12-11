@@ -6,10 +6,4 @@ pages:
     - section_portfolio
 
 fields:
-  title:
-    label: Title
-    type:  text
-
-  text:
-    label: Text
-    type:  textarea
+  title: title

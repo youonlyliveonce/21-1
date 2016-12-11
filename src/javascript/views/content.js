@@ -2,6 +2,7 @@ import PageView from './base';
 import View from 'ampersand-view';
 import YoutubeView from '../features/youtube/youtube';
 import GridView from '../features/filtergrid/filtergrid';
+import dom from 'ampersand-dom';
 
 let Content = PageView.extend({
 
@@ -41,7 +42,11 @@ let Content = PageView.extend({
 					default:
 
 				}
+
 				self.subViews.push({id:element.getAttribute("id"), view:view});
+				if(index == 0){
+					view.on('change:active', self.onFirstSubViewActiveChange, self);
+				}
 			});
 		}
 
@@ -82,25 +87,35 @@ let Content = PageView.extend({
 	previousSlide: function(){
 		let index  = this.subViews.indexOf(this.activeElement);
 		if(index != 0){
-			this.activeElement.view.active = false;
-			CM.App.navigate(`/?section=${this.subViews[index-1].view.el.getAttribute('id')}`);
+			CM.App.navigate(`/${this.model.lang}/?section=${this.subViews[index-1].view.el.getAttribute('id')}`);
 		}
 	},
 	nextSlide: function(){
 		// nächstes Element ermitteln
 		let index  = this.subViews.indexOf(this.activeElement);
 		if(index != this.subViews.length-1){
-			this.activeElement.view.active = false;
-			CM.App.navigate(`/?section=${this.subViews[index+1].view.el.getAttribute('id')}`);
+			CM.App.navigate(`/${this.model.lang}/?section=${this.subViews[index+1].view.el.getAttribute('id')}`);
 		}
 	},
+	onFirstSubViewActiveChange: function(view, value){
+		if(value) {
+			dom.addClass(document.body, 'Navigation--home');
+		} else {
+			dom.removeClass(document.body, 'Navigation--home');
+		}
+	},
+
 	updateActiveView: function(){
+		if(this.activeElement.view){
+			this.activeElement.view.active = false;
+		}
 		if (CM.App._params != {} && CM.App._params.section != null){
 			this.activeElement = this.subViews.filter(element => { return element.id == CM.App._params.section })[0]
 		} else {
 			this.activeElement = this.subViews[0]
 		}
 		this.activeElement.view.active = true;
+
 
 		if(this.activeElement.view.isScrollAble){
 			document.body.addEventListener('mousewheel', this.functionStore, false);

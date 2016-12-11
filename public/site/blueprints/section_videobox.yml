@@ -8,6 +8,6 @@ fields:
   section: section
 
   videoid:
-    label: Cover Video
+    label: Video ID
     type: text
     help: Add Youtube ID

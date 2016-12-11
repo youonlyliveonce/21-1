@@ -9,6 +9,12 @@
 	.Navigation
 		+transform(translateX(0%))
 
+.Navigation--home
+	+bp('medium')
+		.Navigation
+			opacity: 0
+			+transform(translateX(0%) translateY(5%))
+
 .Navigation
 	z-index: 9999
 	position: absolute
@@ -17,63 +23,64 @@
 	background-color: $color-content
 	left: 0
 	right: 50%
-	+bp('large')
+	+bp('medium')
+		+transform(translateX(0%) translateY(0%))
+		width: 100%
 		background-color: transparent
-		top: 0.71428571em
-		right: 0.71428571em
-		left: 0.71428571em
+		top: 0
+		right: 0
 		z-index: 1
+		opacity: 1
 	ul
 		text-align: left
 		padding-top: 3.4em
 		padding-bottom: 1em
 		overflow: hidden
-		+bp('large')
+		+bp('medium')
 			height: auto
 			text-align: center
-			margin: 0 10.71428571em
+			margin: $header-height/2
 			top: 0
 			padding: 0
 		li
-			letter-spacing: 0.1rem
+			// letter-spacing: 0.1rem
 			cursor: pointer
 			padding-left: 1.85em
-			+bp('large')
+			+noselect
+			+bp('medium')
 				position: relative
 				display: inline-block
 				margin: 0
-				padding: 0 10px
+				padding: 0 20px
 			a
 				+fontbold
 				color: white
 				display: block
 				position: relative
 				text-transform: uppercase
+				font-size: 0.9em
+				line-height: 1.2
 				+transition(color, 0.25s)
-				padding: 0.2em 0
-				+bp('large')
-					padding: 0.66666667em 0.55555556em 0.72222222em
+				padding: 0 0.1em
+				position: relative
+				overflow: hidden
+				span
+					position: relative
+					z-index: 10
 				&:before
 					content: ''
 					position: absolute
 					top: 0
 					left: 50%
-					+transform(translateY(-100%))
-					margin-left: -0.3333333em
-					border-width: 0.3333333em
-					border-style: solid
-					border-color: $color-background transparent transparent transparent
-					visibility: hidden
-					+transition(transform, 0.25s)
+					right: 0
+					width: 0%
+					height: 100%
+					z-index: 1
+					+transition(all, 0.25s)
+					background-color: white
 				&.active,
 				&:hover
-					color: $color-highlight
+					color: black
 					&:before
-						+transform(translateY(-0%))
-						visibility: visible
-				+bp('large')
-					font-size: 1.28571429em
-					line-height: 1.38889em
-					letter-spacing: 0.222em
-					&:after
-						display: none
+						left: 0
+						width: 100%

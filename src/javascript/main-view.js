@@ -98,14 +98,14 @@ var MainView = View.extend({
 				// Set current view of page switcher (silent)
 				this.pageSwitcher.current = view;
 
-				// Handle active stuff in navigation
-				this.updateActiveNav();
-
 				// Handle resize
 				view.handleResize();
 
 				// Scroll to paramter 'section'
 				TweenMax.delayedCall(0.15, function(){ self.handleUpdateView() });
+
+				// Handle active stuff in navigation
+				this.updateActiveNav();
 		},
 
 		/*
@@ -208,8 +208,10 @@ var MainView = View.extend({
 				if (CM.App._params != {} && CM.App._params.section != null){
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
+						self.pageSwitcher.current.updateActiveView();
+						self.updateActiveNav();
 						TweenMax.to(this.main, 1.2, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
-							self.pageSwitcher.current.updateActiveView();
+
 						}});
 				}
 		},
@@ -237,30 +239,41 @@ var MainView = View.extend({
 			}
 		},
 		updateActiveNav: function () {
-				var path = window.location.pathname.slice(1),
-						search = /(\w+\/)/g,
-						match = search.exec(path),
-						folder = path;
-
-				if (match != null ) folder = match[0];
-				this.queryAll('.Navigation a[href]').forEach(function (aTag) {
-
-						var aPath = aTag.pathname.slice(1),
-								parent = aTag.parentNode.className.indexOf('sub') != -1
-												? aTag.parentNode.parentNode.parentNode
-												: aTag.parentNode;
-
-						if ( folder.length >= 1 && aPath.indexOf(folder) === 0){
-										dom.addClass(parent, 'active');
-						} else {
-								if ( aPath == path){
-										dom.addClass(parent, 'active');
-								} else {
-										dom.removeClass(parent, 'active');
-								}
+				let path = window.location.pathname.slice(1),
+						topnavi = this.queryAll('.Navigation a[href]'),
+						besidenavi = this.queryAll('.Scrollnavigation a[href]');
+						if (CM.App._params != {} && CM.App._params.section != null){
+							path = `${path}?section=${CM.App._params.section}`;
 						}
+						console.log(path);
+				if(path == this.pageSwitcher.current.model.lang + "/"){
 
-				});
+					topnavi.forEach(function (aTag) {
+						dom.removeClass(aTag, 'active')
+					});
+					dom.addClass(topnavi[0], 'active')
+
+					besidenavi.forEach(function (aTag) {
+						dom.removeClass(aTag.parentNode, 'active')
+					});
+					dom.addClass(besidenavi[0].parentNode, 'active')
+				} else {
+					topnavi.forEach(function (aTag) {
+						if(aTag.href.indexOf(path) != -1){
+							dom.addClass(aTag, 'active')
+						}else {
+							dom.removeClass(aTag, 'active')
+						}
+					});
+					besidenavi.forEach(function (aTag) {
+						if(aTag.href.indexOf(path) != -1){
+							dom.addClass(aTag.parentNode, 'active')
+						}else {
+							dom.removeClass(aTag.parentNode, 'active')
+						}
+					});
+				}
+
 		}
 
 });

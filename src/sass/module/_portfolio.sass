@@ -1,6 +1,9 @@
 .Portfolio
-	background-color: lighten($color-background, 20%)
+	background-color: $color-background
 	position: relative
+	overflow: hidden
+	&__filter
+		height: $header-height*2
 	&__body
 		@extend .Section__body--small
 		padding-bottom: $gap-size-medium

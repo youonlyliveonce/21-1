@@ -13,7 +13,8 @@ let Filtergrid = Base.extend({
 	render: function(){
 		// this.on('change:active', this.onActiveChange, this);
 		this.cacheElements({
-				gridBody: '.Portfolio__body'
+				gridBody: '.Portfolio__body',
+				gridFilter: '.Portfolio__filter',
 		});
 
 		return this;
@@ -32,10 +33,14 @@ let Filtergrid = Base.extend({
 				TweenMax.set(this.gridBody, {y:`+=${-1*event.deltaY}`});
 			}
 		} else {
-			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-event.deltaY < document.body.clientHeight-self.gridBody.clientHeight){
-				TweenMax.to(self.gridBody, 0.2, {y:document.body.clientHeight-self.gridBody.clientHeight, overwrite:true});
+			let cH = document.body.clientHeight - self.gridFilter.clientHeight,
+					bH = self.gridBody.clientHeight,
+					dH = cH-bH;
+
+			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-event.deltaY < cH-bH){
+				TweenMax.to(self.gridBody, 0.2, {y:dH, overwrite:true});
 			} else {
-				TweenMax.set(this.gridBody, {y:`-=${event.deltaY}`});
+				TweenMax.set(self.gridBody, {y:`-=${event.deltaY}`});
 			}
 		}
 
