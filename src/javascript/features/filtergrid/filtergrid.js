@@ -24,6 +24,7 @@ let Filtergrid = Base.extend({
 		// console.log(value);
 	},
 	handleScrollWheel: function(event){
+		event.preventDefault();
 		let self = this;
 
 		if(event.deltaY < 0){

@@ -72,15 +72,15 @@
 	
 	var _router2 = _interopRequireDefault(_router);
 	
-	var _mainView = __webpack_require__(306);
+	var _mainView = __webpack_require__(309);
 	
 	var _mainView2 = _interopRequireDefault(_mainView);
 	
-	var _lsRiasMin = __webpack_require__(313);
+	var _lsRiasMin = __webpack_require__(316);
 	
 	var _lsRiasMin2 = _interopRequireDefault(_lsRiasMin);
 	
-	var _lazysizesMin = __webpack_require__(314);
+	var _lazysizesMin = __webpack_require__(317);
 	
 	var _lazysizesMin2 = _interopRequireDefault(_lazysizesMin);
 	
@@ -1656,11 +1656,11 @@
 	
 	var _content2 = _interopRequireDefault(_content);
 	
-	var _content3 = __webpack_require__(280);
+	var _content3 = __webpack_require__(283);
 	
 	var _content4 = _interopRequireDefault(_content3);
 	
-	var _formModel = __webpack_require__(302);
+	var _formModel = __webpack_require__(305);
 	
 	var _formModel2 = _interopRequireDefault(_formModel);
 	
@@ -7405,11 +7405,11 @@
 	
 	var _ampersandView2 = _interopRequireDefault(_ampersandView);
 	
-	var _youtube = __webpack_require__(317);
+	var _youtube = __webpack_require__(280);
 	
 	var _youtube2 = _interopRequireDefault(_youtube);
 	
-	var _filtergrid = __webpack_require__(318);
+	var _filtergrid = __webpack_require__(282);
 	
 	var _filtergrid2 = _interopRequireDefault(_filtergrid);
 	
@@ -20090,10 +20090,203 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+		value: true
 	});
 	
 	var _base = __webpack_require__(281);
+	
+	var _base2 = _interopRequireDefault(_base);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var YoutubePlayer = _base2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			player: ['object', true, function () {
+				return {};
+			}],
+			active: ['boolean', true, false],
+			ready: ['boolean', true, false],
+			isscrollable: ['boolean', true, false]
+		},
+		events: {},
+	
+		render: function render() {
+			this.cacheElements({
+				ratio: '.Videobox__background'
+			});
+	
+			// INSERT YOUTUBE API
+			var tag = document.createElement('script');
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			this.on('change:active', this.onActiveChange, this);
+			window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+			return this;
+		},
+	
+		onYouTubeIframeAPIReady: function onYouTubeIframeAPIReady() {
+			this.player = new YT.Player(this.id, {
+				events: {
+					'onReady': this.onPlayerReady.bind(this),
+					'onStateChange': this.onPlayerStateChange.bind(this)
+				}
+			});
+		},
+	
+		onPlayerReady: function onPlayerReady() {
+			this.ready = true;
+			if (this.active) {
+				this.player.playVideo();
+			}
+		},
+	
+		playVideo: function playVideo() {
+			this.player.playVideo();
+		},
+		pauseVideo: function pauseVideo() {
+			this.player.pauseVideo();
+		},
+		onActiveChange: function onActiveChange(model, value) {
+			console.log("onActiveChange", value);
+			if (!value) this.player.pauseVideo();else {
+				if (this.ready) {
+					this.player.playVideo();
+				}
+			}
+		},
+		onPlayerStateChange: function onPlayerStateChange(event) {
+			console.log("onPlayerStateChange", event);
+		},
+		handleResize: function handleResize() {
+			var newWidth = document.body.clientHeight / 9 * 16,
+			    newHeight = document.body.clientHeight;
+			if (newWidth < document.body.clientWidth) {
+				newWidth = document.body.clientWidth, newHeight = document.body.clientWidth / 16 * 9;
+			}
+			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
+			this.ratio.setAttribute("style", "width:" + newWidth + "px; height:" + newHeight + "px;");
+		}
+	
+	});
+	
+	exports.default = YoutubePlayer;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _ampersandView = __webpack_require__(158);
+	
+	var _ampersandView2 = _interopRequireDefault(_ampersandView);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Base = _ampersandView2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			active: ['boolean', true, true],
+			isscrollable: ['boolean', true, false]
+		},
+		events: {},
+	
+		render: function render() {
+			this.on('change:active', this.onActiveChange, this);
+		},
+		handleResize: function handleResize() {
+			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
+		},
+		onActiveChange: function onActiveChange(value) {
+			console.log(value);
+		}
+	});
+	
+	exports.default = Base;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _base = __webpack_require__(281);
+	
+	var _base2 = _interopRequireDefault(_base);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Filtergrid = _base2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			filter: ['object', true, function () {
+				return {};
+			}],
+			isScrollAble: ['boolean', true, true],
+			scrollTimer: ['number', true, 0]
+		},
+	
+		events: {},
+	
+		render: function render() {
+			// this.on('change:active', this.onActiveChange, this);
+			this.cacheElements({
+				gridBody: '.Portfolio__body',
+				gridFilter: '.Portfolio__filter'
+			});
+	
+			return this;
+		},
+		onActiveChange: function onActiveChange(value) {
+			// console.log(value);
+		},
+		handleScrollWheel: function handleScrollWheel(event) {
+			event.preventDefault();
+			var self = this;
+	
+			if (event.deltaY < 0) {
+				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y + -1 * event.deltaY > 0) {
+					TweenMax.to(self.gridBody, 0.2, { y: 0, overwrite: true });
+				} else {
+					TweenMax.set(this.gridBody, { y: '+=' + -1 * event.deltaY });
+				}
+			} else {
+				var cH = document.body.clientHeight - self.gridFilter.clientHeight,
+				    bH = self.gridBody.clientHeight,
+				    dH = cH - bH;
+	
+				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - event.deltaY < cH - bH) {
+					TweenMax.to(self.gridBody, 0.2, { y: dH, overwrite: true });
+				} else {
+					TweenMax.set(self.gridBody, { y: '-=' + event.deltaY });
+				}
+			}
+		}
+	});
+	
+	exports.default = Filtergrid;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _base = __webpack_require__(284);
 	
 	var _base2 = _interopRequireDefault(_base);
 	
@@ -20105,7 +20298,7 @@
 	exports.default = Content;
 
 /***/ },
-/* 281 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20114,7 +20307,7 @@
 	    value: true
 	});
 	
-	var _ampersandModel = __webpack_require__(282);
+	var _ampersandModel = __webpack_require__(285);
 	
 	var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
 	
@@ -20166,15 +20359,15 @@
 	exports.default = Base;
 
 /***/ },
-/* 282 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*$AMPERSAND_VERSION*/
 	var State = __webpack_require__(159);
-	var sync = __webpack_require__(283);
+	var sync = __webpack_require__(286);
 	var assign = __webpack_require__(7);
 	var isObject = __webpack_require__(20);
-	var clone = __webpack_require__(301);
+	var clone = __webpack_require__(304);
 	var result = __webpack_require__(87);
 	
 	// Throw an error when a URL is needed, and none is supplied.
@@ -20314,22 +20507,22 @@
 
 
 /***/ },
-/* 283 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var xhr = __webpack_require__(284);
-	module.exports = __webpack_require__(291)(xhr);
+	var xhr = __webpack_require__(287);
+	module.exports = __webpack_require__(294)(xhr);
 
 
 /***/ },
-/* 284 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var window = __webpack_require__(285)
-	var isFunction = __webpack_require__(286)
-	var parseHeaders = __webpack_require__(287)
-	var xtend = __webpack_require__(290)
+	var window = __webpack_require__(288)
+	var isFunction = __webpack_require__(289)
+	var parseHeaders = __webpack_require__(290)
+	var xtend = __webpack_require__(293)
 	
 	module.exports = createXHR
 	createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -20567,7 +20760,7 @@
 
 
 /***/ },
-/* 285 */
+/* 288 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {if (typeof window !== "undefined") {
@@ -20583,7 +20776,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 286 */
+/* 289 */
 /***/ function(module, exports) {
 
 	module.exports = isFunction
@@ -20604,11 +20797,11 @@
 
 
 /***/ },
-/* 287 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(288)
-	  , forEach = __webpack_require__(289)
+	var trim = __webpack_require__(291)
+	  , forEach = __webpack_require__(292)
 	  , isArray = function(arg) {
 	      return Object.prototype.toString.call(arg) === '[object Array]';
 	    }
@@ -20640,7 +20833,7 @@
 	}
 
 /***/ },
-/* 288 */
+/* 291 */
 /***/ function(module, exports) {
 
 	
@@ -20660,10 +20853,10 @@
 
 
 /***/ },
-/* 289 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(286)
+	var isFunction = __webpack_require__(289)
 	
 	module.exports = forEach
 	
@@ -20712,7 +20905,7 @@
 
 
 /***/ },
-/* 290 */
+/* 293 */
 /***/ function(module, exports) {
 
 	module.exports = extend
@@ -20737,16 +20930,16 @@
 
 
 /***/ },
-/* 291 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*$AMPERSAND_VERSION*/
 	var result = __webpack_require__(87);
-	var defaults = __webpack_require__(292);
+	var defaults = __webpack_require__(295);
 	var includes = __webpack_require__(213);
 	var assign = __webpack_require__(7);
-	var qs = __webpack_require__(295);
-	var mediaType = __webpack_require__(300);
+	var qs = __webpack_require__(298);
+	var mediaType = __webpack_require__(303);
 	
 	
 	module.exports = function (xhr) {
@@ -20893,12 +21086,12 @@
 
 
 /***/ },
-/* 292 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var apply = __webpack_require__(31),
-	    assignInDefaults = __webpack_require__(293),
-	    assignInWith = __webpack_require__(294),
+	    assignInDefaults = __webpack_require__(296),
+	    assignInWith = __webpack_require__(297),
 	    baseRest = __webpack_require__(28);
 	
 	/**
@@ -20931,7 +21124,7 @@
 
 
 /***/ },
-/* 293 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var eq = __webpack_require__(25);
@@ -20964,7 +21157,7 @@
 
 
 /***/ },
-/* 294 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var copyObject = __webpack_require__(26),
@@ -21008,14 +21201,14 @@
 
 
 /***/ },
-/* 295 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var stringify = __webpack_require__(296);
-	var parse = __webpack_require__(299);
-	var formats = __webpack_require__(298);
+	var stringify = __webpack_require__(299);
+	var parse = __webpack_require__(302);
+	var formats = __webpack_require__(301);
 	
 	module.exports = {
 	    formats: formats,
@@ -21025,13 +21218,13 @@
 
 
 /***/ },
-/* 296 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(297);
-	var formats = __webpack_require__(298);
+	var utils = __webpack_require__(300);
+	var formats = __webpack_require__(301);
 	
 	var arrayPrefixGenerators = {
 	    brackets: function brackets(prefix) {
@@ -21218,7 +21411,7 @@
 
 
 /***/ },
-/* 297 */
+/* 300 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21404,7 +21597,7 @@
 
 
 /***/ },
-/* 298 */
+/* 301 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21428,12 +21621,12 @@
 
 
 /***/ },
-/* 299 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(297);
+	var utils = __webpack_require__(300);
 	
 	var has = Object.prototype.hasOwnProperty;
 	
@@ -21600,7 +21793,7 @@
 
 
 /***/ },
-/* 300 */
+/* 303 */
 /***/ function(module, exports) {
 
 	/**
@@ -21713,7 +21906,7 @@
 
 
 /***/ },
-/* 301 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseClone = __webpack_require__(161);
@@ -21755,7 +21948,7 @@
 
 
 /***/ },
-/* 302 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21764,15 +21957,15 @@
 	
 	var _ampersandState2 = _interopRequireDefault(_ampersandState);
 	
-	var _ampersandSync = __webpack_require__(283);
+	var _ampersandSync = __webpack_require__(286);
 	
 	var _ampersandSync2 = _interopRequireDefault(_ampersandSync);
 	
-	var _qs = __webpack_require__(295);
+	var _qs = __webpack_require__(298);
 	
 	var _qs2 = _interopRequireDefault(_qs);
 	
-	var _es6Promise = __webpack_require__(303);
+	var _es6Promise = __webpack_require__(306);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21849,7 +22042,7 @@
 	module.exports = Form;
 
 /***/ },
-/* 303 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -21988,7 +22181,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(305);
+	    var vertx = __webpack_require__(308);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -23009,10 +23202,10 @@
 	
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(304), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(307), (function() { return this; }())))
 
 /***/ },
-/* 304 */
+/* 307 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -23198,13 +23391,13 @@
 
 
 /***/ },
-/* 305 */
+/* 308 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 306 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23225,17 +23418,17 @@
 	
 	var _ampersandDom2 = _interopRequireDefault(_ampersandDom);
 	
-	var _ampersandViewSwitcher = __webpack_require__(307);
+	var _ampersandViewSwitcher = __webpack_require__(310);
 	
 	var _ampersandViewSwitcher2 = _interopRequireDefault(_ampersandViewSwitcher);
 	
-	var _hammerjs = __webpack_require__(308);
+	var _hammerjs = __webpack_require__(311);
 	
 	var _hammerjs2 = _interopRequireDefault(_hammerjs);
 	
-	__webpack_require__(309);
-	
 	__webpack_require__(312);
+	
+	__webpack_require__(315);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23504,7 +23697,7 @@
 	exports.default = MainView;
 
 /***/ },
-/* 307 */
+/* 310 */
 /***/ function(module, exports) {
 
 	/*$AMPERSAND_VERSION*/
@@ -23630,7 +23823,7 @@
 
 
 /***/ },
-/* 308 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -24118,7 +24311,7 @@
 	//# sourceMappingURL=hammer.min.js.map
 
 /***/ },
-/* 309 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -24301,7 +24494,7 @@
 			return (_gsScope.GreenSockGlobals || _gsScope)[name];
 		};
 		if (true) { //AMD
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(310)], __WEBPACK_AMD_DEFINE_FACTORY__ = (getGlobal), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(313)], __WEBPACK_AMD_DEFINE_FACTORY__ = (getGlobal), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else if (typeof(module) !== "undefined" && module.exports) { //node
 			require("../TweenLite.js");
 			module.exports = getGlobal();
@@ -24310,7 +24503,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 310 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -24420,7 +24613,7 @@
 							if (global) {
 								_globals[n] = _exports[n] = cl; //provides a way to avoid global namespace pollution. By default, the main classes like TweenLite, Power1, Strong, etc. are added to window unless a GreenSockGlobals is defined. So if you want to have things added to a custom object instead, just do something like window.GreenSockGlobals = {} before loading any GreenSock files. You can even set up an alias like window.GreenSockGlobals = windows.gs = {} so that you can access everything like gs.TweenLite. Also remember that ALL classes are added to the window.com.greensock object (in their respective packages, like com.greensock.easing.Power1, com.greensock.TweenLite, etc.)
 								hasModule = (typeof(module) !== "undefined" && module.exports);
-								if (!hasModule && "function" === "function" && __webpack_require__(311)){ //AMD
+								if (!hasModule && "function" === "function" && __webpack_require__(314)){ //AMD
 									!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() { return cl; }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 								} else if (hasModule){ //node
 									if (ns === moduleName) {
@@ -26234,7 +26427,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 311 */
+/* 314 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -26242,7 +26435,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 312 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32234,7 +32427,7 @@
 							if (global) {
 								_globals[n] = _exports[n] = cl; //provides a way to avoid global namespace pollution. By default, the main classes like TweenLite, Power1, Strong, etc. are added to window unless a GreenSockGlobals is defined. So if you want to have things added to a custom object instead, just do something like window.GreenSockGlobals = {} before loading any GreenSock files. You can even set up an alias like window.GreenSockGlobals = windows.gs = {} so that you can access everything like gs.TweenLite. Also remember that ALL classes are added to the window.com.greensock object (in their respective packages, like com.greensock.easing.Power1, com.greensock.TweenLite, etc.)
 								hasModule = (typeof(module) !== "undefined" && module.exports);
-								if (!hasModule && "function" === "function" && __webpack_require__(311)){ //AMD
+								if (!hasModule && "function" === "function" && __webpack_require__(314)){ //AMD
 									!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() { return cl; }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 								} else if (hasModule){ //node
 									if (ns === moduleName) {
@@ -34048,7 +34241,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 313 */
+/* 316 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -34164,7 +34357,7 @@
 	}(window, document);
 
 /***/ },
-/* 314 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {"use strict";
@@ -34394,200 +34587,6 @@
 	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)(module)))
-
-/***/ },
-/* 315 */,
-/* 316 */,
-/* 317 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _base = __webpack_require__(319);
-	
-	var _base2 = _interopRequireDefault(_base);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var YoutubePlayer = _base2.default.extend({
-		props: {
-			id: ['string', true, ''],
-			player: ['object', true, function () {
-				return {};
-			}],
-			active: ['boolean', true, false],
-			ready: ['boolean', true, false],
-			isscrollable: ['boolean', true, false]
-		},
-		events: {},
-	
-		render: function render() {
-			this.cacheElements({
-				ratio: '.Videobox__background'
-			});
-	
-			// INSERT YOUTUBE API
-			var tag = document.createElement('script');
-			tag.src = "https://www.youtube.com/iframe_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-			this.on('change:active', this.onActiveChange, this);
-			window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
-			return this;
-		},
-	
-		onYouTubeIframeAPIReady: function onYouTubeIframeAPIReady() {
-			this.player = new YT.Player(this.id, {
-				events: {
-					'onReady': this.onPlayerReady.bind(this),
-					'onStateChange': this.onPlayerStateChange.bind(this)
-				}
-			});
-		},
-	
-		onPlayerReady: function onPlayerReady() {
-			this.ready = true;
-			if (this.active) {
-				this.player.playVideo();
-			}
-		},
-	
-		playVideo: function playVideo() {
-			this.player.playVideo();
-		},
-		pauseVideo: function pauseVideo() {
-			this.player.pauseVideo();
-		},
-		onActiveChange: function onActiveChange(model, value) {
-			console.log("onActiveChange", value);
-			if (!value) this.player.pauseVideo();else {
-				if (this.ready) {
-					this.player.playVideo();
-				}
-			}
-		},
-		onPlayerStateChange: function onPlayerStateChange(event) {
-			console.log("onPlayerStateChange", event);
-		},
-		handleResize: function handleResize() {
-			var newWidth = document.body.clientHeight / 9 * 16,
-			    newHeight = document.body.clientHeight;
-			if (newWidth < document.body.clientWidth) {
-				newWidth = document.body.clientWidth, newHeight = document.body.clientWidth / 16 * 9;
-			}
-			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
-			this.ratio.setAttribute("style", "width:" + newWidth + "px; height:" + newHeight + "px;");
-		}
-	
-	});
-	
-	exports.default = YoutubePlayer;
-
-/***/ },
-/* 318 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _base = __webpack_require__(319);
-	
-	var _base2 = _interopRequireDefault(_base);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Filtergrid = _base2.default.extend({
-		props: {
-			id: ['string', true, ''],
-			filter: ['object', true, function () {
-				return {};
-			}],
-			isScrollAble: ['boolean', true, true],
-			scrollTimer: ['number', true, 0]
-		},
-	
-		events: {},
-	
-		render: function render() {
-			// this.on('change:active', this.onActiveChange, this);
-			this.cacheElements({
-				gridBody: '.Portfolio__body',
-				gridFilter: '.Portfolio__filter'
-			});
-	
-			return this;
-		},
-		onActiveChange: function onActiveChange(value) {
-			// console.log(value);
-		},
-		handleScrollWheel: function handleScrollWheel(event) {
-			var self = this;
-	
-			if (event.deltaY < 0) {
-				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y + -1 * event.deltaY > 0) {
-					TweenMax.to(self.gridBody, 0.2, { y: 0, overwrite: true });
-				} else {
-					TweenMax.set(this.gridBody, { y: '+=' + -1 * event.deltaY });
-				}
-			} else {
-				var cH = document.body.clientHeight - self.gridFilter.clientHeight,
-				    bH = self.gridBody.clientHeight,
-				    dH = cH - bH;
-	
-				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - event.deltaY < cH - bH) {
-					TweenMax.to(self.gridBody, 0.2, { y: dH, overwrite: true });
-				} else {
-					TweenMax.set(self.gridBody, { y: '-=' + event.deltaY });
-				}
-			}
-		}
-	});
-	
-	exports.default = Filtergrid;
-
-/***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _ampersandView = __webpack_require__(158);
-	
-	var _ampersandView2 = _interopRequireDefault(_ampersandView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Base = _ampersandView2.default.extend({
-		props: {
-			id: ['string', true, ''],
-			active: ['boolean', true, true],
-			isscrollable: ['boolean', true, false]
-		},
-		events: {},
-	
-		render: function render() {
-			this.on('change:active', this.onActiveChange, this);
-		},
-		handleResize: function handleResize() {
-			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
-		},
-		onActiveChange: function onActiveChange(value) {
-			console.log(value);
-		}
-	});
-	
-	exports.default = Base;
 
 /***/ }
 /******/ ]);
