@@ -44,6 +44,9 @@
 				-moz-transform: scale(.75, .75);
 				transform: scale(.75, .75);
 			}
+			.Header__logo {
+				opacity: 0;
+			}
 			.preloader .curtain {
 				background-color: #000;
 				position: absolute;
@@ -68,6 +71,14 @@
 				-webkit-transform: scale(1, 1);
 				-moz-transform: scale(1, 1);
 				transform: scale(1, 1);
+			}
+			.run .Scrollnavigation {
+				right: 0px;
+			}
+			.run .Header__logo {
+				left: 0px;
+				top: 0px;
+				opacity: 1;
 			}
 			.newload {
 				overflow: hidden

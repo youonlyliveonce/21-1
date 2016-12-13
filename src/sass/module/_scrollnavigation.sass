@@ -1,7 +1,10 @@
 .Scrollnavigation
+	display: none
 	+bp(medium)
+		+transition(right, 0.5s, ease-out, 1s)
+		display: block
 		position: absolute
-		right: 0
+		right: -10px
 		top: 0
 		bottom: 0
 		width: 10px

@@ -6,17 +6,25 @@
 	overflow: visible
 	&__body
 	&__logo
+
 		position: absolute
 		top: 0em
-		left: 0em
+		left: 0
 		margin: 0
 		z-index: 112
 		width: 100px
 		height: 100px
 		+bp('medium')
+			+transition(all, 2s, ease-out, 0.75s)
+			opacity: 0
+			// left: -120px
+			// top: -120px
 			width: 120px
 			height: 120px
 		+bp('large')
+			opacity: 0
+			// left: -200px
+			// top: -200px
 			width: 200px
 			height: 200px
 		letter-spacing: 0.1em
