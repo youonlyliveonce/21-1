@@ -19,14 +19,18 @@ let Filtergrid = Base.extend({
 				gridBody: '.Portfolio__body',
 				gridFilter: '.Portfolio__filter',
 		});
-
+		this.on('change:active', this.onActiveChange, this);
 		TweenMax.to('.check-grey', 0.25, {drawSVG:"0% 0%"});
 
 		return this;
 
 	},
-	onActiveChange: function(value){
-		// console.log(value);
+	onActiveChange: function(view, value){
+		if(!value) {
+			TweenMax.to(this.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
+				this.topend = true;
+			}});
+		}
 	},
 	handleClickFilter: function(event){
 		let target = event.delegateTarget,

@@ -20271,13 +20271,17 @@
 				gridBody: '.Portfolio__body',
 				gridFilter: '.Portfolio__filter'
 			});
-	
+			this.on('change:active', this.onActiveChange, this);
 			TweenMax.to('.check-grey', 0.25, { drawSVG: "0% 0%" });
 	
 			return this;
 		},
-		onActiveChange: function onActiveChange(value) {
-			// console.log(value);
+		onActiveChange: function onActiveChange(view, value) {
+			if (!value) {
+				TweenMax.to(this.gridBody, 0.1, { y: 0, overwrite: true, onComplete: function onComplete() {
+						this.topend = true;
+					} });
+			}
 		},
 		handleClickFilter: function handleClickFilter(event) {
 			var target = event.delegateTarget,
