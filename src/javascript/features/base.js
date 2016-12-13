@@ -5,6 +5,7 @@ let Base = View.extend({
 		id: ['string', true, '']
 		,active: ['boolean', true, true]
 		,isscrollable: ['boolean', true, false]
+		,parentview: ['object', true, function(){ return {} }]
 	},
 	events: {},
 

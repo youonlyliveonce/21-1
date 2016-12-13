@@ -24,10 +24,11 @@ module.exports = function(env) {
         'hammerjs': path.resolve('./src/javascript/vendor/hammer.min.js'),
         'ScrollMagic': path.resolve('./node_modules/scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'),
         'animationGsap': path.resolve('./node_modules/scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'),
-        'ScrollToPlugin': path.resolve('./node_modules/gsap/src/uncompressed/plugins/ScrollToPlugin.js'),
-        'TweenMax': path.resolve('./node_modules/gsap/src/uncompressed/TweenMax.js'),
-        'TweenLite': path.resolve('./node_modules/gsap/src/uncompressed/TweenLite.js'),
-        'TimelineMax': path.resolve('./node_modules/gsap/src/uncompressed/TimelineMax.js')
+        'ScrollToPlugin': path.resolve('./src/javascript/vendor/gsap/uncompressed/plugins/ScrollToPlugin.js'),
+        'DrawSVGPlugin': path.resolve('./src/javascript/vendor/gsap/uncompressed/plugins/DrawSVGPlugin.js'),
+        'TweenMax': path.resolve('./src/javascript/vendor/gsap/uncompressed/TweenMax.js'),
+        'TweenLite': path.resolve('./src/javascript/vendor/gsap/uncompressed/TweenLite.js'),
+        'TimelineMax': path.resolve('./src/javascript/vendor/gsap/uncompressed/TimelineMax.js')
       }
     },
     // node: {

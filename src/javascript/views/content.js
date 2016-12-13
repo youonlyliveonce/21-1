@@ -32,17 +32,15 @@ let Content = PageView.extend({
 				switch(element.dataset.view){
 					case "VideoView" :
 						element.getElementsByTagName('iframe')[0].setAttribute('id', 'videobox'+index)
-						view = new YoutubeView({el:element, id:'videobox'+index});
+						view = new YoutubeView({el:element, id:'videobox'+index, parentview:self});
 						view.render();
 						break;
 					case "GridView" :
-						view = new GridView({el:element});
+						view = new GridView({el:element, parentview:self});
 						view.render();
 						break;
 					default:
-
 				}
-
 				self.subViews.push({id:element.getAttribute("id"), view:view});
 				if(index == 0){
 					view.on('change:active', self.onFirstSubViewActiveChange, self);
@@ -61,7 +59,7 @@ let Content = PageView.extend({
 		this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
 		this.hammerSwipe.on('swipedown', this.handleSwipeDown.bind(this));
 
-		this.functionStore = this.handleMouseWheel.bind(this);
+		// this.functionStore = this.handleMouseWheel.bind(this);
 
 	},
 	handleResize: function(){
@@ -73,7 +71,7 @@ let Content = PageView.extend({
 
 	},
 	handleMouseWheel: function(event){
-		this.activeElement.view.handleScrollWheel(event);
+		this.activeElement.view.handleMouseWheel(event);
 	},
 	handleDownClick: function(event){
 		this.nextSlide();
@@ -106,9 +104,8 @@ let Content = PageView.extend({
 	},
 
 	updateActiveView: function(){
-		if(this.activeElement.view){
-			this.activeElement.view.active = false;
-		}
+		let lastActiveElement = this.activeElement;
+
 		if (CM.App._params != {} && CM.App._params.section != null){
 			this.activeElement = this.subViews.filter(element => { return element.id == CM.App._params.section })[0]
 		} else {
@@ -116,11 +113,8 @@ let Content = PageView.extend({
 		}
 		this.activeElement.view.active = true;
 
-
-		if(this.activeElement.view.isScrollAble){
-			document.body.addEventListener('mousewheel', this.functionStore, false);
-		}else{
-			document.body.removeEventListener('mousewheel', this.functionStore, false);
+		if(lastActiveElement.view && (lastActiveElement.view != this.activeElement.view)){
+			lastActiveElement.view.active = false;
 		}
 
 	}

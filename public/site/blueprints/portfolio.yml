@@ -9,12 +9,24 @@ fields:
     label: Title
     type: title
 
-  intro:
-    label: Intro
-    type: textarea
-    size: small
+  videoid:
+    label: Video ID
+    type: text
+    help: Add Youtube ID oder add Images to files
 
-  text:
-    label: Text
+  headline:
+    label: Überschrift
+    type: text
+
+  subline:
+    label: Unterüberschrift
+    type: text
+
+  description:
+    label: Beschreibung
     type: textarea
     size: large
+
+  filtertags:
+    label: Tags
+    type: tags

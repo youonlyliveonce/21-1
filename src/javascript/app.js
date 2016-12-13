@@ -80,11 +80,24 @@ class App {
 					window.attachEvent('onresize', function() {
 							self.mainView.handleResize();
 					});
+					// IE 6/7/8
+					document.body.attachEvent("onmousewheel", function(event){
+						self.mainView.handleMouseWheel(event);
+					});
 				}
 				else if(window.addEventListener) {
 						window.addEventListener('resize', function() {
 							self.mainView.handleResize();
 						}, true);
+						// IE9, Chrome, Safari, Opera
+						document.body.addEventListener('mousewheel', function(event){
+							self.mainView.handleMouseWheel(event);
+						}, false);
+						// Firefox
+						document.body.addEventListener('DOMMouseScroll', function(event){
+							self.mainView.handleMouseWheel(event);
+						}, false);
+
 				}
 
 		}

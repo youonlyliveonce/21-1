@@ -3,7 +3,88 @@
 	position: relative
 	overflow: hidden
 	&__filter
-		height: $header-height*2
+		height: $header-height
+		text-align: center
+		ul
+			padding-top: 100px
+			text-align: center
+			display: inline-block
+			letter-spacing: 0
+			font-size: 0.9em
+			+clearfix
+			li
+				+fontbold
+				color: $color-selection
+				text-transform: uppercase
+				display: block
+				float: left
+				padding: 0
+				margin: 0 1px 0 0
+				cursor: pointer
+				position: relative
+				&:after
+					+transition(all, 0.25s)
+					content: ''
+					background-color: $color-selection
+					position: absolute
+					left: 50%
+					top: 0
+					bottom: 0
+					width: 0
+					height: 100%
+					z-index: 1
+				svg
+					position: absolute
+					left: 15px
+					top: 10px
+					width: 11px
+					display: inline-block
+					z-index: 2
+				span
+					position: relative
+					display: block
+					margin: 0
+					padding: 4px 20px 3px 40px
+					z-index: 3
+					+transition(all, 0.4s)
+				&.active,
+				&:hover
+					color: white
+					&:after
+						left: 0
+						width: 100%
+				&:hover
+					color: $color-selection
+					&:after
+						left: 0%
+						width: 100%
+						opacity: 0.5
+				&:hover.active
+					color: white
+					&:after
+						left: 0%
+						width: 100%
+						opacity: 0.5
+				&.active
+					span
+						&:before
+							background-position: 18px center
+							background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMSBUaW55Ly9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLXRpbnkuZHRkIj48c3ZnIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9InRpbnkiIGlkPSJFYmVuZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjEwLjAxN3B4IiBoZWlnaHQ9IjkuMDIycHgiIHZpZXdCb3g9IjAgMCAxMC4wMTcgOS4wMjIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwb2x5Z29uIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbD0iI0ZGRkZGRiIgcG9pbnRzPSI4LjI0OSwwIDMuNTM1LDUuMTU2IDEuNzY4LDMuMjIzIDAsNS4xNTUgMy41MzUsOS4wMjIgMTAuMDE3LDEuOTM0ICIvPjwvc3ZnPg==)
+
+				&:first-child
+					&.active,
+					&:hover
+						span
+							background-color: white
+					span
+						padding: 4px 20px 3px 20px
+						&:before,
+						&:after,
+							content: none
+						color: black
+						background-color: white
+
+
 	&__body
 		@extend .Section__body--small
 		padding-bottom: $gap-size-medium

@@ -16,7 +16,6 @@ let Router = AmpersandRouter.extend({
 		// Handelt alle Links und übergibt alle Parameter über den Event an die App
 		content: function (lang, params) {
 
-			console.log("params", params);
 			// prüfe ob sich nur der search String ?x=y geändert hat
 			var onlyParamChange = this._checkForParamChange(lang, params);
 
@@ -34,6 +33,7 @@ let Router = AmpersandRouter.extend({
 		},
 
 		subcontent: function (lang, value, params) {
+			console.log("route: subcontent");
 			if(value == null) value = "";
 			value = `${lang}/${value}`;
 

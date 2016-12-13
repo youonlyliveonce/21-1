@@ -7,3 +7,9 @@ pages:
 
 fields:
   title: title
+
+  info:
+    label: Hint
+    type: info
+    text: >
+      Die Inhalte werden durch die einzelnen Unterseiten definiert. 

@@ -6,6 +6,7 @@ import ViewSwitcher from 'ampersand-view-switcher';
 import Hammer from 'hammerjs';
 
 import "ScrollToPlugin";
+import "DrawSVGPlugin";
 import "TweenMax";
 
 var MainView = View.extend({
@@ -13,6 +14,7 @@ var MainView = View.extend({
 		/* Set Properties */
 		props: {
 			isSticky: ['boolean', true, false],
+			isSwiping: ['boolean', true, false],
 			hammerSwipe: ['object', true, function(){ return []; } ],
 		},
 
@@ -165,7 +167,12 @@ var MainView = View.extend({
 			var body = document.body;
 			dom.addClass(body, 'Navigation--show');
 		},
-
+		handleMouseWheel: function(event){
+			event.preventDefault();
+			if(this && this.pageSwitcher.current && !this.isSwiping){
+				this.pageSwitcher.current.handleMouseWheel(event);
+			}
+		},
 		handleResize: function(e){
 			if(this && this.pageSwitcher.current){
 				this.pageSwitcher.current.handleResize();
@@ -208,10 +215,11 @@ var MainView = View.extend({
 				if (CM.App._params != {} && CM.App._params.section != null){
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
+						self.isSwiping = true;
 						self.pageSwitcher.current.updateActiveView();
 						self.updateActiveNav();
-						TweenMax.to(this.main, 1.2, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
-
+						TweenMax.to(this.main, 0.85, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+							self.isSwiping = false;
 						}});
 				}
 		},
