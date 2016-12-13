@@ -21,10 +21,10 @@ let Base = View.extend({
 	handleMouseWheel: function(event){
 		let e = window.event || e || e.originalEvent;
 		let value = e.wheelDelta || -e.deltaY || -e.detail;
-		let delta = Math.max(-1, Math.min(1, value));
-		if(delta == -1){
+		let delta = Math.max(-20, Math.min(20, value));
+		if(delta < -10){
 			this.parentview.nextSlide()
-		} else {
+		} else if(delta > 10) {
 			this.parentview.previousSlide()
 		}
 	}

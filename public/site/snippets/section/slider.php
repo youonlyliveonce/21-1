@@ -3,17 +3,17 @@
 ?>
 
 <div class="Slider [ Element ]" id="<?php echo $section->slug(); ?>"  data-view="SliderView">
-	<div class="Slider__body">
 		<div class="swiper-container">
 				<div class="swiper-wrapper">
 				<?php foreach($slides as $slide): ?>
 					<div class="swiper-slide">
-						<img src="<?= $slide->background()->url(); ?>" alt="<?= $slide->title(); ?>">
+						<div class="Slider__background"  style="background-image:url(<?= $slide->background()->toFile()->url(); ?>)"> </div>
 					</div>
 				<?php endforeach; ?>
 				</div>
-				<div class="swiper-button-next"></div>
-				<div class="swiper-button-prev"></div>
+
 			</div>
-	</div>
+		<?php snippet('right') ?>
+		<?php snippet('left') ?>
+		<?php snippet('down') ?>
 </div>

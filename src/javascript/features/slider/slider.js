@@ -8,16 +8,18 @@ let Slider = Base.extend({
 		,parentview: ['object', true, function(){ return {} }]
 		,swiper: ['object', true, function(){ return {} }]
 		,settings: ['object', true, function(){ return {
-						nextButton: '.swiper-button-next',
-						prevButton: '.swiper-button-prev',
-						spaceBetween: 0,
-						slidesPerView: 1
+						speed: 1200,
+						effect: 'fade',
+						loop: true
 					}
 				}]
 
 	},
 
-	events: { },
+	events: {
+		'click .Button--right':'handleRightClick',
+		'click .Button--left':'handleLeftClick'
+	},
 
 	render: function(){
 		this.cacheElements({ });
@@ -30,14 +32,20 @@ let Slider = Base.extend({
 
 	},
 	handleResize: function(){
-		// var newWidth = document.body.clientHeight/9*16,
-		// 		newHeight = document.body.clientHeight;
-		// if(newWidth < document.body.clientWidth) {
-		// 	newWidth = document.body.clientWidth,
-		// 	newHeight = document.body.clientWidth/16*9;
-		// }
-		// this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
+		var newWidth = document.body.clientHeight/9*16,
+				newHeight = document.body.clientHeight;
+		if(newWidth < document.body.clientWidth) {
+			newWidth = document.body.clientWidth,
+			newHeight = document.body.clientWidth/16*9;
+		}
+		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
 		// this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
+	},
+	handleRightClick: function(){
+		this.swiper.slideNext();
+	},
+	handleLeftClick: function(){
+		this.swiper.slidePrev();
 	}
 
 })

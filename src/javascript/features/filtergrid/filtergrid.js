@@ -27,9 +27,9 @@ let Filtergrid = Base.extend({
 	},
 	onActiveChange: function(view, value){
 		if(!value) {
-			TweenMax.to(this.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-				this.topend = true;
-			}});
+			// TweenMax.to(this.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
+			// 	this.topend = true;
+			// }});
 		}
 	},
 	handleClickFilter: function(event){
@@ -66,7 +66,7 @@ let Filtergrid = Base.extend({
 		if(delta < 0){
 			self.bottomend = false;
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y+(-1*delta) > 0){
-					if(self.topend){
+					if(self.topend && delta<-10){
 						self.parentview.previousSlide()
 						self.topend = false
 					}
@@ -87,7 +87,7 @@ let Filtergrid = Base.extend({
 					dH = cH-bH;
 
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta < cH-bH){
-				if(self.bottomend){
+				if(self.bottomend && delta>10){
 					self.parentview.nextSlide()
 					self.bottomend = false;
 				} else {
