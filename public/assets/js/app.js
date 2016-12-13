@@ -7425,6 +7425,10 @@
 	
 	var _filtergrid2 = _interopRequireDefault(_filtergrid);
 	
+	var _slider = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../features/slider/slider\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var _slider2 = _interopRequireDefault(_slider);
+	
 	var _ampersandDom = __webpack_require__(273);
 	
 	var _ampersandDom2 = _interopRequireDefault(_ampersandDom);
@@ -7468,6 +7472,10 @@
 							break;
 						case "GridView":
 							view = new _filtergrid2.default({ el: element, parentview: self });
+							view.render();
+							break;
+						case "SliderView":
+							view = new _slider2.default({ el: element, parentview: self });
 							view.render();
 							break;
 						default:
@@ -20175,17 +20183,6 @@
 			}
 			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
 			this.ratio.setAttribute("style", "width:" + newWidth + "px; height:" + newHeight + "px;");
-		},
-		handleMouseWheel: function handleMouseWheel(event) {
-			event.preventDefault();
-			var e = window.event || e || e.originalEvent;
-			var value = e.wheelDelta || -e.deltaY || -e.detail;
-			var delta = Math.max(-1, Math.min(1, value));
-			if (delta == -1) {
-				this.parentview.nextSlide();
-			} else {
-				this.parentview.previousSlide();
-			}
 		}
 	
 	});
@@ -20227,6 +20224,16 @@
 		},
 		onActiveChange: function onActiveChange(value) {
 			console.log(value);
+		},
+		handleMouseWheel: function handleMouseWheel(event) {
+			var e = window.event || e || e.originalEvent;
+			var value = e.wheelDelta || -e.deltaY || -e.detail;
+			var delta = Math.max(-1, Math.min(1, value));
+			if (delta == -1) {
+				this.parentview.nextSlide();
+			} else {
+				this.parentview.previousSlide();
+			}
 		}
 	});
 	
@@ -22258,7 +22265,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(308);
+	    var vertx = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"vertx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -23468,12 +23475,7 @@
 
 
 /***/ },
-/* 308 */
-/***/ function(module, exports) {
-
-	/* (ignored) */
-
-/***/ },
+/* 308 */,
 /* 309 */
 /***/ function(module, exports, __webpack_require__) {
 

@@ -1,7 +1,7 @@
 {
 	"root": {
-		"domain": "http://21-1.de",
-		"appName": "21-1",
+		"domain": "http://24-1.de",
+		"appName": "24-1",
 		"appDescription": "-",
 		"src": "./src",
 		"dest": "./public/assets",
@@ -10,7 +10,7 @@
 
 	"tasks": {
 		"browserSync": {
-			"proxy": "21-1.dev"
+			"proxy": "24-1.dev"
 		},
 
 		"js": {

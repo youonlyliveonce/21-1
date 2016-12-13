@@ -17,6 +17,16 @@ let Base = View.extend({
 	},
 	onActiveChange: function(value){
 		console.log(value)
+	},
+	handleMouseWheel: function(event){
+		let e = window.event || e || e.originalEvent;
+		let value = e.wheelDelta || -e.deltaY || -e.detail;
+		let delta = Math.max(-1, Math.min(1, value));
+		if(delta == -1){
+			this.parentview.nextSlide()
+		} else {
+			this.parentview.previousSlide()
+		}
 	}
 })
 

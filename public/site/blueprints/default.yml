@@ -4,6 +4,7 @@ pages:
   template:
     - section_videobox
     - section_portfolio
+    - section_slider
 
 fields:
   title: title
@@ -12,4 +13,4 @@ fields:
     label: Hint
     type: info
     text: >
-      Die Inhalte werden durch die einzelnen Unterseiten definiert. 
+      Die Inhalte werden durch die einzelnen Unterseiten definiert.

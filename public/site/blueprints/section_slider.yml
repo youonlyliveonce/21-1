@@ -1,0 +1,23 @@
+title: Section Slider
+
+pages: false
+
+fields:
+  title: title
+
+  section: section
+  slider:
+    label: Slideelemente
+    type: structure
+    modalsize: large
+    required: true
+    entry: >
+      <u>Titel</u> : {{title}}<br/>
+      <u>Image</u> : {{background}}<br/>
+    fields:
+      title:
+        label: Titel
+        type: text
+      background:
+        label: Bild
+        type: image

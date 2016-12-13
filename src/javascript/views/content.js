@@ -2,6 +2,7 @@ import PageView from './base';
 import View from 'ampersand-view';
 import YoutubeView from '../features/youtube/youtube';
 import GridView from '../features/filtergrid/filtergrid';
+import SliderView from '../features/slider/slider';
 import dom from 'ampersand-dom';
 
 let Content = PageView.extend({
@@ -37,6 +38,10 @@ let Content = PageView.extend({
 						break;
 					case "GridView" :
 						view = new GridView({el:element, parentview:self});
+						view.render();
+						break;
+					case "SliderView" :
+						view = new SliderView({el:element, parentview:self});
 						view.render();
 						break;
 					default:

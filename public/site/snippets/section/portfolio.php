@@ -1,7 +1,7 @@
 <?php
 	$filtertags = $section->children()->pluck('filtertags', ',', true);
 ?>
-<div class="Portfolio [ Element ]" id="S<?php echo $section->hash(); ?>" data-view="GridView">
+<div class="Portfolio [ Element ]" id="<?php echo $section->slug(); ?>" data-view="GridView">
 		<div class="Portfolio__filter">
 			<ul>
 				<li data-filter="all"><span>FILTER</span></li>

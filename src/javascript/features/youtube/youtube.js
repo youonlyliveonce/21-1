@@ -68,17 +68,6 @@ let YoutubePlayer = Base.extend({
 		}
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
 		this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
-	},
-	handleMouseWheel: function(event){
-		event.preventDefault();
-		let e = window.event || e || e.originalEvent;
-		let value = e.wheelDelta || -e.deltaY || -e.detail;
-		let delta = Math.max(-1, Math.min(1, value));
-		if(delta == -1){
-			this.parentview.nextSlide()
-		} else {
-			this.parentview.previousSlide()
-		}
 	}
 
 });
