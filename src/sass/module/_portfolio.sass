@@ -88,14 +88,50 @@
 	&__body
 		@extend .Section__body--small
 		padding-bottom: $gap-size-medium
+		&.Animation-VFX-3D
+			.Portfolio__item.Animation-VFX-3D
+				opacity: 1
+				>div
+					left: 5px
+					top: 5px
+					right: 5px
+					bottom: 5px
+		&.Film
+			.Portfolio__item.Film
+				opacity: 1
+				>div
+					left: 5px
+					top: 5px
+					right: 5px
+					bottom: 5px
+		&.Interactive-Design
+			.Portfolio__item.Interactive-Design
+				opacity: 1
+				>div
+					left: 5px
+					top: 5px
+					right: 5px
+					bottom: 5px
+		&.Concept
+			.Portfolio__item.Concept
+				opacity: 1
+				>div
+					left: 5px
+					top: 5px
+					right: 5px
+					bottom: 5px
+
 	&__item
 		position: relative
+		opacity: 0.1
+		+transition(opacity, 0.3s)
 		>div
 			position: absolute
-			left: 5px
-			top: 5px
-			right: 5px
-			bottom: 5px
+			left: 50px
+			top: 50px
+			right: 50px
+			bottom: 50px
+			+transition(all, 0.75s)
 			background-color: rgba(255,255,255,0.25)
 		+bp(medium)
 			float: left

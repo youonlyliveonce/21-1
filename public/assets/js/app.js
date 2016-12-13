@@ -20282,12 +20282,16 @@
 		handleClickFilter: function handleClickFilter(event) {
 			var target = event.delegateTarget,
 			    whiteSVGs = event.delegateTarget.getElementsByClassName('check-white'),
-			    greySVGs = event.delegateTarget.getElementsByClassName('check-grey');
-			target.classList.toggle('active');
-			if (target.classList.contains('active')) {
-				this.showWhiteArrow(whiteSVGs, greySVGs);
-			} else {
-				this.showGreyArrow(whiteSVGs, greySVGs);
+			    greySVGs = event.delegateTarget.getElementsByClassName('check-grey'),
+			    filter = event.delegateTarget.dataset.filter;
+			if (filter == "all") {} else {
+				this.gridBody.classList.toggle(filter);
+				target.classList.toggle('active');
+				if (target.classList.contains('active')) {
+					this.showWhiteArrow(whiteSVGs, greySVGs);
+				} else {
+					this.showGreyArrow(whiteSVGs, greySVGs);
+				}
 			}
 		},
 		showGreyArrow: function showGreyArrow(white, grey) {
@@ -20299,8 +20303,6 @@
 			TweenMax.to(grey[0], 0.25, { drawSVG: "0% 0%" });
 		},
 		handleMouseWheel: function handleMouseWheel(event) {
-			event.preventDefault();
-	
 			var e = window.event || e || e.originalEvent;
 			var delta = e.wheelDelta || e.deltaY || e.detail;
 			delta = -1 * delta;
@@ -20316,7 +20318,7 @@
 					if (self.gridBody._gsTransform.y == 0) {
 						self.topend = true;
 					} else {
-						TweenMax.to(self.gridBody, 0.2, { y: 0, overwrite: true, onComplete: function onComplete() {
+						TweenMax.to(self.gridBody, 0.1, { y: 0, overwrite: true, onComplete: function onComplete() {
 								self.topend = true;
 							} });
 					}
@@ -20332,9 +20334,11 @@
 				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta < cH - bH) {
 					if (self.bottomend) {
 						self.parentview.nextSlide();
+						self.bottomend = false;
 					} else {
-						self.bottomend = true;
-						TweenMax.to(self.gridBody, 0.2, { y: dH, overwrite: true });
+						TweenMax.to(self.gridBody, 0.1, { y: dH, overwrite: true, onComplete: function onComplete() {
+								self.bottomend = true;
+							} });
 					}
 				} else {
 					TweenMax.set(self.gridBody, { y: '-=' + delta });

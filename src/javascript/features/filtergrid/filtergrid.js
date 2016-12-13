@@ -31,12 +31,18 @@ let Filtergrid = Base.extend({
 	handleClickFilter: function(event){
 		let target = event.delegateTarget,
 				whiteSVGs = event.delegateTarget.getElementsByClassName('check-white'),
-				greySVGs = event.delegateTarget.getElementsByClassName('check-grey');
-		target.classList.toggle('active');
-		if(target.classList.contains('active')){
-			this.showWhiteArrow(whiteSVGs, greySVGs);
+				greySVGs = event.delegateTarget.getElementsByClassName('check-grey'),
+				filter = event.delegateTarget.dataset.filter;
+		if(filter == "all"){
+
 		} else {
-			this.showGreyArrow(whiteSVGs, greySVGs);
+			this.gridBody.classList.toggle(filter);
+			target.classList.toggle('active');
+			if(target.classList.contains('active')){
+				this.showWhiteArrow(whiteSVGs, greySVGs);
+			} else {
+				this.showGreyArrow(whiteSVGs, greySVGs);
+			}
 		}
 	},
 	showGreyArrow: function(white, grey){
@@ -48,8 +54,6 @@ let Filtergrid = Base.extend({
 		TweenMax.to(grey[0], 0.25, {drawSVG:"0% 0%"});
 	},
 	handleMouseWheel: function(event){
-		event.preventDefault();
-
 		let e = window.event || e || e.originalEvent;
 		let delta = e.wheelDelta || e.deltaY || e.detail;
 				delta = -1*delta;
@@ -65,7 +69,7 @@ let Filtergrid = Base.extend({
 					if(self.gridBody._gsTransform.y == 0){
 						self.topend = true;
 					} else {
-						TweenMax.to(self.gridBody, 0.2, {y:0, overwrite:true, onComplete:function(){
+						TweenMax.to(self.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
 							self.topend = true;
 						}});
 					}
@@ -81,9 +85,11 @@ let Filtergrid = Base.extend({
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta < cH-bH){
 				if(self.bottomend){
 					self.parentview.nextSlide()
+					self.bottomend = false;
 				} else {
-					self.bottomend = true;
-					TweenMax.to(self.gridBody, 0.2, {y:dH, overwrite:true});
+					TweenMax.to(self.gridBody, 0.1, {y:dH, overwrite:true, onComplete:function(){
+							self.bottomend = true;
+					}});
 				}
 			} else {
 				TweenMax.set(self.gridBody, {y:`-=${delta}`});
