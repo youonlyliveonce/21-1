@@ -16,7 +16,7 @@
 			</ul>
 		</div>
 		<div class="Portfolio__body [ Film Interactive-Design Concept Animation-VFX-3D ]">
-			<div class="Portfolio__item [ Film ]">
+			<div class="Portfolio__item [ Film ]" style="background-image: url('/assets/pic1.jpg')">
 				<div></div>
 			</div>
 			<div class="Portfolio__item Portfolio__item--small [ Interactive-Design ]">
