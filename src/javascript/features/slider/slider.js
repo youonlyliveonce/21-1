@@ -11,8 +11,8 @@ let Slider = Base.extend({
 		,layer: ['array', true, function(){ return [] }]
 		,activelayer: ['object', true, function(){ return {} }]
 		,settings: ['object', true, function(){ return {
-						speed: 1200,
-						effect: 'fade',
+						speed: 600,
+						// effect: 'fade',
 						loop: true
 					}
 		}]
@@ -53,8 +53,12 @@ let Slider = Base.extend({
 	},
 	gfxIn: function(){
 		this.activelayer.classList.add('active');
+		// this.gfxLetterIn(this.activelayer);
 		this.gfxLinesIn(this.activelayer);
 	},
+	// gfxLetterIn: function(node){
+	// 	let letters = node.getElementsByClassName('letter');
+	// },
 	gfxLinesIn: function(node){
 		let lines = node.getElementsByTagName('line');
 		TweenMax.set(lines, {drawSVG:"0% 0%"});

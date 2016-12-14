@@ -10,9 +10,9 @@
 					<?php $subtitle = str_split($slide->subtitle()); ?>
 					<?php $description = str_split($slide->description()); ?>
 					<div>
-						<h1><?php foreach($title as $item): ?><span><span><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h1>
-						<h2><?php foreach($subtitle as $item): ?><span><span><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h2>
-						<h3><?php foreach($description as $item): ?><span><span><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h3>
+						<h1><?php foreach($title as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h1>
+						<h2><?php foreach($subtitle as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h2>
+						<h3><?php foreach($description as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h3>
 						<?= $slide->svg(); ?>
 					</div>
 				<?php endforeach; ?>

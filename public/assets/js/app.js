@@ -20568,8 +20568,8 @@
 			}],
 			settings: ['object', true, function () {
 				return {
-					speed: 1200,
-					effect: 'fade',
+					speed: 600,
+					// effect: 'fade',
 					loop: true
 				};
 			}]
@@ -20610,8 +20610,12 @@
 		},
 		gfxIn: function gfxIn() {
 			this.activelayer.classList.add('active');
+			// this.gfxLetterIn(this.activelayer);
 			this.gfxLinesIn(this.activelayer);
 		},
+		// gfxLetterIn: function(node){
+		// 	let letters = node.getElementsByClassName('letter');
+		// },
 		gfxLinesIn: function gfxLinesIn(node) {
 			var lines = node.getElementsByTagName('line');
 			TweenMax.set(lines, { drawSVG: "0% 0%" });
