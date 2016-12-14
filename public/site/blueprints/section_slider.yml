@@ -13,11 +13,22 @@ fields:
     required: true
     entry: >
       <u>Titel</u> : {{title}}<br/>
+      <u>Subtitel</u> : {{subtitle}}<br/>
+      <u>Beschreibung</u> : {{description}}<br/>
       <u>Image</u> : {{background}}<br/>
     fields:
       title:
         label: Titel
         type: text
+      subtitle:
+        label: Subtitel
+        type: text
+      description:
+        label: Beschreibung
+        type: text
+      svg:
+        label: svg
+        type: textarea
       background:
         label: Bild
         type: image

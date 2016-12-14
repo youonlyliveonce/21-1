@@ -3,7 +3,7 @@ import _ from 'underscore';
 import View from 'ampersand-view';
 import dom from 'ampersand-dom';
 import ViewSwitcher from 'ampersand-view-switcher';
-import Hammer from 'hammerjs';
+// import Hammer from 'hammerjs';
 
 import "ScrollToPlugin";
 import "DrawSVGPlugin";
@@ -218,7 +218,7 @@ var MainView = View.extend({
 						self.isSwiping = true;
 						self.pageSwitcher.current.updateActiveView();
 						self.updateActiveNav();
-						TweenMax.to(this.main, 0.85, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+						TweenMax.to(this.main, 0.55, {y:-1*id.offsetTop, overwrite:true, ease:Sine.easeOut, onComplete:function(){
 							self.isSwiping = false;
 						}});
 				}
