@@ -1,5 +1,5 @@
 <div class="Header__logo">
-	<a href="/<?= $site->language() ?>/?section=S<?= $site->page('home')->children()->first()->hash(); ?>">
+	<a href="/<?= $site->language() ?>/?section=<?= $site->page('home')->children()->first()->id(); ?>">
 		<svg version="1.1" baseProfile="tiny" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 			 x="0px" y="0px" viewBox="0 0 453.543 453.543" overflow="auto" xml:space="preserve">
 		<rect width="453.543" height="453.543"/>

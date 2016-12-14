@@ -4,6 +4,7 @@ let Filtergrid = Base.extend({
 	props: {
 		id: ['string', true, '']
 		,filter: ['object', true, function(){ return {}; }]
+		,filteritems: ['array', true, function(){ return []; }]
 		,isscrollable: ['boolean', true, true]
 		,parentview: ['object', true, function(){ return {} }]
 		,topend: ['boolean', true, true]
@@ -17,8 +18,9 @@ let Filtergrid = Base.extend({
 	render: function(){
 		this.cacheElements({
 				gridBody: '.Portfolio__body',
-				gridFilter: '.Portfolio__filter',
+				gridFilter: '.Portfolio__filter'
 		});
+		this.filteritems = this.queryAll('.Portfolio__filter li');
 		this.on('change:active', this.onActiveChange, this);
 		TweenMax.to('.check-grey', 0.25, {drawSVG:"0% 0%"});
 
@@ -38,7 +40,14 @@ let Filtergrid = Base.extend({
 				greySVGs = event.delegateTarget.getElementsByClassName('check-grey'),
 				filter = event.delegateTarget.dataset.filter;
 		if(filter == "all"){
-
+			for(let i=0; i<this.filteritems.length; i++){
+				this.filteritems[i].classList.remove('active');
+				this.filteritems[i].classList.add('active');
+				if(this.filteritems[i].dataset.filter != "all"){
+					this.gridBody.classList.add(this.filteritems[i].dataset.filter);
+					this.showWhiteArrow(this.filteritems[i].getElementsByClassName('check-white'), this.filteritems[i].getElementsByClassName('check-grey'));
+				}
+			}
 		} else {
 			this.gridBody.classList.toggle(filter);
 			target.classList.toggle('active');
