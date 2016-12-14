@@ -15,8 +15,8 @@
     "production": "gulp production",
     "media": "gulp media",
     "dom": "gulp dom",
-    "init": "git-ftp init --syncroot public -u YYY  -P - ftp://cadman2.timmeserver.de/web/",
-    "push": "git-ftp push --syncroot public -u YYY  -P - ftp://cadman2.timmeserver.de/web/"
+		"init": "git-ftp init --syncroot public -u matteng_de_9  -P - ftp://kontentftp.matteng.de/24-1/htdocs",
+    "push": "git-ftp push --syncroot public -u matteng_de_9  -P - ftp://kontentftp.matteng.de/24-1/htdocs",
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
