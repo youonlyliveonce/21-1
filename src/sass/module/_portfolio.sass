@@ -90,7 +90,17 @@
 		padding-bottom: $gap-size-large*2
 		&.Animation-VFX-3D
 			.Portfolio__item.Animation-VFX-3D
-				opacity: 1
+				h2
+					opacity: 1
+				span
+					opacity: 0.4
+				&:hover
+					h2
+						padding-left: $gap-size/2
+						&:after
+							+transform(translateX(0%))
+					span
+						opacity: 0
 				>div
 					left: 5px
 					top: 5px
@@ -98,7 +108,17 @@
 					bottom: 5px
 		&.Film
 			.Portfolio__item.Film
-				opacity: 1
+				h2
+					opacity: 1
+				span
+					opacity: 0.4
+				&:hover
+					h2
+						padding-left: $gap-size/2
+						&:after
+							+transform(translateX(0%))
+					span
+						opacity: 0
 				>div
 					left: 5px
 					top: 5px
@@ -106,7 +126,17 @@
 					bottom: 5px
 		&.Interactive-Design
 			.Portfolio__item.Interactive-Design
-				opacity: 1
+				h2
+					opacity: 1
+				span
+					opacity: 0.4
+				&:hover
+					h2
+						padding-left: $gap-size/2
+						&:after
+							+transform(translateX(0%))
+					span
+						opacity: 0
 				>div
 					left: 5px
 					top: 5px
@@ -114,7 +144,17 @@
 					bottom: 5px
 		&.Concept
 			.Portfolio__item.Concept
-				opacity: 1
+				h2
+					opacity: 1
+				span
+					opacity: 0.4
+				&:hover
+					h2
+						padding-left: $gap-size/2
+						&:after
+							+transform(translateX(0%))
+					span
+						opacity: 0
 				>div
 					left: 5px
 					top: 5px
@@ -122,17 +162,60 @@
 					bottom: 5px
 
 	&__item
+		cursor: pointer
 		position: relative
-		opacity: 0.1
+
+		// opacity: 0.1
 		+transition(opacity, 0.3s)
+
+		h2
+			opacity: 0
+			position: relative
+			z-index: 2
+			color: white
+			margin-top: 30px
+			max-width: 100%
+			+transition(padding, 0.75s)
+			+fontbold
+			font-size: 3em
+			line-height: 1
+			&:after
+				content: ''
+				position: absolute
+				left: 0
+				top: -20px
+				width: 30px
+				height: 40px
+				+transform(translateX(-100%))
+				+transition(all, 0.35s, ease-out, 0.3s)
+				background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iRWJlbmVfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyNTUuMTIxIDI1NS4xMjEiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI1NS4xMjEgMjU1LjEyMSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTg2LjI2MiwxMjcuNDE1aDcyLjgxbC0xNy4zNzMsMTcuNzM2Yy0xLjUyMSwxLjU1NC0xLjUyMSw0LjA3MSwwLDUuNjI1YzEuNTIxLDEuNTU0LDMuOTg3LDEuNTU0LDUuNTA4LDBsMjQuMDI1LTI0LjUyNWMxLjUyMy0xLjU1NCwxLjUyMy00LjA3LDAtNS42MjVsLTI0LjAyNS0yNC41MjVjLTAuNzU4LTAuNzc3LTEuNzU4LTEuMTY0LTIuNzU0LTEuMTY0Yy0wLjk5OCwwLTEuOTk0LDAuMzg3LTIuNzU0LDEuMTY0Yy0xLjUyMSwxLjU1NS0xLjUyMSw0LjA3MSwwLDUuNjI1bDE3LjM3MywxNy43MzZoLTcyLjgxYy0yLjE1MSwwLTMuODk1LDEuNzgyLTMuODk1LDMuOTc4Uzg0LjExMSwxMjcuNDE1LDg2LjI2MiwxMjcuNDE1eiIvPjwvc3ZnPg==)
+				background-position: 0 0
+				background-size: contain
+				background-repeat: no-repeat
+				// background-color: black
+
+		span
+			opacity: 0.95
+			position: absolute
+			z-index: 1
+			left: 0
+			top: 0
+			bottom: 0
+			right: 0
+			margin: -1px
+			background-color: $color-background
+			+transition(all, 0.3s)
 		>div
+			overflow: hidden
 			position: absolute
 			left: 50px
 			top: 50px
 			right: 50px
 			bottom: 50px
 			+transition(all, 0.75s)
-			background-color: rgba(255,255,255,0.25)
+			// background-color: rgba(255,255,255,0.25)
+			background-position: center
+			background-size: cover
 		+bp(medium)
 			float: left
 		width: 100%
@@ -147,7 +230,11 @@
 			+bp(medium)
 				width: 50%
 				padding-bottom: +unit(4,16)
+				h2
+					font-size: 1.5em
 		&--tiny
 			+bp(medium)
 				width: 25%
 				padding-bottom: +unit(4,16)
+				h2
+					font-size: 1.3em

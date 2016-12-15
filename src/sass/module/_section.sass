@@ -1,15 +1,17 @@
 .Section
-  &__body
-    position: relative
-    max-width: $max-size
-    padding: 0 $gap-size-large
-    margin: 0 auto
-    +clearfix()
-  &__body--small
-    position: relative
-    max-width: $max-size - 420
-    padding: 0 $gap-size
-    margin: 0 auto
-    +clearfix()
-    +bp('large')
-      padding: 0 4*$gap-size-large
+	&__body
+		position: relative
+		max-width: $max-size
+		padding: 0 $gap-size-large
+		margin: 0 auto
+		+clearfix()
+	&__body--small
+		position: relative
+		max-width: $max-size - 420
+		padding: 0 $gap-size
+		margin: 0 auto
+		+clearfix()
+		+bp('large')
+			padding: 0 4*$gap-size-large
+		+bp('huge')
+			padding: 0 3*$gap-size-medium
