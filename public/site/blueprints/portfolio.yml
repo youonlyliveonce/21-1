@@ -2,21 +2,52 @@ title: Portfolio
 
 pages: false
 
-files: false
+files: true
 
 fields:
   title:
     label: Title
     type: title
+  filtertags:
+    label: Tags
+    type: multiselect
+    required: true
+    options:
+      Concept: Concept
+      Film: Film
+      Animation-VFX-3D: Animation/VFX/3D
+      Interactive-Design: Interactive/Design
+
+  section1:
+    label: Herobereich
+    type: headline
 
   videoid:
     label: Video ID
     type: text
+    width: 1/2
     help: Add Youtube ID oder add Images to files
+
+  slideshow:
+    label: Bildergalerie
+    type: structure
+    width: 1/2
+    help: Select Images from files
+    entry: >
+      <u>Image</u> : {{img}}
+    fields:
+      img:
+        label: Image
+        type: image
+
+  section2:
+    label: Beschreibung
+    type: headline
 
   headline:
     label: Überschrift
     type: text
+    required: true
 
   subline:
     label: Unterüberschrift
@@ -26,7 +57,36 @@ fields:
     label: Beschreibung
     type: textarea
     size: large
+    required: true
 
-  filtertags:
-    label: Tags
-    type: tags
+  section3:
+    label: Moodboard
+    type: headline
+
+  moodboard:
+    label: Bildergalerie
+    type: structure
+    help: Select Images from files, first Image will be full width
+    entry: >
+      <u>Image</u> : {{img}}<br/>
+      <u>Caption</u> : {{caption}}<br/>
+      oder<br/>
+      <u>Headline</u> : {{headline}}<br/>
+      <u>Text</u> : {{copy}}<br/>
+    fields:
+      img:
+        label: Image
+        type: image
+        required: true
+      caption:
+        label: Caption
+        type: text
+      headline:
+        label: Überschrift Textbox
+        type: text
+        help: Nur als Alternative zu einem Bild
+      copy:
+        label: Inhalt Textbox
+        type: textarea
+        size: large
+        help: Nur als Alternative zu einem Bild

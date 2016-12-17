@@ -49,13 +49,28 @@ let Filtergrid = Base.extend({
 				}
 			}
 		} else {
-			this.gridBody.classList.toggle(filter);
-			target.classList.toggle('active');
-			if(target.classList.contains('active')){
-				this.showWhiteArrow(whiteSVGs, greySVGs);
-			} else {
-				this.showGreyArrow(whiteSVGs, greySVGs);
+			/* ISOLATE */
+			for(let i=0; i<this.filteritems.length; i++){
+				this.filteritems[i].classList.remove('active');
+				// this.filteritems[i].classList.add('active');
+				if(this.filteritems[i].dataset.filter != "all" && this.filteritems[i].dataset.filter != filter){
+					this.gridBody.classList.remove(this.filteritems[i].dataset.filter);
+					this.showGreyArrow(this.filteritems[i].getElementsByClassName('check-white'), this.filteritems[i].getElementsByClassName('check-grey'));
+				}
 			}
+			target.classList.add('active');
+			this.showWhiteArrow(whiteSVGs, greySVGs);
+			this.gridBody.classList.add(filter);
+
+
+			/* REDUCE */
+			// this.gridBody.classList.toggle(filter);
+			// target.classList.toggle('active');
+			// if(target.classList.contains('active')){
+			// 	this.showWhiteArrow(whiteSVGs, greySVGs);
+			// } else {
+			// 	this.showGreyArrow(whiteSVGs, greySVGs);
+			// }
 		}
 	},
 	showGreyArrow: function(white, grey){

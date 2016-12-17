@@ -1,4 +1,4 @@
-<div class="Page">
+<div class="Page<?php echo $pageclass; ?>">
 	<header class="Header" role="banner">
 		<?php snippet('logo') ?>
 		<div class="Header__body">

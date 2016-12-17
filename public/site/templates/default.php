@@ -1,6 +1,6 @@
 <?php snippet('head') ?>
 
-<?php snippet('view-start')?>
+<?php snippet('view-start', array('pageclass' => ""))?>
 
 			<?php
 				if($page->isErrorPage()){

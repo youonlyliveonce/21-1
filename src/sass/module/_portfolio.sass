@@ -88,86 +88,26 @@
 	&__body
 		@extend .Section__body--small
 		padding-bottom: $gap-size-large*2
+
 		&.Animation-VFX-3D
 			.Portfolio__item.Animation-VFX-3D
-				h2
-					opacity: 1
-				span
-					opacity: 0.4
-				&:hover
-					h2
-						padding-left: $gap-size/2
-						&:after
-							+transform(translateX(0%))
-					span
-						opacity: 0
-				>div
-					left: 5px
-					top: 5px
-					right: 5px
-					bottom: 5px
+				@extend .Portfolio__item--active
 		&.Film
 			.Portfolio__item.Film
-				h2
-					opacity: 1
-				span
-					opacity: 0.4
-				&:hover
-					h2
-						padding-left: $gap-size/2
-						&:after
-							+transform(translateX(0%))
-					span
-						opacity: 0
-				>div
-					left: 5px
-					top: 5px
-					right: 5px
-					bottom: 5px
+				@extend .Portfolio__item--active
 		&.Interactive-Design
 			.Portfolio__item.Interactive-Design
-				h2
-					opacity: 1
-				span
-					opacity: 0.4
-				&:hover
-					h2
-						padding-left: $gap-size/2
-						&:after
-							+transform(translateX(0%))
-					span
-						opacity: 0
-				>div
-					left: 5px
-					top: 5px
-					right: 5px
-					bottom: 5px
+				@extend .Portfolio__item--active
 		&.Concept
 			.Portfolio__item.Concept
-				h2
-					opacity: 1
-				span
-					opacity: 0.4
-				&:hover
-					h2
-						padding-left: $gap-size/2
-						&:after
-							+transform(translateX(0%))
-					span
-						opacity: 0
-				>div
-					left: 5px
-					top: 5px
-					right: 5px
-					bottom: 5px
+				@extend .Portfolio__item--active
 
 	&__item
 		cursor: pointer
 		position: relative
-
-		// opacity: 0.1
 		+transition(opacity, 0.3s)
-
+		a
+			display: block
 		h2
 			opacity: 0
 			position: relative
@@ -195,7 +135,7 @@
 				// background-color: black
 
 		span
-			opacity: 0.95
+			opacity: 0.75
 			position: absolute
 			z-index: 1
 			left: 0
@@ -205,9 +145,10 @@
 			margin: -1px
 			background-color: $color-background
 			+transition(all, 0.3s)
-		>div
+		>a
 			overflow: hidden
 			position: absolute
+			display: block
 			left: 50px
 			top: 50px
 			right: 50px
@@ -220,6 +161,23 @@
 			float: left
 		width: 100%
 		padding-bottom: +unit(9,16)
+		&--active
+			h2
+				opacity: 1
+			span
+				opacity: 0.4
+			&:hover
+				h2
+					padding-left: $gap-size/2
+					&:after
+						+transform(translateX(0%))
+				span
+					opacity: 0
+			>a
+				left: 5px
+				top: 5px
+				right: 5px
+				bottom: 5px
 		&--right
 			float: right
 		&--medium

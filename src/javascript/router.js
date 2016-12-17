@@ -33,7 +33,6 @@ let Router = AmpersandRouter.extend({
 		},
 
 		subcontent: function (lang, value, params) {
-			console.log("route: subcontent");
 			if(value == null) value = "";
 			value = `${lang}/${value}`;
 

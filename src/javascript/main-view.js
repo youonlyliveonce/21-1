@@ -128,6 +128,8 @@ var MainView = View.extend({
 						});
 				}
 
+				this.page.setAttribute('class', view.model.pageClass);
+
 				// SWICTH THE VIEW
 				this.pageSwitcher.set(view);
 
