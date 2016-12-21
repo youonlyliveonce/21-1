@@ -64,7 +64,7 @@ fields:
     type: headline
 
   moodboard:
-    label: Bildergalerie
+    label: Moodboard
     type: structure
     help: Select Images from files, first Image will be full width
     entry: >

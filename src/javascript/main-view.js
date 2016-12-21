@@ -52,7 +52,7 @@ var MainView = View.extend({
 										oldView.hookBeforeHide();
 										TweenMax.to(oldView.el, 0.4, {opacity:0, onComplete:function(){
 												// scroll to top
-												TweenMax.to(window, 0.3, {scrollTo:{y:0}});
+												// TweenMax.to(window, 0.3, {scrollTo:{y:0}});
 												// cb triggers the show function in ViewSwitcher
 												cb.apply(inSwitcher);
 										}, delay:0.2 });
@@ -62,12 +62,14 @@ var MainView = View.extend({
 
 								// Set newView opacity to 0
 								TweenMax.set(newView.el, {opacity:0});
+								// Handle resize
+								newView.handleResize();
 
 								// Animate newView opacity to 1
 								TweenMax.to(newView.el, 0.8, {opacity:1, onComplete:function(){
-									newView.hookAfterShow();
 									// Scroll to paramter 'section'
 									self.scrollTo();
+									newView.hookAfterShow();
 								}, delay:1.2});
 						}
 				});
@@ -196,17 +198,21 @@ var MainView = View.extend({
 
 			var aTag = e.delegateTarget,
 					self = this,
-					path = aTag.getAttribute("href");
+					path = aTag.getAttribute("href"),
+					params = path.split("?")[1];
+
 
 				var local = aTag.host === window.location.host;
 				if (local && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && aTag.getAttribute("target") !== "_blank") {
 						// no link handling via Browser
 						e.preventDefault();
-						// Route
-						CM.App.navigate(path);
+
 						// Update View without reloading view
-						if (CM.App._params != {} && this.paramArray != {} && CM.App.router.history.location.pathname == e.delegateTarget.pathname ){
+						if (CM.App._params != {} && CM.App.router.history.location.pathname == e.delegateTarget.pathname && CM.App._paramsString == params){
 							this.handleUpdateView();
+						} else {
+							// Route
+							CM.App.navigate(path);
 						}
 						// Close Navigation
 						this.handleClickClose();

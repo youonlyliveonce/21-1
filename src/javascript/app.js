@@ -113,7 +113,8 @@ class App {
 		}
 
 		_setParams (params) {
-			this._params = []
+			this._params = [];
+			this._paramsString = params;
 			if(params != null){
 				let paramlist = params.split('&');
 				for (let i = 0; i < paramlist.length; i++ ) {

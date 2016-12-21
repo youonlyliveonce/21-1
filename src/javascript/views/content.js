@@ -3,6 +3,7 @@ import View from 'ampersand-view';
 import YoutubeView from '../features/youtube/youtube';
 import GridView from '../features/filtergrid/filtergrid';
 import SliderView from '../features/slider/slider';
+import CaseView from '../features/case/case';
 import dom from 'ampersand-dom';
 
 let Content = PageView.extend({
@@ -33,20 +34,25 @@ let Content = PageView.extend({
 				switch(element.dataset.view){
 					case "VideoView" :
 						element.getElementsByTagName('iframe')[0].setAttribute('id', 'videobox'+index)
-						view = new YoutubeView({el:element, id:'videobox'+index, parentview:self});
+						view = new YoutubeView({el:element, id:element.getAttribute('id'), videoid:'videobox'+index, parentview:self});
 						view.render();
 						break;
 					case "GridView" :
-						view = new GridView({el:element, parentview:self});
+						view = new GridView({el:element, id:element.getAttribute('id'), parentview:self});
 						view.render();
 						break;
 					case "SliderView" :
-						view = new SliderView({el:element, parentview:self});
+						view = new SliderView({el:element, id:element.getAttribute('id'), parentview:self});
+						view.render();
+						break;
+					case "CaseView" :
+						view = new CaseView({el:element, id:element.getAttribute('id'), parentview:self});
 						view.render();
 						break;
 					default:
 				}
-				self.subViews.push({id:element.getAttribute("id"), view:view});
+				self.registerSubview(view);
+				self.subViews.push({id:view.id, view:view});
 				if(index == 0){
 					view.on('change:active', self.onFirstSubViewActiveChange, self);
 				}

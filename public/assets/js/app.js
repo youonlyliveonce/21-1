@@ -201,6 +201,7 @@
 					key: '_setParams',
 					value: function _setParams(params) {
 							this._params = [];
+							this._paramsString = params;
 							if (params != null) {
 									var paramlist = params.split('&');
 									for (var i = 0; i < paramlist.length; i++) {
@@ -7561,6 +7562,10 @@
 	
 	var _slider2 = _interopRequireDefault(_slider);
 	
+	var _case = __webpack_require__(320);
+	
+	var _case2 = _interopRequireDefault(_case);
+	
 	var _ampersandDom = __webpack_require__(273);
 	
 	var _ampersandDom2 = _interopRequireDefault(_ampersandDom);
@@ -7599,20 +7604,25 @@
 					switch (element.dataset.view) {
 						case "VideoView":
 							element.getElementsByTagName('iframe')[0].setAttribute('id', 'videobox' + index);
-							view = new _youtube2.default({ el: element, id: 'videobox' + index, parentview: self });
+							view = new _youtube2.default({ el: element, id: element.getAttribute('id'), videoid: 'videobox' + index, parentview: self });
 							view.render();
 							break;
 						case "GridView":
-							view = new _filtergrid2.default({ el: element, parentview: self });
+							view = new _filtergrid2.default({ el: element, id: element.getAttribute('id'), parentview: self });
 							view.render();
 							break;
 						case "SliderView":
-							view = new _slider2.default({ el: element, parentview: self });
+							view = new _slider2.default({ el: element, id: element.getAttribute('id'), parentview: self });
+							view.render();
+							break;
+						case "CaseView":
+							view = new _case2.default({ el: element, id: element.getAttribute('id'), parentview: self });
 							view.render();
 							break;
 						default:
 					}
-					self.subViews.push({ id: element.getAttribute("id"), view: view });
+					self.registerSubview(view);
+					self.subViews.push({ id: view.id, view: view });
 					if (index == 0) {
 						view.on('change:active', self.onFirstSubViewActiveChange, self);
 					}
@@ -20286,6 +20296,7 @@
 	var YoutubePlayer = _base2.default.extend({
 		props: {
 			id: ['string', true, ''],
+			videoid: ['string', true, ''],
 			player: ['object', true, function () {
 				return {};
 			}],
@@ -20299,26 +20310,38 @@
 		events: {},
 	
 		render: function render() {
+			var self = this;
 			this.cacheElements({
 				ratio: '.Videobox__background'
 			});
-			// INSERT YOUTUBE API
-			var tag = document.createElement('script');
-			tag.src = "https://www.youtube.com/iframe_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			if (window.YT === undefined) {
+				window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+				// INSERT YOUTUBE API
+				var tag = document.createElement('script');
+				tag.src = "https://www.youtube.com/iframe_api";
+				tag.id = "youtubeapi";
+				var firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			} else {
+				TweenMax.delayedCall(0.25, function () {
+					self.onYouTubeIframeAPIReady();
+				});
+			}
 			this.on('change:active', this.onActiveChange, this);
-			window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+	
 			return this;
 		},
 	
 		onYouTubeIframeAPIReady: function onYouTubeIframeAPIReady() {
-			this.player = new YT.Player(this.id, {
+			this.player = new YT.Player(this.videoid, {
 				events: {
 					'onReady': this.onPlayerReady.bind(this),
 					'onStateChange': this.onPlayerStateChange.bind(this)
 				}
 			});
+			if (this.player.B) {
+				this.onPlayerReady();
+			};
 		},
 	
 		onPlayerReady: function onPlayerReady() {
@@ -20343,6 +20366,9 @@
 		},
 		onPlayerStateChange: function onPlayerStateChange(event) {
 			console.log("onPlayerStateChange", event);
+		},
+		cleanup: function cleanup() {
+			this.player.destroy();
 		},
 		handleResize: function handleResize() {
 			var newWidth = document.body.clientHeight / 9 * 16,
@@ -20608,10 +20634,15 @@
 		},
 	
 		render: function render() {
+			var self = this;
 			this.cacheElements({});
 			this.on('change:active', this.onActiveChange, this);
-			this.swiper = new Swiper('.swiper-container', this.settings);
-			this.layer = this.queryAll('.Slider__layer div');
+			console.log(self.id);
+			TweenMax.delayedCall(0.15, function () {
+				self.swiper = new Swiper('#' + self.id + ' .swiper-container', self.settings);
+			});
+	
+			this.layer = this.queryAll('#' + this.id + ' .Slider__layer div');
 			return this;
 		},
 		onActiveChange: function onActiveChange(view, value) {
@@ -23873,7 +23904,7 @@
 						oldView.hookBeforeHide();
 						TweenMax.to(oldView.el, 0.4, { opacity: 0, onComplete: function onComplete() {
 								// scroll to top
-								TweenMax.to(window, 0.3, { scrollTo: { y: 0 } });
+								// TweenMax.to(window, 0.3, {scrollTo:{y:0}});
 								// cb triggers the show function in ViewSwitcher
 								cb.apply(inSwitcher);
 							}, delay: 0.2 });
@@ -23883,12 +23914,14 @@
 	
 					// Set newView opacity to 0
 					TweenMax.set(newView.el, { opacity: 0 });
+					// Handle resize
+					newView.handleResize();
 	
 					// Animate newView opacity to 1
 					TweenMax.to(newView.el, 0.8, { opacity: 1, onComplete: function onComplete() {
-							newView.hookAfterShow();
 							// Scroll to paramter 'section'
 							self.scrollTo();
+							newView.hookAfterShow();
 						}, delay: 1.2 });
 				}
 			});
@@ -24010,17 +24043,20 @@
 	
 			var aTag = e.delegateTarget,
 			    self = this,
-			    path = aTag.getAttribute("href");
+			    path = aTag.getAttribute("href"),
+			    params = path.split("?")[1];
 	
 			var local = aTag.host === window.location.host;
 			if (local && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && aTag.getAttribute("target") !== "_blank") {
 				// no link handling via Browser
 				e.preventDefault();
-				// Route
-				CM.App.navigate(path);
+	
 				// Update View without reloading view
-				if (CM.App._params != {} && this.paramArray != {} && CM.App.router.history.location.pathname == e.delegateTarget.pathname) {
+				if (CM.App._params != {} && CM.App.router.history.location.pathname == e.delegateTarget.pathname && CM.App._paramsString == params) {
 					this.handleUpdateView();
+				} else {
+					// Route
+					CM.App.navigate(path);
 				}
 				// Close Navigation
 				this.handleClickClose();
@@ -32877,6 +32913,110 @@
 	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)(module)))
+
+/***/ },
+/* 318 */,
+/* 319 */,
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _base = __webpack_require__(281);
+	
+	var _base2 = _interopRequireDefault(_base);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Case = _base2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			filter: ['object', true, function () {
+				return {};
+			}],
+			filteritems: ['array', true, function () {
+				return [];
+			}],
+			isscrollable: ['boolean', true, true],
+			parentview: ['object', true, function () {
+				return {};
+			}],
+			topend: ['boolean', true, true],
+			bottomend: ['boolean', true, false]
+		},
+	
+		events: {
+			'click .Portfolio__filter ul li': 'handleClickFilter'
+		},
+	
+		render: function render() {
+			this.cacheElements({
+				caseBody: '.Case__body',
+				gridFilter: '.Portfolio__filter'
+			});
+			this.filteritems = this.queryAll('.Portfolio__filter li');
+			this.on('change:active', this.onActiveChange, this);
+			TweenMax.to('.check-grey', 0.25, { drawSVG: "0% 0%" });
+	
+			return this;
+		},
+		onActiveChange: function onActiveChange(view, value) {
+			if (!value) {
+				// TweenMax.to(this.caseBody, 0.1, {y:0, overwrite:true, onComplete:function(){
+				// 	this.topend = true;
+				// }});
+			}
+		},
+		handleMouseWheel: function handleMouseWheel(event) {
+			var e = window.event || e || e.originalEvent;
+			var delta = e.wheelDelta || e.deltaY || e.detail;
+			delta = -1 * delta;
+	
+			var self = this;
+			if (delta < 0) {
+				self.bottomend = false;
+				if (self.caseBody._gsTransform && self.caseBody._gsTransform.y + -1 * delta > 0) {
+					if (self.topend && delta < -10) {
+						// self.parentview.previousSlide()
+						self.topend = false;
+					}
+					if (self.caseBody._gsTransform.y == 0) {
+						self.topend = true;
+					} else {
+						TweenMax.to(self.caseBody, 0.1, { y: 0, overwrite: true, onComplete: function onComplete() {
+								self.topend = true;
+							} });
+					}
+				} else {
+					TweenMax.set(this.caseBody, { y: '+=' + -1 * delta });
+				}
+			} else {
+				self.topend = false;
+				var cH = document.body.clientHeight,
+				    bH = self.caseBody.clientHeight,
+				    dH = cH - bH;
+	
+				if (self.caseBody._gsTransform && self.caseBody._gsTransform.y - delta < cH - bH) {
+					if (self.bottomend && delta > 10) {
+						// self.parentview.nextSlide()
+						self.bottomend = false;
+					} else {
+						TweenMax.to(self.caseBody, 0.1, { y: dH, overwrite: true, onComplete: function onComplete() {
+								self.bottomend = true;
+							} });
+					}
+				} else {
+					TweenMax.set(self.caseBody, { y: '-=' + delta });
+				}
+			}
+		}
+	});
+	
+	exports.default = Case;
 
 /***/ }
 /******/ ]);

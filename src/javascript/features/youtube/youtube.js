@@ -3,6 +3,7 @@ import Base from '../base';
 let YoutubePlayer = Base.extend({
 	props: {
 		id: ['string', true, '']
+		,videoid: ['string', true, '']
 		,player: ['object', true, function(){ return {}; }]
 		,active: ['boolean', true, false]
 		,ready: ['boolean', true, false]
@@ -12,26 +13,38 @@ let YoutubePlayer = Base.extend({
 	events: {},
 
 	render: function(){
+		let self = this;
 		this.cacheElements({
 			ratio : '.Videobox__background'
 		});
-		// INSERT YOUTUBE API
-		let tag = document.createElement('script');
-				tag.src = "https://www.youtube.com/iframe_api";
-		let firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		if(window.YT === undefined){
+			window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+			// INSERT YOUTUBE API
+			let tag = document.createElement('script');
+					tag.src = "https://www.youtube.com/iframe_api";
+					tag.id = "youtubeapi";
+			let firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		} else {
+			TweenMax.delayedCall(0.25, function(){
+				self.onYouTubeIframeAPIReady();
+			})
+		}
 		this.on('change:active', this.onActiveChange, this);
-		window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+
 		return this;
 	},
 
 	onYouTubeIframeAPIReady: function(){
-		this.player = new YT.Player(this.id, {
+		this.player = new YT.Player(this.videoid, {
 					events: {
 						'onReady': this.onPlayerReady.bind(this),
 						'onStateChange': this.onPlayerStateChange.bind(this)
 					}
 				});
+		if(this.player.B){
+			this.onPlayerReady();
+		};
 	},
 
 	onPlayerReady: function(){
@@ -58,6 +71,9 @@ let YoutubePlayer = Base.extend({
 	},
 	onPlayerStateChange: function(event){
 		console.log("onPlayerStateChange", event);
+	},
+	cleanup : function(){
+		this.player.destroy();
 	},
 	handleResize: function(){
 		var newWidth = document.body.clientHeight/9*16,

@@ -25,10 +25,15 @@ let Slider = Base.extend({
 	},
 
 	render: function(){
+		let self = this;
 		this.cacheElements({ });
 		this.on('change:active', this.onActiveChange, this);
-		this.swiper = new Swiper('.swiper-container', this.settings);
-		this.layer = this.queryAll('.Slider__layer div');
+		console.log(self.id);
+		TweenMax.delayedCall(0.15, function(){
+				self.swiper = new Swiper('#'+self.id+' .swiper-container', self.settings);
+		})
+
+		this.layer = this.queryAll('#'+this.id+' .Slider__layer div');
 		return this;
 	},
 	onActiveChange: function(view, value){
