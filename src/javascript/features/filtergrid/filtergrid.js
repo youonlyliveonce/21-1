@@ -90,7 +90,7 @@ let Filtergrid = Base.extend({
 		if(delta < 0){
 			self.bottomend = false;
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y+(-1*delta) > 0){
-					if(self.topend && delta<-10){
+					if(self.topend && delta<-19){
 						self.parentview.previousSlide()
 						self.topend = false
 					}
@@ -111,9 +111,12 @@ let Filtergrid = Base.extend({
 					dH = cH-bH;
 
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta < cH-bH){
-				if(self.bottomend && delta>10){
+				if(self.bottomend && delta>19){
 					self.parentview.nextSlide()
 					self.bottomend = false;
+				}
+				if(self.gridBody._gsTransform.y == dH){
+					self.bottomend = true;
 				} else {
 					TweenMax.to(self.gridBody, 0.1, {y:dH, overwrite:true, onComplete:function(){
 							self.bottomend = true;

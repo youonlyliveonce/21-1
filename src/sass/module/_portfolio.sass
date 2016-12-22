@@ -27,11 +27,11 @@
 					content: ''
 					background-color: $color-selection
 					position: absolute
-					left: 50%
-					top: 0
+					left: 0%
+					top: 50%
 					bottom: 0
-					width: 0
-					height: 100%
+					width: 100%
+					height: 0%
 					z-index: 1
 				svg
 					position: absolute
@@ -51,19 +51,19 @@
 				&:hover
 					color: white
 					&:after
-						left: 0
-						width: 100%
+						top: 0
+						height: 100%
 				&:hover
 					color: $color-selection
 					&:after
-						left: 0%
-						width: 100%
+						top: 0%
+						height: 100%
 						opacity: 0.5
 				&:hover.active
 					color: white
 					&:after
-						left: 0%
-						width: 100%
+						top: 0%
+						height: 100%
 						opacity: 0.5
 				&.active
 					span
@@ -165,14 +165,14 @@
 			h2
 				opacity: 1
 			span
-				opacity: 0.4
+				opacity: 0
 			&:hover
 				h2
 					padding-left: $gap-size/2
 					&:after
 						+transform(translateX(0%))
 				span
-					opacity: 0
+					opacity: 0.4
 			>a
 				left: 5px
 				top: 5px

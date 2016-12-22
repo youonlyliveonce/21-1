@@ -2,6 +2,7 @@
 <?php snippet('view-start', array('pageclass' => " Page--single"))?>
 
 <div class="Case [ Element ]" id="<?php echo $page->slug(); ?>"  data-view="CaseView">
+	<a href="<?= $parentlink ?>" class="Button--close"><span></span></a>
 	<div class="Case__body">
 	<?php if($hasvideo) : ?>
 		<div class="Videobox__background">
@@ -45,7 +46,12 @@
 	</div>
 	<!-- Moodboard -->
 
+
+
 	<!-- Backlink -->
+		<div class="Case__back">
+			<a href="<?= $parentlink ?>"><span>Zurück zur Übersicht</span></a>
+		</div>
 	</div>
 </div>
 

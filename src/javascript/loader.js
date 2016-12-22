@@ -18,6 +18,7 @@ class Loader {
 	}
 	removeGFX (){
 		document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join("run"));
+		CM.App.showPage();
 		let preloader = document.getElementsByClassName("preloader")[0];
 		if(preloader && preloader.parentNode){
 				preloader.parentNode.removeChild(preloader);

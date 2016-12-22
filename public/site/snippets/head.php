@@ -30,6 +30,10 @@
 	</script>
 
 	<style>
+			body {
+				overflow: hidden
+			}
+
 			.preloader {
 				text-align:center;
 				position: fixed;
@@ -63,22 +67,20 @@
 				transition: all 0.75s cubic-bezier(0.395, 0.060, 0.610, 0.925);
 			}
 			.run .Page {
-				-webkit-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
+				/*-webkit-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
 				-moz-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
 				-ms-transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
 				transition: all 0.45s cubic-bezier(0.250, 0.250, 0.195, 1.085) 0.35s;
 				-ms-transform: scale(1, 1);
 				-webkit-transform: scale(1, 1);
 				-moz-transform: scale(1, 1);
-				transform: scale(1, 1);
+				transform: scale(1, 1);*/
 			}
 			.run .Scrollnavigation {
-				right: 0px;
+				/*right: 0px;*/
 			}
 			.run .Header__logo {
-				left: 0px;
-				top: 0px;
-				opacity: 1;
+				/*opacity: 1;*/
 			}
 			.newload {
 				overflow: hidden

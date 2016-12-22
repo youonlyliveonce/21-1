@@ -1,7 +1,17 @@
 .Page--single
 	.Navigation
 		opacity: 0
-		+transform(translateX(0%) translateY(5%))
+		+transform(translateX(0%) translateY(-100%))
+.Page--multi
+	.Navigation
+		opacity: 1
+		+transform(translateX(0%) translateY(0%))
+
+.Navigation--home
+	+bp('medium')
+		.Navigation
+			opacity: 0
+			+transform(translateX(0%) translateY(5%))
 
 .Navigation--show
 	.Button--toggle
@@ -14,11 +24,7 @@
 	.Navigation
 		+transform(translateX(0%))
 
-.Navigation--home
-	+bp('medium')
-		.Navigation
-			opacity: 0
-			+transform(translateX(0%) translateY(5%))
+
 
 .Navigation
 	z-index: 9999
@@ -29,13 +35,13 @@
 	left: 0
 	right: 50%
 	+bp('medium')
-		+transform(translateX(0%) translateY(0%))
+		+transform(translateX(0%) translateY(-100%))
 		width: 100%
 		background-color: transparent
 		top: 0
 		right: 0
 		z-index: 1
-		opacity: 1
+		opacity: 0
 	ul
 		text-align: left
 		padding-top: 3.4em
@@ -76,11 +82,11 @@
 				&:before
 					content: ''
 					position: absolute
-					top: 0
-					left: 50%
+					top: 50%
+					left: 0
 					right: 0
-					width: 0%
-					height: 100%
+					width: 100%
+					height: 0%
 					z-index: 1
 					+transition(all, 0.25s)
 					background-color: white
@@ -88,5 +94,5 @@
 				&:hover
 					color: black
 					&:before
-						left: 0
-						width: 100%
+						top: 0
+						height: 100%

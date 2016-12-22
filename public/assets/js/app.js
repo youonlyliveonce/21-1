@@ -162,26 +162,44 @@
 	
 							// we have what we need, we can now start our router and show the appropriate page
 							this.router.history.start();
+							this.addEvents();
+					}
+			}, {
+					key: 'showPage',
+					value: function showPage() {
+							TweenMax.to(this.mainView.page, 0.35, { scale: 1, ease: Cubic.easeOut });
+							TweenMax.to(this.mainView.headerlogo, 0.45, { opacity: 1, ease: Cubic.easeOut, delay: 0.1 });
+					}
+			}, {
+					key: 'addEvents',
+					value: function addEvents() {
+							var self = this;
 							if (window.attachEvent) {
-									window.attachEvent('onresize', function () {
-											self.mainView.handleResize();
-									});
+									window.attachEvent('onresize', self.mainView.handleResize);
 									// IE 6/7/8
-									document.body.attachEvent("onmousewheel", function (event) {
-											self.mainView.handleMouseWheel(event);
-									});
+									document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
 							} else if (window.addEventListener) {
-									window.addEventListener('resize', function () {
-											self.mainView.handleResize();
-									}, true);
+									window.addEventListener('resize', self.mainView.handleResize, true);
 									// IE9, Chrome, Safari, Opera
-									document.body.addEventListener('mousewheel', function (event) {
-											self.mainView.handleMouseWheel(event);
-									}, false);
+									document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
 									// Firefox
-									document.body.addEventListener('DOMMouseScroll', function (event) {
-											self.mainView.handleMouseWheel(event);
-									}, false);
+									document.body.addEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
+							}
+					}
+			}, {
+					key: 'removeEvents',
+					value: function removeEvents() {
+							var self = this;
+							if (window.attachEvent) {
+									window.dettachEvent('onresize', self.mainView.handleResize);
+									// IE 6/7/8
+									document.body.dettachEvent("onmousewheel", self.mainView.handleMouseWheel);
+							} else if (window.addEventListener) {
+									window.removeEventListener('resize', self.mainView.handleResize, true);
+									// IE9, Chrome, Safari, Opera
+									document.body.removeEventListener('mousewheel', self.mainView.handleMouseWheel, false);
+									// Firefox
+									document.body.removeEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
 							}
 					}
 	
@@ -1816,31 +1834,20 @@
 	var Router = _ampersandRouter2.default.extend({
 	
 		routes: {
-			// ':lang': 'content',
-			':lang/*value': 'subcontent'
+			':lang': 'content',
+			':lang/*value': 'content'
 		},
 		// ------- ROUTE HANDLERS ---------
 		// Handelt alle Links und übergibt alle Parameter über den Event an die App
-		content: function content(lang, params) {
 	
-			// prüfe ob sich nur der search String ?x=y geändert hat
-			var onlyParamChange = this._checkForParamChange(lang, params);
-	
-			if (onlyParamChange) {
-				// Update active View
-				this.trigger('update', params);
-			} else {
-				// Trigger new View
-				this.trigger('page', new _content2.default({
-					model: new _content4.default({ id: lang, lang: lang }),
-					formModel: new _formModel2.default()
-					// ,mapModel: new MapModel()
-				}), params);
-			}
-		},
-	
-		subcontent: function subcontent(lang, value, params) {
+		content: function content(lang, value, params) {
 			if (value == null) value = "";
+	
+			if (value.indexOf('=') != -1 && params == null) {
+				params = value;
+				value == "";
+			}
+	
 			value = lang + '/' + value;
 	
 			// prüfe ob sich nur der search String ?x=y geändert hat
@@ -20424,9 +20431,9 @@
 			var e = window.event || e || e.originalEvent;
 			var value = e.wheelDelta || -e.deltaY || -e.detail;
 			var delta = Math.max(-20, Math.min(20, value));
-			if (delta < -10) {
+			if (delta < -19) {
 				this.parentview.nextSlide();
-			} else if (delta > 10) {
+			} else if (delta > 19) {
 				this.parentview.previousSlide();
 			}
 		}
@@ -20544,7 +20551,7 @@
 			if (delta < 0) {
 				self.bottomend = false;
 				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y + -1 * delta > 0) {
-					if (self.topend && delta < -10) {
+					if (self.topend && delta < -19) {
 						self.parentview.previousSlide();
 						self.topend = false;
 					}
@@ -20565,9 +20572,12 @@
 				    dH = cH - bH;
 	
 				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta < cH - bH) {
-					if (self.bottomend && delta > 10) {
+					if (self.bottomend && delta > 19) {
 						self.parentview.nextSlide();
 						self.bottomend = false;
+					}
+					if (self.gridBody._gsTransform.y == dH) {
+						self.bottomend = true;
 					} else {
 						TweenMax.to(self.gridBody, 0.1, { y: dH, overwrite: true, onComplete: function onComplete() {
 								self.bottomend = true;
@@ -23888,17 +23898,19 @@
 				page: '.Page',
 				main: '[role="main"]',
 				header: '.Header',
+				headerlogo: '.Header__logo',
 				nav: '.Navigation',
 				switcher: '[data-hook=switcher]'
 			});
 	
 			// Init and configure our page switcher
 			this.pageSwitcher = new _ampersandViewSwitcher2.default(this.main, {
-				waitForRemove: false,
+				waitForRemove: true,
 				hide: function hide(oldView, cb) {
 					// Set scope for callback of TweenMax
 					var inSwitcher = this;
-	
+					TweenMax.to(self.headerlogo, 0.1, { opacity: 0 });
+					TweenMax.to(self.page, 0.25, { scale: 1.25, delay: 0.15 });
 					// Hide oldView if oldView exits
 					if (oldView && oldView.el) {
 						oldView.hookBeforeHide();
@@ -23907,22 +23919,28 @@
 								// TweenMax.to(window, 0.3, {scrollTo:{y:0}});
 								// cb triggers the show function in ViewSwitcher
 								cb.apply(inSwitcher);
-							}, delay: 0.2 });
+							} });
 					}
 				},
 				show: function show(newView) {
 	
-					// Set newView opacity to 0
 					TweenMax.set(newView.el, { opacity: 0 });
+					// Set newView opacity to 0
 					// Handle resize
 					newView.handleResize();
+					self.scrollTo(0);
+					TweenMax.set(self.page, { scale: 1 });
+	
+					// TweenMax.set(newView.el, {opacity:1});
 	
 					// Animate newView opacity to 1
 					TweenMax.to(newView.el, 0.8, { opacity: 1, onComplete: function onComplete() {
+							self.page.setAttribute('class', newView.model.pageClass);
 							// Scroll to paramter 'section'
+							TweenMax.to(self.headerlogo, 0.75, { opacity: 1, ease: Cubic.easeOut });
 							self.scrollTo();
 							newView.hookAfterShow();
-						}, delay: 1.2 });
+						}, delay: 0.3 });
 				}
 			});
 			return this;
@@ -23979,7 +23997,7 @@
 				});
 			}
 	
-			this.page.setAttribute('class', view.model.pageClass);
+			this.page.setAttribute('class', 'Page');
 	
 			// SWICTH THE VIEW
 			this.pageSwitcher.set(view);
@@ -24021,17 +24039,17 @@
 		},
 		handleMouseWheel: function handleMouseWheel(event) {
 			event.preventDefault();
-			if (this && this.pageSwitcher.current && !this.isSwiping) {
-				this.pageSwitcher.current.handleMouseWheel(event);
+			if (CM.App.mainView.pageSwitcher.current && CM.App.mainView.isSwiping === false) {
+				CM.App.mainView.pageSwitcher.current.handleMouseWheel(event);
 			}
 		},
 		handleResize: function handleResize(e) {
-			if (this && this.pageSwitcher.current) {
-				this.pageSwitcher.current.handleResize();
+			if (CM.App.mainView && CM.App.mainView.pageSwitcher.current) {
+				CM.App.mainView.pageSwitcher.current.handleResize();
 			}
 			if (CM.App._params != {} && CM.App._params.section != null) {
-				var id = this.query('#' + CM.App._params.section);
-				TweenMax.set(this.main, { y: -1 * id.offsetTop, overwrite: true });
+				var id = CM.App.mainView.query('#' + CM.App._params.section);
+				TweenMax.set(CM.App.mainView.main, { y: -1 * id.offsetTop, overwrite: true });
 			}
 		},
 	
@@ -24066,15 +24084,37 @@
 		scrollTo: function scrollTo() {
 			var _this = this;
 	
+			var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.25;
+	
 			if (CM.App._params != {} && CM.App._params.section != null) {
 				(function () {
 					var id = _this.query('#' + CM.App._params.section);
 					var self = _this;
 					self.isSwiping = true;
+					// CM.App.removeEvents();
 					self.pageSwitcher.current.updateActiveView();
 					self.updateActiveNav();
-					TweenMax.to(_this.main, 0.55, { y: -1 * id.offsetTop, overwrite: true, ease: Sine.easeOut, onComplete: function onComplete() {
-							self.isSwiping = false;
+					TweenMax.to(_this.main, duration, { y: -1 * id.offsetTop, overwrite: true, ease: Power2.easeOut, onComplete: function onComplete() {
+							if (duration == 0) self.isSwiping = false;
+							TweenMax.delayedCall(0.4, function () {
+								self.isSwiping = false;
+								// CM.App.addEvents();
+							});
+						} });
+				})();
+			} else {
+				(function () {
+					var self = _this;
+					self.isSwiping = true;
+					// CM.App.removeEvents();
+					self.pageSwitcher.current.updateActiveView();
+					self.updateActiveNav();
+					TweenMax.to(_this.main, duration, { y: 0, overwrite: true, ease: Power2.easeOut, onComplete: function onComplete() {
+							if (duration == 0) self.isSwiping = false;
+							TweenMax.delayedCall(0.4, function () {
+								self.isSwiping = false;
+								// CM.App.addEvents();
+							});
 						} });
 				})();
 			}

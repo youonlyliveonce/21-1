@@ -36,17 +36,19 @@ var MainView = View.extend({
 						page: '.Page',
 						main: '[role="main"]',
 						header: '.Header',
+						headerlogo: '.Header__logo',
 						nav: '.Navigation',
 						switcher: '[data-hook=switcher]'
 				});
 
 				// Init and configure our page switcher
 				this.pageSwitcher = new ViewSwitcher(this.main, {
-						waitForRemove: false,
+						waitForRemove: true,
 						hide: function (oldView, cb) {
 								// Set scope for callback of TweenMax
 								var inSwitcher = this;
-
+								TweenMax.to(self.headerlogo, 0.1, {opacity:0});
+								TweenMax.to(self.page, 0.25, {scale:1.25, delay:0.15});
 								// Hide oldView if oldView exits
 								if(oldView && oldView.el){
 										oldView.hookBeforeHide();
@@ -55,22 +57,28 @@ var MainView = View.extend({
 												// TweenMax.to(window, 0.3, {scrollTo:{y:0}});
 												// cb triggers the show function in ViewSwitcher
 												cb.apply(inSwitcher);
-										}, delay:0.2 });
+										}});
 								}
 						},
 						show: function (newView) {
 
-								// Set newView opacity to 0
 								TweenMax.set(newView.el, {opacity:0});
+								// Set newView opacity to 0
 								// Handle resize
 								newView.handleResize();
+								self.scrollTo(0);
+								TweenMax.set(self.page, {scale:1});
+
+								// TweenMax.set(newView.el, {opacity:1});
 
 								// Animate newView opacity to 1
 								TweenMax.to(newView.el, 0.8, {opacity:1, onComplete:function(){
+									self.page.setAttribute('class', newView.model.pageClass);
 									// Scroll to paramter 'section'
+									TweenMax.to(self.headerlogo, 0.75, {opacity:1, ease:Cubic.easeOut});
 									self.scrollTo();
 									newView.hookAfterShow();
-								}, delay:1.2});
+								}, delay:0.3});
 						}
 				});
 				return this;
@@ -130,7 +138,7 @@ var MainView = View.extend({
 						});
 				}
 
-				this.page.setAttribute('class', view.model.pageClass);
+				this.page.setAttribute('class', 'Page');
 
 				// SWICTH THE VIEW
 				this.pageSwitcher.set(view);
@@ -173,17 +181,17 @@ var MainView = View.extend({
 		},
 		handleMouseWheel: function(event){
 			event.preventDefault();
-			if(this && this.pageSwitcher.current && !this.isSwiping){
-				this.pageSwitcher.current.handleMouseWheel(event);
+			if(CM.App.mainView.pageSwitcher.current && CM.App.mainView.isSwiping === false){
+				CM.App.mainView.pageSwitcher.current.handleMouseWheel(event);
 			}
 		},
 		handleResize: function(e){
-			if(this && this.pageSwitcher.current){
-				this.pageSwitcher.current.handleResize();
+			if(CM.App.mainView && CM.App.mainView.pageSwitcher.current){
+				CM.App.mainView.pageSwitcher.current.handleResize();
 			}
 			if (CM.App._params != {} && CM.App._params.section != null){
-					let id = this.query('#'+CM.App._params.section);
-					TweenMax.set(this.main, {y:-1*id.offsetTop, overwrite:true});
+					let id = CM.App.mainView.query('#'+CM.App._params.section);
+					TweenMax.set(CM.App.mainView.main, {y:-1*id.offsetTop, overwrite:true});
 			}
 		},
 
@@ -219,16 +227,34 @@ var MainView = View.extend({
 				}
 		},
 
-		scrollTo: function(){
+		scrollTo: function(duration = 1.25){
 				if (CM.App._params != {} && CM.App._params.section != null){
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
 						self.isSwiping = true;
+						// CM.App.removeEvents();
 						self.pageSwitcher.current.updateActiveView();
 						self.updateActiveNav();
-						TweenMax.to(this.main, 0.55, {y:-1*id.offsetTop, overwrite:true, ease:Sine.easeOut, onComplete:function(){
-							self.isSwiping = false;
+						TweenMax.to(this.main, duration, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+							if(duration == 0) self.isSwiping = false;
+							TweenMax.delayedCall(0.4, function(){
+								self.isSwiping = false;
+								// CM.App.addEvents();
+							});
 						}});
+				} else {
+					let self = this;
+					self.isSwiping = true;
+					// CM.App.removeEvents();
+					self.pageSwitcher.current.updateActiveView();
+					self.updateActiveNav();
+					TweenMax.to(this.main, duration, {y:0, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+						if(duration == 0) self.isSwiping = false;
+						TweenMax.delayedCall(0.4, function(){
+							self.isSwiping = false;
+							// CM.App.addEvents();
+						});
+					}});
 				}
 		},
 		overlayerTo: function (){

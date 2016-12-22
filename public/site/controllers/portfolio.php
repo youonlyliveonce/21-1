@@ -2,6 +2,9 @@
 
 
 return function($site, $pages, $page) {
+	// backlink
+	$parentlink = '/'.$site->language().'/?section='.$page->parent()->slug();
+
 	// has video
 	$hasvideo = !$page->videoid()->isEmpty();
 
@@ -12,5 +15,5 @@ return function($site, $pages, $page) {
 	// var für Moodboard
 
 
-	return compact('slides', 'isslideshow', 'hasvideo');
+	return compact('slides', 'isslideshow', 'hasvideo', 'parentlink');
 };

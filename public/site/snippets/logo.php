@@ -1,5 +1,14 @@
 <div class="Header__logo">
 	<a href="/<?= $site->language() ?>/?section=<?= $site->page('home')->children()->first()->slug(); ?>">
+		<svg version="1.1" id="Ebene_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			 viewBox="0 0 85.039 85.039" enable-background="new 0 0 85.039 85.039" xml:space="preserve">
+			 <rect fill-rule="evenodd" clip-rule="evenodd" width="85.039" height="85.039"/>
+ 			<g>
+					<path fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" d="M7.02,35.02h23v-6h-23V35.02z M31.02,35.02h23v-6h-23V35.02z
+						 M7.02,42.02h23v-6h-23V42.02z M31.02,42.02h23v-6h-23V42.02z M31.02,49.02h23v-6h-23V49.02z M31.02,56.02h23v-6h-23V56.02z
+						 M55.02,50.02v6h23v-6H55.02z"/>
+ 			</g>
+		</svg>
 		<svg version="1.1" baseProfile="tiny" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 			 x="0px" y="0px" viewBox="0 0 453.543 453.543" overflow="auto" xml:space="preserve">
 		<rect width="453.543" height="453.543"/>

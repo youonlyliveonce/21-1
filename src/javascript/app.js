@@ -76,30 +76,43 @@ class App {
 
 				// we have what we need, we can now start our router and show the appropriate page
 				this.router.history.start();
-				if(window.attachEvent) {
-					window.attachEvent('onresize', function() {
-							self.mainView.handleResize();
-					});
-					// IE 6/7/8
-					document.body.attachEvent("onmousewheel", function(event){
-						self.mainView.handleMouseWheel(event);
-					});
-				}
-				else if(window.addEventListener) {
-						window.addEventListener('resize', function() {
-							self.mainView.handleResize();
-						}, true);
-						// IE9, Chrome, Safari, Opera
-						document.body.addEventListener('mousewheel', function(event){
-							self.mainView.handleMouseWheel(event);
-						}, false);
-						// Firefox
-						document.body.addEventListener('DOMMouseScroll', function(event){
-							self.mainView.handleMouseWheel(event);
-						}, false);
+				this.addEvents();
 
-				}
+		}
+		showPage() {
+			TweenMax.to(this.mainView.page, 0.35, {scale:1, ease:Cubic.easeOut});
+			TweenMax.to(this.mainView.headerlogo, 0.45, {opacity:1, ease:Cubic.easeOut, delay:0.1});
+		}
+		addEvents () {
+			let self = this;
+			if(window.attachEvent) {
+				window.attachEvent('onresize', self.mainView.handleResize);
+				// IE 6/7/8
+				document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
+			}
+			else if(window.addEventListener) {
+					window.addEventListener('resize', self.mainView.handleResize, true);
+					// IE9, Chrome, Safari, Opera
+					document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
+					// Firefox
+					document.body.addEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
+			}
+		}
 
+		removeEvents() {
+			let self = this;
+			if(window.attachEvent) {
+				window.dettachEvent('onresize', self.mainView.handleResize);
+				// IE 6/7/8
+				document.body.dettachEvent("onmousewheel", self.mainView.handleMouseWheel);
+			}
+			else if(window.addEventListener) {
+					window.removeEventListener('resize', self.mainView.handleResize, true);
+					// IE9, Chrome, Safari, Opera
+					document.body.removeEventListener('mousewheel', self.mainView.handleMouseWheel, false);
+					// Firefox
+					document.body.removeEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
+			}
 		}
 
 		// This is how you navigate around the app.

@@ -22,9 +22,9 @@ let Base = View.extend({
 		let e = window.event || e || e.originalEvent;
 		let value = e.wheelDelta || -e.deltaY || -e.detail;
 		let delta = Math.max(-20, Math.min(20, value));
-		if(delta < -10){
+		if(delta < -19){
 			this.parentview.nextSlide()
-		} else if(delta > 10) {
+		} else if(delta > 19) {
 			this.parentview.previousSlide()
 		}
 	}
