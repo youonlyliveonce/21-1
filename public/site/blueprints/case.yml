@@ -1,4 +1,4 @@
-title: Portfolio
+title: Case
 
 pages: false
 
@@ -18,6 +18,11 @@ fields:
       Animation-VFX-3D: Animation/VFX/3D
       Interactive-Design: Interactive/Design
 
+  teaserimage:
+    label: Teaserbild
+    type: image
+    required: true
+
   section1:
     label: Herobereich
     type: headline
@@ -26,13 +31,13 @@ fields:
     label: Video ID
     type: text
     width: 1/2
-    help: Add Youtube ID oder add Images to files
+    help: Youtube ID eintragen oder Bilder unter Dateien hochladen
 
   slideshow:
     label: Bildergalerie
     type: structure
     width: 1/2
-    help: Select Images from files
+    help: Bilder aus den Dateien auswählen
     entry: >
       <u>Image</u> : {{img}}
     fields:
@@ -66,7 +71,7 @@ fields:
   moodboard:
     label: Moodboard
     type: structure
-    help: Select Images from files, first Image will be full width
+    help: Bilder aus Dateien auswählen. Das erste Bild wird in der vollen Breite angezeigt. Alle folgenden immer mit der halben Breite.
     entry: >
       <u>Image</u> : {{img}}<br/>
       <u>Caption</u> : {{caption}}<br/>

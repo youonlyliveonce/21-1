@@ -1,7 +1,9 @@
 <?php
 	$filtertags = $section->children()->pluck('filtertags', ',', true);
+	$arrangements = $section->arrangement()->structure();
 ?>
 <div class="Portfolio [ Element ]" id="<?php echo $section->slug(); ?>" data-view="GridView">
+	<div class="Portfolio__background"></div>
 		<div class="Portfolio__filter">
 			<ul>
 				<li data-filter="all"><span>FILTER</span></li>
@@ -16,130 +18,46 @@
 			</ul>
 		</div>
 		<div class="Portfolio__body [ Film Interactive-Design Concept Animation-VFX-3D ]">
-			<div class="Portfolio__item [ Film ]">
-				<a href="/de/home/work/work-1" style="background-image: url('/assets/images/pic1.jpg')">
-					<span></span>
-					<h2>UNTOUCHED VELVET</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Interactive-Design ]">
-				<a style="background-image: url('/assets/images/pic2.jpg')">
-					<span></span>
-					<h2>RALP LOREN</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--medium Portfolio__item--right [ Interactive-Design Film ]">
-				<a style="background-image: url('/assets/images/pic3.jpg')">
-					<span></span>
-					<h2>LANCOM – <br/>GLOSS IN<br/>LOVE</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Concept ]">
-				<a style="background-image: url('/assets/images/pic4.jpg')">
-					<span></span>
-					<h2>SUBSTRAL – MAGISCHER ERDENZAUBER</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--medium [ Concept ]">
-				<a style="background-image: url('/assets/images/pic5.jpg')">
-					<span></span>
-					<h2>PREMIUM TUTORIAL WITH LENA GERKE</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--tiny [ Concept ]">
-				<a style="background-image: url('/assets/images/pic6.jpg')">
-					<span></span>
-					<h2>NAILWALK</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--tiny [ Interactive-Design ]">
-				<a style="background-image: url('/assets/images/pic7.jpg')">
-					<span></span>
-					<h2>VODFONE TUTORIALS</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Animation-VFX-3D ]">
-				<a style="background-image: url('/assets/images/pic8.jpg')">
-					<span></span>
-					<h2>L'OREÁL TUTORIALS</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item [ Film ]">
-				<a style="background-image: url('/assets/images/pic10.jpg')">
-					<span></span>
-					<h2>REEL 2016</h2>
-				</a>
-			</div>
+			<?php foreach($arrangements as $arrangement):
 
-			<div class="Portfolio__item Portfolio__item--medium [ Animation-VFX-3D ]">
-				<a style="background-image: url('/assets/images/pic2.jpg')">
-					<span></span>
-					<h2>RALP LOREN</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Film ]">
-				<a style="background-image: url('/assets/images/pic3.jpg')">
-					<span></span>
-					<h2>LANCOM – <br/>GLOSS IN<br/>LOVE</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--tiny [ Interactive-Design ]">
-				<a style="background-image: url('/assets/images/pic5.jpg')">
-					<span></span>
-					<h2>PREMIUM TUTORIAL WITH LENA GERKE</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--tiny [ Concept ]">
-				<a style="background-image: url('/assets/images/pic6.jpg')">
-					<span></span>
-					<h2>NAILWALK</h2>
-				</a>
-			</div>
+					$snippet = 'tiny/case_teaser';
+					$design = $arrangement->design();
+					$first = $site->page($section->uri().'/'.$arrangement->firstitem());
+					if($arrangement->seconditem()->isNotEmpty()):
+						$second = $site->page($section->uri().'/'.$arrangement->seconditem());
+					endif;
+					if($arrangement->thirditem()->isNotEmpty()):
+						$third = $site->page($section->uri().'/'.$arrangement->thirditem());
+					endif;
+					if($arrangement->fourthitem()->isNotEmpty()):
+						$fourth = $site->page($section->uri().'/'.$arrangement->fourthitem());
+					endif;
 
-			<div class="Portfolio__item Portfolio__item--tiny [ Animation-VFX-3D ]">
-				<a style="background-image: url('/assets/images/pic9.jpg')">
-					<span></span>
-					<h2>UNTOUCHED VELVET</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--tiny [ Concept ]">
-				<a style="background-image: url('/assets/images/pic7.jpg')">
-					<span></span>
-					<h2>VODFONE TUTORIALS</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--medium Portfolio__item--right [ Concept Film ]">
-				<a style="background-image: url('/assets/images/pic6.jpg')">
-					<span></span>
-					<h2>NAILWALK</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Concept Film ]">
-				<a style="background-image: url('/assets/images/pic4.jpg')">
-					<span></span>
-					<h2>SUBSTRAL – MAGISCHER ERDENZAUBER</h2>
-				</a>
-			</div>
-
-
-			<div class="Portfolio__item Portfolio__item--medium [ Animation-VFX-3D ]">
-				<a style="background-image: url('/assets/images/pic9.jpg')">
-					<span></span>
-					<h2>UNTOUCHED VELVET</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Concept Film ]">
-				<a style="background-image: url('/assets/images/pic2.jpg')">
-					<span></span>
-					<h2>RALP LOREN</h2>
-				</a>
-			</div>
-			<div class="Portfolio__item Portfolio__item--small [ Film ]">
-				<a style="background-image: url('/assets/images/pic3.jpg')">
-					<span></span>
-					<h2>LANCOM – <br/>GLOSS IN<br/>LOVE</h2>
-				</a>
-			</div>
+					if($design == 'hero'):
+						snippet($snippet, array('item' => $first, 'itemclass' => '', 'thumb' => 'large'));
+					elseif($design == '1-1'):
+						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
+					elseif($design == '1-2'):
+						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+					elseif($design == '2-1'):
+						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--medium Portfolio__item--right ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+					elseif($design == '1-3'):
+						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $fourth, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+					elseif($design == '3-1'):
+						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--medium Portfolio__item--right ', 'thumb' => 'square'));
+						 snippet($snippet, array('item' => $fourth, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+					endif;
+			endforeach; ?>
 
 		</div>
 		<?php snippet('down') ?>

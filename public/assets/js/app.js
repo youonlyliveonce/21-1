@@ -72,15 +72,15 @@
 	
 	var _router2 = _interopRequireDefault(_router);
 	
-	var _mainView = __webpack_require__(310);
+	var _mainView = __webpack_require__(311);
 	
 	var _mainView2 = _interopRequireDefault(_mainView);
 	
-	var _lsRiasMin = __webpack_require__(316);
+	var _lsRiasMin = __webpack_require__(317);
 	
 	var _lsRiasMin2 = _interopRequireDefault(_lsRiasMin);
 	
-	var _lazysizesMin = __webpack_require__(317);
+	var _lazysizesMin = __webpack_require__(318);
 	
 	var _lazysizesMin2 = _interopRequireDefault(_lazysizesMin);
 	
@@ -1820,11 +1820,11 @@
 	
 	var _content2 = _interopRequireDefault(_content);
 	
-	var _content3 = __webpack_require__(284);
+	var _content3 = __webpack_require__(285);
 	
 	var _content4 = _interopRequireDefault(_content3);
 	
-	var _formModel = __webpack_require__(306);
+	var _formModel = __webpack_require__(307);
 	
 	var _formModel2 = _interopRequireDefault(_formModel);
 	
@@ -7569,7 +7569,7 @@
 	
 	var _slider2 = _interopRequireDefault(_slider);
 	
-	var _case = __webpack_require__(320);
+	var _case = __webpack_require__(284);
 	
 	var _case2 = _interopRequireDefault(_case);
 	
@@ -7637,10 +7637,6 @@
 			}
 	
 			this.updateActiveView();
-	
-			TweenMax.delayedCall(0.8, function () {
-				self.bindSlider('.swiper-container', 'basic');
-			});
 	
 			// this.hammerSwipe = new Hammer(this.el);
 			// this.hammerSwipe.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
@@ -20471,7 +20467,8 @@
 				return {};
 			}],
 			topend: ['boolean', true, true],
-			bottomend: ['boolean', true, false]
+			bottomend: ['boolean', true, false],
+			mousebreak: ['boolean', true, false]
 		},
 	
 		events: {
@@ -20480,6 +20477,7 @@
 	
 		render: function render() {
 			this.cacheElements({
+				gridBackground: '.Portfolio__background',
 				gridBody: '.Portfolio__body',
 				gridFilter: '.Portfolio__filter'
 			});
@@ -20490,11 +20488,9 @@
 			return this;
 		},
 		onActiveChange: function onActiveChange(view, value) {
-			if (!value) {
-				// TweenMax.to(this.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-				// 	this.topend = true;
-				// }});
-			}
+			this.mousebreak = false;
+			this.topend = false;
+			this.bottomend = false;
 		},
 		handleClickFilter: function handleClickFilter(event) {
 			var target = event.delegateTarget,
@@ -20542,6 +20538,18 @@
 			TweenMax.to(white[0], 0.25, { drawSVG: "0% 100%", delay: 0.25 });
 			TweenMax.to(grey[0], 0.25, { drawSVG: "0% 0%" });
 		},
+		delayMouseWheelBreak: function delayMouseWheelBreak() {
+			this.mousebreak = false;
+			TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
+			TweenMax.delayedCall(0.05, this.setMouseWheelBreak, [], this);
+		},
+		setMouseWheelBreak: function setMouseWheelBreak() {
+			this.mousebreak = true;
+		},
+		flashBackground: function flashBackground() {
+			TweenMax.to(this.gridBackground, 0.15, { css: { 'opacity': 0.1 }, yoyo: true, repeat: 1 });
+		},
+	
 		handleMouseWheel: function handleMouseWheel(event) {
 			var e = window.event || e || e.originalEvent;
 			var delta = e.wheelDelta || e.deltaY || e.detail;
@@ -20551,39 +20559,44 @@
 			if (delta < 0) {
 				self.bottomend = false;
 				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y + -1 * delta > 0) {
-					if (self.topend && delta < -19) {
-						self.parentview.previousSlide();
-						self.topend = false;
-					}
-					if (self.gridBody._gsTransform.y == 0) {
+					if (self.topend) {
+						if (self.mousebreak) {
+							self.parentview.previousSlide();
+						} else {
+							self.delayMouseWheelBreak();
+						}
+					} else if (!self.topend) {
 						self.topend = true;
-					} else {
-						TweenMax.to(self.gridBody, 0.1, { y: 0, overwrite: true, onComplete: function onComplete() {
-								self.topend = true;
-							} });
+						TweenMax.set(this.gridBody, { y: 0 });
+						self.flashBackground();
+						self.delayMouseWheelBreak();
 					}
 				} else {
+					self.mousebreak = false;
 					TweenMax.set(this.gridBody, { y: '+=' + -1 * delta });
 				}
 			} else {
 				self.topend = false;
+	
 				var cH = document.body.clientHeight - self.gridFilter.clientHeight,
 				    bH = self.gridBody.clientHeight,
 				    dH = cH - bH;
 	
 				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta < cH - bH) {
-					if (self.bottomend && delta > 19) {
-						self.parentview.nextSlide();
-						self.bottomend = false;
-					}
-					if (self.gridBody._gsTransform.y == dH) {
+					if (self.bottomend) {
+						if (self.mousebreak) {
+							self.parentview.nextSlide();
+						} else {
+							self.delayMouseWheelBreak();
+						}
+					} else if (!self.bottomend) {
 						self.bottomend = true;
-					} else {
-						TweenMax.to(self.gridBody, 0.1, { y: dH, overwrite: true, onComplete: function onComplete() {
-								self.bottomend = true;
-							} });
+						TweenMax.set(self.gridBody, { y: dH });
+						self.flashBackground();
+						self.delayMouseWheelBreak();
 					}
 				} else {
+					self.mousebreak = false;
 					TweenMax.set(self.gridBody, { y: '-=' + delta });
 				}
 			}
@@ -20620,7 +20633,7 @@
 				return {};
 			}],
 			swiper: ['object', true, function () {
-				return {};
+				return undefined;
 			}],
 			layer: ['array', true, function () {
 				return [];
@@ -20644,23 +20657,36 @@
 		},
 	
 		render: function render() {
-			var self = this;
 			this.cacheElements({});
 			this.on('change:active', this.onActiveChange, this);
-			console.log(self.id);
 			TweenMax.delayedCall(0.15, function () {
-				self.swiper = new Swiper('#' + self.id + ' .swiper-container', self.settings);
-			});
-	
+				this.swiper = new Swiper('#' + this.id + ' .swiper-container', this.settings);
+				if (this.active) {
+					this.bindChangeStart();
+				}
+			}, [], this);
 			this.layer = this.queryAll('#' + this.id + ' .Slider__layer div');
 			return this;
 		},
 		onActiveChange: function onActiveChange(view, value) {
 			var self = this;
 			if (value) {
+				TweenMax.delayedCall(1.25, function () {
+					if (this.active) {
+						this.bindChangeStart();
+					}
+				}, [], this);
+			} else {
+				self.layer[this.swiper.realIndex].classList.remove('active');
+				this.swiper.off('slideChangeStart');
+			}
+		},
+		bindChangeStart: function bindChangeStart() {
+			var self = this;
+			if (self.swiper != undefined) {
 				self.activelayer = self.layer[self.swiper.realIndex];
 				self.gfxIn();
-				this.swiper.on('slideChangeStart', function (event) {
+				self.swiper.on('slideChangeStart', function (event) {
 					for (var i = 0; i < self.layer.length; i++) {
 						if (i == event.realIndex) {
 							self.activelayer = self.layer[i];
@@ -20670,9 +20696,6 @@
 						}
 					}
 				});
-			} else {
-				self.layer[this.swiper.realIndex].classList.remove('active');
-				this.swiper.off('slideChangeStart');
 			}
 		},
 		gfxIn: function gfxIn() {
@@ -20722,10 +20745,112 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _base = __webpack_require__(281);
+	
+	var _base2 = _interopRequireDefault(_base);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Case = _base2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			filter: ['object', true, function () {
+				return {};
+			}],
+			filteritems: ['array', true, function () {
+				return [];
+			}],
+			isscrollable: ['boolean', true, true],
+			parentview: ['object', true, function () {
+				return {};
+			}],
+			topend: ['boolean', true, true],
+			bottomend: ['boolean', true, false]
+		},
+	
+		events: {
+			'click .Portfolio__filter ul li': 'handleClickFilter'
+		},
+	
+		render: function render() {
+			this.cacheElements({
+				caseBody: '.Case__body',
+				gridFilter: '.Portfolio__filter'
+			});
+			this.filteritems = this.queryAll('.Portfolio__filter li');
+			this.on('change:active', this.onActiveChange, this);
+			TweenMax.to('.check-grey', 0.25, { drawSVG: "0% 0%" });
+	
+			return this;
+		},
+		onActiveChange: function onActiveChange(view, value) {
+			if (!value) {
+				// TweenMax.to(this.caseBody, 0.1, {y:0, overwrite:true, onComplete:function(){
+				// 	this.topend = true;
+				// }});
+			}
+		},
+		handleMouseWheel: function handleMouseWheel(event) {
+			var e = window.event || e || e.originalEvent;
+			var delta = e.wheelDelta || e.deltaY || e.detail;
+			delta = -1 * delta;
+	
+			var self = this;
+			if (delta < 0) {
+				self.bottomend = false;
+				if (self.caseBody._gsTransform && self.caseBody._gsTransform.y + -1 * delta > 0) {
+					if (self.topend && delta < -10) {
+						// self.parentview.previousSlide()
+						self.topend = false;
+					}
+					if (self.caseBody._gsTransform.y == 0) {
+						self.topend = true;
+					} else {
+						TweenMax.to(self.caseBody, 0.1, { y: 0, overwrite: true, onComplete: function onComplete() {
+								self.topend = true;
+							} });
+					}
+				} else {
+					TweenMax.set(this.caseBody, { y: '+=' + -1 * delta });
+				}
+			} else {
+				self.topend = false;
+				var cH = document.body.clientHeight,
+				    bH = self.caseBody.clientHeight,
+				    dH = cH - bH;
+	
+				if (self.caseBody._gsTransform && self.caseBody._gsTransform.y - delta < cH - bH) {
+					if (self.bottomend && delta > 10) {
+						// self.parentview.nextSlide()
+						self.bottomend = false;
+					} else {
+						TweenMax.to(self.caseBody, 0.1, { y: dH, overwrite: true, onComplete: function onComplete() {
+								self.bottomend = true;
+							} });
+					}
+				} else {
+					TweenMax.set(self.caseBody, { y: '-=' + delta });
+				}
+			}
+		}
+	});
+	
+	exports.default = Case;
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
-	var _base = __webpack_require__(285);
+	var _base = __webpack_require__(286);
 	
 	var _base2 = _interopRequireDefault(_base);
 	
@@ -20737,7 +20862,7 @@
 	exports.default = Content;
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20746,7 +20871,7 @@
 			value: true
 	});
 	
-	var _ampersandModel = __webpack_require__(286);
+	var _ampersandModel = __webpack_require__(287);
 	
 	var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
 	
@@ -20799,15 +20924,15 @@
 	exports.default = Base;
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*$AMPERSAND_VERSION*/
 	var State = __webpack_require__(159);
-	var sync = __webpack_require__(287);
+	var sync = __webpack_require__(288);
 	var assign = __webpack_require__(7);
 	var isObject = __webpack_require__(20);
-	var clone = __webpack_require__(305);
+	var clone = __webpack_require__(306);
 	var result = __webpack_require__(87);
 	
 	// Throw an error when a URL is needed, and none is supplied.
@@ -20947,22 +21072,22 @@
 
 
 /***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var xhr = __webpack_require__(288);
-	module.exports = __webpack_require__(295)(xhr);
-
-
-/***/ },
 /* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var xhr = __webpack_require__(289);
+	module.exports = __webpack_require__(296)(xhr);
+
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
-	var window = __webpack_require__(289)
-	var isFunction = __webpack_require__(290)
-	var parseHeaders = __webpack_require__(291)
-	var xtend = __webpack_require__(294)
+	var window = __webpack_require__(290)
+	var isFunction = __webpack_require__(291)
+	var parseHeaders = __webpack_require__(292)
+	var xtend = __webpack_require__(295)
 	
 	module.exports = createXHR
 	createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -21200,7 +21325,7 @@
 
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {if (typeof window !== "undefined") {
@@ -21216,7 +21341,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports) {
 
 	module.exports = isFunction
@@ -21237,11 +21362,11 @@
 
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var trim = __webpack_require__(292)
-	  , forEach = __webpack_require__(293)
+	var trim = __webpack_require__(293)
+	  , forEach = __webpack_require__(294)
 	  , isArray = function(arg) {
 	      return Object.prototype.toString.call(arg) === '[object Array]';
 	    }
@@ -21273,7 +21398,7 @@
 	}
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports) {
 
 	
@@ -21293,10 +21418,10 @@
 
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(290)
+	var isFunction = __webpack_require__(291)
 	
 	module.exports = forEach
 	
@@ -21345,7 +21470,7 @@
 
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports) {
 
 	module.exports = extend
@@ -21370,16 +21495,16 @@
 
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*$AMPERSAND_VERSION*/
 	var result = __webpack_require__(87);
-	var defaults = __webpack_require__(296);
+	var defaults = __webpack_require__(297);
 	var includes = __webpack_require__(213);
 	var assign = __webpack_require__(7);
-	var qs = __webpack_require__(299);
-	var mediaType = __webpack_require__(304);
+	var qs = __webpack_require__(300);
+	var mediaType = __webpack_require__(305);
 	
 	
 	module.exports = function (xhr) {
@@ -21526,12 +21651,12 @@
 
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var apply = __webpack_require__(31),
-	    assignInDefaults = __webpack_require__(297),
-	    assignInWith = __webpack_require__(298),
+	    assignInDefaults = __webpack_require__(298),
+	    assignInWith = __webpack_require__(299),
 	    baseRest = __webpack_require__(28);
 	
 	/**
@@ -21564,7 +21689,7 @@
 
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var eq = __webpack_require__(25);
@@ -21597,7 +21722,7 @@
 
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var copyObject = __webpack_require__(26),
@@ -21641,14 +21766,14 @@
 
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var stringify = __webpack_require__(300);
-	var parse = __webpack_require__(303);
-	var formats = __webpack_require__(302);
+	var stringify = __webpack_require__(301);
+	var parse = __webpack_require__(304);
+	var formats = __webpack_require__(303);
 	
 	module.exports = {
 	    formats: formats,
@@ -21658,13 +21783,13 @@
 
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(301);
-	var formats = __webpack_require__(302);
+	var utils = __webpack_require__(302);
+	var formats = __webpack_require__(303);
 	
 	var arrayPrefixGenerators = {
 	    brackets: function brackets(prefix) {
@@ -21851,7 +21976,7 @@
 
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22037,7 +22162,7 @@
 
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22061,12 +22186,12 @@
 
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(301);
+	var utils = __webpack_require__(302);
 	
 	var has = Object.prototype.hasOwnProperty;
 	
@@ -22233,7 +22358,7 @@
 
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports) {
 
 	/**
@@ -22346,7 +22471,7 @@
 
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseClone = __webpack_require__(161);
@@ -22388,7 +22513,7 @@
 
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22397,15 +22522,15 @@
 	
 	var _ampersandState2 = _interopRequireDefault(_ampersandState);
 	
-	var _ampersandSync = __webpack_require__(287);
+	var _ampersandSync = __webpack_require__(288);
 	
 	var _ampersandSync2 = _interopRequireDefault(_ampersandSync);
 	
-	var _qs = __webpack_require__(299);
+	var _qs = __webpack_require__(300);
 	
 	var _qs2 = _interopRequireDefault(_qs);
 	
-	var _es6Promise = __webpack_require__(307);
+	var _es6Promise = __webpack_require__(308);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22482,7 +22607,7 @@
 	module.exports = Form;
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -22621,7 +22746,7 @@
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(309);
+	    var vertx = __webpack_require__(310);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -23642,10 +23767,10 @@
 	
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(308), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(309), (function() { return this; }())))
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -23831,13 +23956,13 @@
 
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23858,15 +23983,15 @@
 	
 	var _ampersandDom2 = _interopRequireDefault(_ampersandDom);
 	
-	var _ampersandViewSwitcher = __webpack_require__(311);
+	var _ampersandViewSwitcher = __webpack_require__(312);
 	
 	var _ampersandViewSwitcher2 = _interopRequireDefault(_ampersandViewSwitcher);
-	
-	__webpack_require__(312);
 	
 	__webpack_require__(313);
 	
 	__webpack_require__(314);
+	
+	__webpack_require__(315);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24188,7 +24313,7 @@
 	exports.default = MainView;
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports) {
 
 	/*$AMPERSAND_VERSION*/
@@ -24314,7 +24439,7 @@
 
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -24444,7 +24569,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -24641,7 +24766,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -30731,7 +30856,7 @@
 					if (global) {
 						_globals[n] = cl; //provides a way to avoid global namespace pollution. By default, the main classes like TweenLite, Power1, Strong, etc. are added to window unless a GreenSockGlobals is defined. So if you want to have things added to a custom object instead, just do something like window.GreenSockGlobals = {} before loading any GreenSock files. You can even set up an alias like window.GreenSockGlobals = windows.gs = {} so that you can access everything like gs.TweenLite. Also remember that ALL classes are added to the window.com.greensock object (in their respective packages, like com.greensock.easing.Power1, com.greensock.TweenLite, etc.)
 						hasModule = typeof module !== "undefined" && module.exports;
-						if (!hasModule && "function" === "function" && __webpack_require__(315)) {
+						if (!hasModule && "function" === "function" && __webpack_require__(316)) {
 							//AMD
 							!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
 								return cl;
@@ -32599,7 +32724,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -32607,7 +32732,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32723,7 +32848,7 @@
 	}(window, document);
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {"use strict";
@@ -32953,110 +33078,6 @@
 	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)(module)))
-
-/***/ },
-/* 318 */,
-/* 319 */,
-/* 320 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _base = __webpack_require__(281);
-	
-	var _base2 = _interopRequireDefault(_base);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Case = _base2.default.extend({
-		props: {
-			id: ['string', true, ''],
-			filter: ['object', true, function () {
-				return {};
-			}],
-			filteritems: ['array', true, function () {
-				return [];
-			}],
-			isscrollable: ['boolean', true, true],
-			parentview: ['object', true, function () {
-				return {};
-			}],
-			topend: ['boolean', true, true],
-			bottomend: ['boolean', true, false]
-		},
-	
-		events: {
-			'click .Portfolio__filter ul li': 'handleClickFilter'
-		},
-	
-		render: function render() {
-			this.cacheElements({
-				caseBody: '.Case__body',
-				gridFilter: '.Portfolio__filter'
-			});
-			this.filteritems = this.queryAll('.Portfolio__filter li');
-			this.on('change:active', this.onActiveChange, this);
-			TweenMax.to('.check-grey', 0.25, { drawSVG: "0% 0%" });
-	
-			return this;
-		},
-		onActiveChange: function onActiveChange(view, value) {
-			if (!value) {
-				// TweenMax.to(this.caseBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-				// 	this.topend = true;
-				// }});
-			}
-		},
-		handleMouseWheel: function handleMouseWheel(event) {
-			var e = window.event || e || e.originalEvent;
-			var delta = e.wheelDelta || e.deltaY || e.detail;
-			delta = -1 * delta;
-	
-			var self = this;
-			if (delta < 0) {
-				self.bottomend = false;
-				if (self.caseBody._gsTransform && self.caseBody._gsTransform.y + -1 * delta > 0) {
-					if (self.topend && delta < -10) {
-						// self.parentview.previousSlide()
-						self.topend = false;
-					}
-					if (self.caseBody._gsTransform.y == 0) {
-						self.topend = true;
-					} else {
-						TweenMax.to(self.caseBody, 0.1, { y: 0, overwrite: true, onComplete: function onComplete() {
-								self.topend = true;
-							} });
-					}
-				} else {
-					TweenMax.set(this.caseBody, { y: '+=' + -1 * delta });
-				}
-			} else {
-				self.topend = false;
-				var cH = document.body.clientHeight,
-				    bH = self.caseBody.clientHeight,
-				    dH = cH - bH;
-	
-				if (self.caseBody._gsTransform && self.caseBody._gsTransform.y - delta < cH - bH) {
-					if (self.bottomend && delta > 10) {
-						// self.parentview.nextSlide()
-						self.bottomend = false;
-					} else {
-						TweenMax.to(self.caseBody, 0.1, { y: dH, overwrite: true, onComplete: function onComplete() {
-								self.bottomend = true;
-							} });
-					}
-				} else {
-					TweenMax.set(self.caseBody, { y: '-=' + delta });
-				}
-			}
-		}
-	});
-	
-	exports.default = Case;
 
 /***/ }
 /******/ ]);

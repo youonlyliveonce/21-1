@@ -2,6 +2,15 @@
 	background-color: $color-background
 	position: relative
 	overflow: hidden
+	&__background
+		background-color: #fff
+		position: absolute
+		left: 0
+		right: 0
+		width: 100%
+		top: 0
+		bottom: 0
+		opacity: 0
 	&__filter
 		height: $header-height
 		text-align: center
@@ -155,8 +164,13 @@
 			bottom: 50px
 			+transition(all, 0.75s)
 			// background-color: rgba(255,255,255,0.25)
-			background-position: center
-			background-size: cover
+			img
+				width: 100%
+				position: absolute
+				top: 50%
+				left: 50%
+				backface-visibility: hidden
+				+transform(translateX(-50%) translateY(-50%))
 		+bp(medium)
 			float: left
 		width: 100%

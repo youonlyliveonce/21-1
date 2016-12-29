@@ -2,7 +2,7 @@ title: Section Portfolio
 
 pages:
   template:
-    - portfolio
+    - case
 
 fields:
   title: title
@@ -11,3 +11,43 @@ fields:
     type: headline
   section: section
   scrollable: scrollable
+
+  arrangement:
+    label: Anordnung
+    type: structure
+    modalsize: large
+    required: true
+    entry: >
+      <u>Design</u> : {{design}}<br/>
+      <u>First</u> : {{firstitem}}<br/>
+      <u>Second</u> : {{seconditem}}<br/>
+      <u>Third</u> : {{thirditem}}<br/>
+      <u>Fourth</u> : {{fourthitem}}<br/>
+    fields:
+      design:
+        label: Design
+        type: select
+        required: true
+        options:
+          hero: Ein großes Element
+          1-1: Halb und Halb
+          2-1: Links zwei und rechts Halb
+          1-2: Links Halb und rechts zwei
+          3-1: Links drei und rechts Halb
+          1-3: Links Halb und rechts drei
+      firstitem:
+        label: Erstes Element
+        type: select
+        options: children
+      seconditem:
+        label: Zweites Element
+        type: select
+        options: children
+      thirditem:
+        label: Drittes Element
+        type: select
+        options: children
+      fourthitem:
+        label: Viertes Element
+        type: select
+        options: children

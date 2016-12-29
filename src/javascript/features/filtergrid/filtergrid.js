@@ -9,6 +9,7 @@ let Filtergrid = Base.extend({
 		,parentview: ['object', true, function(){ return {} }]
 		,topend: ['boolean', true, true]
 		,bottomend: ['boolean', true, false]
+		,mousebreak: ['boolean', true, false]
 	},
 
 	events: {
@@ -17,6 +18,7 @@ let Filtergrid = Base.extend({
 
 	render: function(){
 		this.cacheElements({
+				gridBackground: '.Portfolio__background',
 				gridBody: '.Portfolio__body',
 				gridFilter: '.Portfolio__filter'
 		});
@@ -28,11 +30,9 @@ let Filtergrid = Base.extend({
 
 	},
 	onActiveChange: function(view, value){
-		if(!value) {
-			// TweenMax.to(this.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-			// 	this.topend = true;
-			// }});
-		}
+		this.mousebreak = false;
+		this.topend = false;
+		this.bottomend = false;
 	},
 	handleClickFilter: function(event){
 		let target = event.delegateTarget,
@@ -81,6 +81,18 @@ let Filtergrid = Base.extend({
 		TweenMax.to(white[0], 0.25, {drawSVG:"0% 100%", delay:0.25});
 		TweenMax.to(grey[0], 0.25, {drawSVG:"0% 0%"});
 	},
+	delayMouseWheelBreak: function(){
+		this.mousebreak = false;
+		TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
+		TweenMax.delayedCall(0.05, this.setMouseWheelBreak, [], this);
+	},
+	setMouseWheelBreak: function(){
+		this.mousebreak = true;
+	},
+	flashBackground: function(){
+		TweenMax.to(this.gridBackground, 0.15, {css: {'opacity':0.1}, yoyo:true, repeat:1});
+	},
+
 	handleMouseWheel: function(event){
 		let e = window.event || e || e.originalEvent;
 		let delta = e.wheelDelta || e.deltaY || e.detail;
@@ -90,39 +102,44 @@ let Filtergrid = Base.extend({
 		if(delta < 0){
 			self.bottomend = false;
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y+(-1*delta) > 0){
-					if(self.topend && delta<-19){
-						self.parentview.previousSlide()
-						self.topend = false
-					}
-					if(self.gridBody._gsTransform.y == 0){
+					if(self.topend){
+						if(self.mousebreak){
+							self.parentview.previousSlide();
+						} else {
+							self.delayMouseWheelBreak();
+						}
+					} else if(!self.topend){
 						self.topend = true;
-					} else {
-						TweenMax.to(self.gridBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-							self.topend = true;
-						}});
+						TweenMax.set(this.gridBody, {y:0});
+						self.flashBackground();
+						self.delayMouseWheelBreak();
 					}
 			} else {
+				self.mousebreak = false;
 				TweenMax.set(this.gridBody, {y:`+=${-1*delta}`});
 			}
 		} else {
 			self.topend = false;
+
 			let cH = document.body.clientHeight - self.gridFilter.clientHeight,
 					bH = self.gridBody.clientHeight,
 					dH = cH-bH;
 
 			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta < cH-bH){
-				if(self.bottomend && delta>19){
-					self.parentview.nextSlide()
-					self.bottomend = false;
-				}
-				if(self.gridBody._gsTransform.y == dH){
+				if(self.bottomend){
+					if(self.mousebreak){
+						self.parentview.nextSlide();
+					} else {
+						self.delayMouseWheelBreak();
+					}
+				} else if(!self.bottomend) {
 					self.bottomend = true;
-				} else {
-					TweenMax.to(self.gridBody, 0.1, {y:dH, overwrite:true, onComplete:function(){
-							self.bottomend = true;
-					}});
+					TweenMax.set(self.gridBody, {y:dH});
+					self.flashBackground();
+					self.delayMouseWheelBreak();
 				}
 			} else {
+				self.mousebreak = false;
 				TweenMax.set(self.gridBody, {y:`-=${delta}`});
 			}
 		}

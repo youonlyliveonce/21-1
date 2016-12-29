@@ -7,7 +7,7 @@ let Slider = Base.extend({
 		,isscrollable: ['boolean', true, true]
 		,active: ['boolean', true, false]
 		,parentview: ['object', true, function(){ return {} }]
-		,swiper: ['object', true, function(){ return {} }]
+		,swiper: ['object', true, function(){ return undefined }]
 		,layer: ['array', true, function(){ return [] }]
 		,activelayer: ['object', true, function(){ return {} }]
 		,settings: ['object', true, function(){ return {
@@ -25,23 +25,36 @@ let Slider = Base.extend({
 	},
 
 	render: function(){
-		let self = this;
 		this.cacheElements({ });
 		this.on('change:active', this.onActiveChange, this);
-		console.log(self.id);
 		TweenMax.delayedCall(0.15, function(){
-				self.swiper = new Swiper('#'+self.id+' .swiper-container', self.settings);
-		})
-
+				this.swiper = new Swiper('#'+this.id+' .swiper-container', this.settings);
+				if(this.active){
+					this.bindChangeStart();
+				}
+		}, [], this);
 		this.layer = this.queryAll('#'+this.id+' .Slider__layer div');
 		return this;
 	},
 	onActiveChange: function(view, value){
 		let self = this;
 		if(value){
+			TweenMax.delayedCall(1.25, function(){
+				if(this.active){
+					this.bindChangeStart();
+				}
+			}, [], this);
+		} else {
+			self.layer[this.swiper.realIndex].classList.remove('active');
+			this.swiper.off('slideChangeStart');
+		}
+	},
+	bindChangeStart: function(){
+		let self = this;
+		if(self.swiper != undefined){
 			self.activelayer = self.layer[self.swiper.realIndex];
 			self.gfxIn();
-			this.swiper.on('slideChangeStart', function (event) {
+			self.swiper.on('slideChangeStart', function (event) {
 				for(let i=0; i<self.layer.length; i++){
 					if(i == event.realIndex){
 							self.activelayer = self.layer[i]
@@ -51,9 +64,6 @@ let Slider = Base.extend({
 					}
 				}
 			});
-		} else {
-			self.layer[this.swiper.realIndex].classList.remove('active');
-			this.swiper.off('slideChangeStart');
 		}
 	},
 	gfxIn: function(){

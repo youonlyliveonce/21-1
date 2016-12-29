@@ -122,8 +122,10 @@
 				vertical-align: top;
 				position: absolute;
 				display: block;
-				top: 33.333%;
-				height: 33.333%;
+				/*top: 33.333%;
+				height: 33.333%;*/
+				top: 50%;
+				height: 1px;
 
 				background-color: #fff;
 				animation: loader-inner 8s infinite ease;

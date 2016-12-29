@@ -61,10 +61,6 @@ let Content = PageView.extend({
 
 		this.updateActiveView();
 
-		TweenMax.delayedCall(0.8, function(){
-				self.bindSlider('.swiper-container', 'basic');
-		});
-
 		// this.hammerSwipe = new Hammer(this.el);
 		// this.hammerSwipe.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 		// this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
