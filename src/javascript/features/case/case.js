@@ -3,35 +3,32 @@ import Base from '../base';
 let Case = Base.extend({
 	props: {
 		id: ['string', true, '']
-		,filter: ['object', true, function(){ return {}; }]
-		,filteritems: ['array', true, function(){ return []; }]
 		,isscrollable: ['boolean', true, true]
 		,parentview: ['object', true, function(){ return {} }]
 		,topend: ['boolean', true, true]
 		,bottomend: ['boolean', true, false]
 	},
 
-	events: {
-		'click .Portfolio__filter ul li':'handleClickFilter'
-	},
+	events: { },
 
 	render: function(){
 		this.cacheElements({
 				caseBody: '.Case__body',
-				gridFilter: '.Portfolio__filter'
+				ratio : '.Videobox__background'
 		});
-		this.filteritems = this.queryAll('.Portfolio__filter li');
 		this.on('change:active', this.onActiveChange, this);
-		TweenMax.to('.check-grey', 0.25, {drawSVG:"0% 0%"});
 
 		return this;
 
 	},
 	onActiveChange: function(view, value){
-		if(!value) {
-			// TweenMax.to(this.caseBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-			// 	this.topend = true;
-			// }});
+	},
+	handleResize: function(){
+		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
+		if(this.ratio != undefined){
+			let newWidth = this.ratio.clientWidth,
+					newHeight = newWidth/16*9;
+			this.ratio.setAttribute("style", "height:"+newHeight+"px;");
 		}
 	},
 	handleMouseWheel: function(event){

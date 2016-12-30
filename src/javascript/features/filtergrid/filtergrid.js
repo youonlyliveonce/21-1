@@ -84,7 +84,7 @@ let Filtergrid = Base.extend({
 	delayMouseWheelBreak: function(){
 		this.mousebreak = false;
 		TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
-		TweenMax.delayedCall(0.05, this.setMouseWheelBreak, [], this);
+		TweenMax.delayedCall(0.1, this.setMouseWheelBreak, [], this);
 	},
 	setMouseWheelBreak: function(){
 		this.mousebreak = true;

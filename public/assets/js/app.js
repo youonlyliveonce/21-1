@@ -20541,7 +20541,7 @@
 		delayMouseWheelBreak: function delayMouseWheelBreak() {
 			this.mousebreak = false;
 			TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
-			TweenMax.delayedCall(0.05, this.setMouseWheelBreak, [], this);
+			TweenMax.delayedCall(0.1, this.setMouseWheelBreak, [], this);
 		},
 		setMouseWheelBreak: function setMouseWheelBreak() {
 			this.mousebreak = true;
@@ -20757,12 +20757,6 @@
 	var Case = _base2.default.extend({
 		props: {
 			id: ['string', true, ''],
-			filter: ['object', true, function () {
-				return {};
-			}],
-			filteritems: ['array', true, function () {
-				return [];
-			}],
 			isscrollable: ['boolean', true, true],
 			parentview: ['object', true, function () {
 				return {};
@@ -20771,26 +20765,24 @@
 			bottomend: ['boolean', true, false]
 		},
 	
-		events: {
-			'click .Portfolio__filter ul li': 'handleClickFilter'
-		},
+		events: {},
 	
 		render: function render() {
 			this.cacheElements({
 				caseBody: '.Case__body',
-				gridFilter: '.Portfolio__filter'
+				ratio: '.Videobox__background'
 			});
-			this.filteritems = this.queryAll('.Portfolio__filter li');
 			this.on('change:active', this.onActiveChange, this);
-			TweenMax.to('.check-grey', 0.25, { drawSVG: "0% 0%" });
 	
 			return this;
 		},
-		onActiveChange: function onActiveChange(view, value) {
-			if (!value) {
-				// TweenMax.to(this.caseBody, 0.1, {y:0, overwrite:true, onComplete:function(){
-				// 	this.topend = true;
-				// }});
+		onActiveChange: function onActiveChange(view, value) {},
+		handleResize: function handleResize() {
+			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
+			if (this.ratio != undefined) {
+				var newWidth = this.ratio.clientWidth,
+				    newHeight = newWidth / 16 * 9;
+				this.ratio.setAttribute("style", "height:" + newHeight + "px;");
 			}
 		},
 		handleMouseWheel: function handleMouseWheel(event) {

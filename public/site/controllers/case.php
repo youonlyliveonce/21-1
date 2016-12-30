@@ -13,7 +13,9 @@ return function($site, $pages, $page) {
 	$isslideshow = sizeof($slides) > 1;
 
 	// var für Moodboard
+	$gallery = $page->moodboard()->yaml();
+	$hasmoodboard = sizeof($gallery) > 1;
 
 
-	return compact('slides', 'isslideshow', 'hasvideo', 'parentlink');
+	return compact('slides', 'isslideshow', 'hasvideo', 'hasmoodboard', 'gallery', 'parentlink');
 };
