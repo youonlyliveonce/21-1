@@ -16,10 +16,13 @@
 					<div class="swiper-wrapper">
 					<?php foreach($slides as $slide): ?>
 						<div class="swiper-slide">
-							<?php if($image = $page->image($slide['img'])) echo $image->html() ?>
+							<?php if($image = $page->image($slide['img'])) echo thumb($image, array('width' => 1010, 'height' => 564, 'crop' => true)); ?>
 						</div>
 					<?php endforeach; ?>
 					</div>
+					<div class="swiper-pagination"></div>
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
 				</div>
 			</div>
 		<?php else: ?>
@@ -65,7 +68,14 @@
 									<figcaption><?= $gallery[$index]['caption'] ?></figcaption>
 								<?php endif; ?>
 							<?php endif; ?>
-							
+							<?php if($gallery[$index]['headline'] != null): ?>
+								<div>
+									<article>
+										<h3><?= $gallery[$index]['headline'] ?></h3>
+										<?= kirbytext($gallery[$index]['copy']) ?>
+									</article>
+								</div>
+							<?php endif; ?>
 
 						</div>
 					</div>

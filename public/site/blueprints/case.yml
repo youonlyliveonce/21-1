@@ -82,7 +82,6 @@ fields:
       img:
         label: Image
         type: image
-        required: true
       caption:
         label: Caption
         type: text
