@@ -11,6 +11,7 @@ let Slider = Base.extend({
 		,activeindex: ['number', true, -1]
 		,layer: ['array', true, function(){ return [] }]
 		,navigation: ['array', true, function(){ return [] }]
+		,textbox: ['object', true, function(){ return undefined }]
 		,settings: ['object', true, function(){ return {
 						speed: 600,
 						// effect: 'fade',
@@ -85,12 +86,14 @@ let Slider = Base.extend({
 		}}, 0.15);
 	},
 	setActiveIndex: function(newIndex){
+		console.log("setActiveIndex: ", newIndex);
 		if(this.activeindex != -1){
 			this.layer[this.activeindex].classList.remove('active');
 			this.navigation[this.activeindex].classList.remove('active');
 		}
 		this.activeindex = newIndex;
 		this.gfxIn();
+		this.textbox = (this.layer[this.activeindex].getElementsByClassName('Textbox__body')[0] == undefined) ? [] : this.layer[this.activeindex].getElementsByClassName('Textbox__body')[0];
 	},
 	handleResize: function(){
 		var newWidth = document.body.clientHeight/9*16,
@@ -100,6 +103,7 @@ let Slider = Base.extend({
 			newHeight = document.body.clientWidth/16*9;
 		}
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
+		// resize all textboxen
 		// this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
 	},
 	handleRightClick: function(){
@@ -114,7 +118,6 @@ let Slider = Base.extend({
 	handleClickContentnavi: function(event){
 		event.preventDefault();
 		this.navigationContainer.classList.add('open');
-
 	},
 	handleClickContentnaviClose: function(event){
 		this.navigationContainer.classList.remove('open');
@@ -130,9 +133,29 @@ let Slider = Base.extend({
 		let e = window.event || e || e.originalEvent;
 		let value = e.wheelDelta || -e.deltaY || -e.detail;
 		let delta = Math.max(-20, Math.min(20, value));
-		console.log(event);
-		if(event.target.offsetParent.classList.contains('.Textbox__wrapper')){
-			console.log("Textbox");
+
+		if(event.target && event.target.offsetParent &&
+			( event.target.offsetParent.classList.contains('Textbox__wrapper') 
+				|| event.target.offsetParent.classList.contains('Textbox__body')
+				|| event.target.classList.contains('Textbox__body')
+				|| event.target.classList.contains('Textbox__wrapper') ) ){
+			if(delta < 0){
+				if(this.textbox._gsTransform && this.textbox._gsTransform.y+(-1*delta) > 0){
+					TweenMax.set(this.textbox, {y:0});
+				} else {
+					TweenMax.set(this.textbox, {y:`+=${-1*delta}`});
+				}
+			} else {
+				let cH = this.textbox.parentNode.clientHeight - this.textbox.parentNode.parentNode.clientHeight,
+						bH = this.textbox.parentNode.parentNode.clientHeight,
+						dH = cH-bH;
+				if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta < dH){
+					TweenMax.set(this.textbox, {y:dH});
+				} else {
+					TweenMax.set(this.textbox, {y:`-=${delta}`});
+				}
+			}
+			// TweenMax.set(this.textbox, {y:`-=${delta}`});
 		} else {
 			if(delta < -19){
 				this.parentview.nextSlide()
