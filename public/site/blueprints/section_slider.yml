@@ -12,11 +12,16 @@ fields:
     modalsize: large
     required: true
     entry: >
+      Label : {{label}}<br/>
       <u>Titel</u> : {{title}}<br/>
       <u>Subtitel</u> : {{subtitle}}<br/>
       <u>Beschreibung</u> : {{description}}<br/>
+      <u>Textbox</u> : {{textbox}}<br/>
       <u>Image</u> : {{background}}<br/>
     fields:
+      label:
+        label: Navigationtitle
+        type: text
       title:
         label: Titel
         type: text
@@ -26,6 +31,9 @@ fields:
       description:
         label: Beschreibung
         type: text
+      textbox:
+        label: Textbox
+        type: textarea
       svg:
         label: svg
         type: textarea

@@ -13,20 +13,45 @@
 						<h1><?php foreach($title as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h1>
 						<h2><?php foreach($subtitle as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h2>
 						<h3><?php foreach($description as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h3>
+						<?php if($slide->textbox()->isNotEmpty()): ?>
+							<div class="Textbox">
+								<div class="Textbox__wrapper">
+									<div class="Textbox__body">
+										<?= $slide->textbox()->markdown() ?>
+									</div>
+								</div>
+								<div class="Textbox__scroller"><span></span></div>
+							</div>
+						<?php endif; ?>
 						<?= $slide->svg(); ?>
 					</div>
 				<?php endforeach; ?>
 			</div>
-				<div class="swiper-wrapper">
-				<?php foreach($slides as $slide): ?>
-					<div class="swiper-slide">
-						<div class="Slider__background" style="background-image:url(<?= $slide->background()->toFile()->url(); ?>)"> </div>
-					</div>
-				<?php endforeach; ?>
+			<div class="swiper-wrapper">
+			<?php foreach($slides as $slide): ?>
+				<div class="swiper-slide">
+					<div class="Slider__background" style="background-image:url(<?= $slide->background()->toFile()->url(); ?>)"> </div>
 				</div>
-
+			<?php endforeach; ?>
 			</div>
-		<?php snippet('right') ?>
-		<?php snippet('left') ?>
+			<div class="swiper-pagination"></div>
+
+		</div>
+		<div class="Contentnavigation">
+			<div class="Contentnavigation__background"></div>
+			<div class="Button--contentnavi">
+				<span></span>
+			</div>
+			<div class="Contentnavigation__body">
+				<ul>
+					<?php foreach($slides as $index => $slide): ?>
+						<li data-index="<?= $index ?>">
+							<span><?= thumb($slide->background()->toFile(), array('width' => 160, 'height' => 90, 'crop' => true)); ?></span>
+							<?= $slide->label(); ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		</div>
 		<?php snippet('down') ?>
 </div>

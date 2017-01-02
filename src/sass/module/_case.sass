@@ -1,52 +1,5 @@
 .Case
 	background-color: $color-background
-	.swiper-button-next
-		&:hover
-			right: 5px
-		right: 0px
-		+transform(translateX(55%))
-
-	.swiper-button-prev
-		&:hover
-			left: 5px
-		background-position: 90% 50%
-		left: 0px
-		+transform(translateX(-55%))
-	.swiper-pagination
-		.swiper-pagination-bullet
-			position: relative
-			background-color: black
-			opacity: 1
-			width: 17px
-			height: 23px
-			border-radius: 0
-			margin: 0
-			&:first-child
-				width: 23px
-				&:after
-					margin: -4px 0 0 -1px
-			&:last-child
-				width: 23px
-				&:after
-					margin: -4px 0 0 -6px
-			&:after
-				content: ''
-				position: absolute
-				top: 50%
-				left: 50%
-				margin: -4px 0 0 -4px
-				width: 8px
-				height: 8px
-				display: inline-block
-				border-radius: 100%
-				background: #fff
-				opacity: 1
-			&-active
-				&:after
-					background-color: $color-selection
-					opacity: 1
-
-
 	iframe
 		position: absolute
 		top: 0
@@ -69,6 +22,21 @@
 		padding: 0 10px
 		img
 			width: 100%
+	&__slideshow
+		position: relative
+		.swiper-button-next
+			&:hover
+				right: 5px
+			right: 0px
+			+transform(translateX(100%))
+
+		.swiper-button-prev
+			&:hover
+				left: 5px
+			background-position: 90% 50%
+			left: 0px
+			+transform(translateX(-100%))
+
 	&__info
 		margin: 10px 0
 		height: 120px
@@ -157,8 +125,15 @@
 			line-height: 1.2
 			word-wrap: break-word
 		h2
-			margin-top: 0.85em
-			margin-bottom: 1.65em
+			+fontserifbold
+			font-size: 1.4em
+			letter-spacing: 0
+			font-style: italic
+			margin-top: 0.45em
+			margin-bottom: 1em
+		p
+			+fontserif
+			letter-spacing: 0.03em
 	&__board
 		padding: $gap-size-large 0
 		+bp(medium)

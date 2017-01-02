@@ -8,24 +8,33 @@ let Slider = Base.extend({
 		,active: ['boolean', true, false]
 		,parentview: ['object', true, function(){ return {} }]
 		,swiper: ['object', true, function(){ return undefined }]
+		,activeindex: ['number', true, -1]
 		,layer: ['array', true, function(){ return [] }]
-		,activelayer: ['object', true, function(){ return {} }]
+		,navigation: ['array', true, function(){ return [] }]
 		,settings: ['object', true, function(){ return {
 						speed: 600,
 						// effect: 'fade',
-						loop: true
+						loop: true,
+						pagination: '.Slider .swiper-pagination',
+						paginationClickable: true
 					}
 		}]
 	},
 
 	events: {
-		'click .Button--right':'handleRightClick',
-		'click .Button--left':'handleLeftClick',
-		'mousemove .swiper-container':'handleMouseMove'
+		// 'click .Button--right':'handleRightClick',
+		// 'click .Button--left':'handleLeftClick',
+		'mousemove .swiper-container':'handleMouseMove',
+		'click .Contentnavigation li':'handleClickContentnaviItem',
+		'click .Contentnavigation':'handleClickContentnavi',
+		'click .Contentnavigation__background':'handleClickContentnaviClose',
+		'click .Button--contentnavi':'handleClickContentnavi',
 	},
 
 	render: function(){
-		this.cacheElements({ });
+		this.cacheElements({
+			'navigationContainer': '.Contentnavigation'
+		});
 		this.on('change:active', this.onActiveChange, this);
 		TweenMax.delayedCall(0.15, function(){
 				this.swiper = new Swiper('#'+this.id+' .swiper-container', this.settings);
@@ -34,10 +43,10 @@ let Slider = Base.extend({
 				}
 		}, [], this);
 		this.layer = this.queryAll('#'+this.id+' .Slider__layer div');
+		this.navigation = this.queryAll('#'+this.id+' .Contentnavigation li');
 		return this;
 	},
 	onActiveChange: function(view, value){
-		let self = this;
 		if(value){
 			TweenMax.delayedCall(1.25, function(){
 				if(this.active){
@@ -45,35 +54,25 @@ let Slider = Base.extend({
 				}
 			}, [], this);
 		} else {
-			self.layer[this.swiper.realIndex].classList.remove('active');
+			this.layer[this.swiper.realIndex].classList.remove('active');
+			this.navigation[this.swiper.realIndex].classList.remove('active');
 			this.swiper.off('slideChangeStart');
 		}
 	},
 	bindChangeStart: function(){
 		let self = this;
 		if(self.swiper != undefined){
-			self.activelayer = self.layer[self.swiper.realIndex];
-			self.gfxIn();
+			self.setActiveIndex(self.swiper.realIndex);
 			self.swiper.on('slideChangeStart', function (event) {
-				for(let i=0; i<self.layer.length; i++){
-					if(i == event.realIndex){
-							self.activelayer = self.layer[i]
-							self.gfxIn();
-					} else {
-						self.layer[i].classList.remove('active');
-					}
-				}
+				self.setActiveIndex(event.realIndex);
 			});
 		}
 	},
 	gfxIn: function(){
-		this.activelayer.classList.add('active');
-		// this.gfxLetterIn(this.activelayer);
-		this.gfxLinesIn(this.activelayer);
+		this.layer[this.activeindex].classList.add('active');
+		this.navigation[this.activeindex].classList.add('active');
+		this.gfxLinesIn(this.layer[this.activeindex]);
 	},
-	// gfxLetterIn: function(node){
-	// 	let letters = node.getElementsByClassName('letter');
-	// },
 	gfxLinesIn: function(node){
 		let lines = node.getElementsByTagName('line');
 		TweenMax.set(lines, {drawSVG:"0% 0%"});
@@ -84,6 +83,14 @@ let Slider = Base.extend({
 				TweenMax.to(this.target, 1.2, {drawSVG:`0% ${tlength}%`});
 			}});
 		}}, 0.15);
+	},
+	setActiveIndex: function(newIndex){
+		if(this.activeindex != -1){
+			this.layer[this.activeindex].classList.remove('active');
+			this.navigation[this.activeindex].classList.remove('active');
+		}
+		this.activeindex = newIndex;
+		this.gfxIn();
 	},
 	handleResize: function(){
 		var newWidth = document.body.clientHeight/9*16,
@@ -102,6 +109,37 @@ let Slider = Base.extend({
 		this.swiper.slidePrev();
 	},
 	handleMouseMove: function(event){
+
+	},
+	handleClickContentnavi: function(event){
+		event.preventDefault();
+		this.navigationContainer.classList.add('open');
+
+	},
+	handleClickContentnaviClose: function(event){
+		this.navigationContainer.classList.remove('open');
+	},
+	handleClickContentnaviItem: function(event){
+		let newIndex = Number(event.delegateTarget.getAttribute('data-index'))+1;
+		TweenMax.delayedCall(1.25, function(){
+			this.navigationContainer.classList.remove('open');
+		}, [], this);
+		this.swiper.slideTo(newIndex);
+	},
+	handleMouseWheel: function(event){
+		let e = window.event || e || e.originalEvent;
+		let value = e.wheelDelta || -e.deltaY || -e.detail;
+		let delta = Math.max(-20, Math.min(20, value));
+		console.log(event);
+		if(event.target.offsetParent.classList.contains('.Textbox__wrapper')){
+			console.log("Textbox");
+		} else {
+			if(delta < -19){
+				this.parentview.nextSlide()
+			} else if(delta > 19) {
+				this.parentview.previousSlide()
+			}
+		}
 
 	}
 

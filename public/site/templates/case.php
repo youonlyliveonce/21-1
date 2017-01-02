@@ -21,9 +21,9 @@
 					<?php endforeach; ?>
 					</div>
 					<div class="swiper-pagination"></div>
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
 				</div>
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
 			</div>
 		<?php else: ?>
 			<!-- Single Image -->
@@ -43,7 +43,7 @@
 			<?php if(!$page->subline()->empty()) :?>
 				<h2><?= $page->subline(); ?></h2>
 			<?php endif; ?>
-			<?= $page->description()->kirby(); ?>
+			<?= $page->description()->markdown(); ?>
 		</div>
 	</div>
 	<!-- Moodboard -->

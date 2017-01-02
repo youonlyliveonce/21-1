@@ -13,6 +13,9 @@
 				h1,h2,h3
 					span
 						+transform(translateX(0%))
+				.Textbox
+					&__wrapper
+						+transform(translateX(0%))
 			svg
 				opacity: 0
 				position: absolute
@@ -62,44 +65,47 @@
 					>span
 						display: block
 						+transform(translateX(-101%))
+			.Textbox
+				&__wrapper
+					+transition(all, 1s, cubic-bezier(0.000, 0.000, 0.000, 1.005), 0.75s)
+					+transform(translateX(-101%))
+
+.swiper-button-prev,
+.swiper-button-next
+	background-position: 10% 50%
+	height: 40px
+	width: 40px
+	margin-top: -20px
+	+bp(large)
+		background-size: contain
+		height: 60px
+		width: 140px
+		margin-top: -30px
+	top: 50%
+
+	+transition(all, 0.25s)
+.swiper-button-next
+	&:hover
+		right: 5px
+	right: 0px
+	+transform(translateX(55%))
+
+.swiper-button-prev
+	&:hover
+		left: 5px
+	background-position: 90% 50%
+	left: 0px
+	+transform(translateX(-55%))
 
 .swiper-container
 	width: 100%
 	height: 100%
-	.swiper-button-prev,
-	.swiper-button-next
-		background-color: rgba(#000, 1)
-		background-size: 20px 12px
-		background-position: 10% 50%
-		border-radius: 100%
-		height: 40px
-		width: 40px
-		margin-top: -20px
-		+bp(large)
-			background-size: 40px 24px
-			height: 80px
-			width: 80px
-			margin-top: -40px
-		top: 50%
-
-		+transition(all, 0.25s)
-
-	.swiper-button-next
-		&:hover
-			right: 5px
-		right: 0px
-		+transform(translateX(55%))
-
-	.swiper-button-prev
-		&:hover
-			left: 5px
-		background-position: 90% 50%
-		left: 0px
-		+transform(translateX(-55%))
 
 	.swiper-pagination
-		left: 0
-		right: 0
+		z-index: 99999
+		bottom: 70px
+		.swiper-pagination-bullet
+			background-color: transparent
 
 	.swiper-slide
 		margin: 0 !important

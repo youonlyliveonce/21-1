@@ -27,7 +27,6 @@ let Case = Base.extend({
 				caseBody: '.Case__body',
 				ratio : '.Videobox__background'
 		});
-		console.log(this.queryAll('#'+this.id+' .swiper-slide').length);
 		if(this.queryAll('#'+this.id+' .swiper-slide').length > 1){
 			TweenMax.delayedCall(0.15, function(){
 					this.swiper = new Swiper('#'+this.id+' .swiper-container', this.settings);

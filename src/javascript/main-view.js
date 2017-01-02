@@ -153,7 +153,6 @@ var MainView = View.extend({
 		*/
 		handleUpdateView: function(){
 			this.scrollTo();
-			// this.overlayerTo();
 		},
 
 		/*
@@ -235,7 +234,7 @@ var MainView = View.extend({
 						// CM.App.removeEvents();
 						self.pageSwitcher.current.updateActiveView();
 						self.updateActiveNav();
-						TweenMax.to(this.main, duration, {y:-1*id.offsetTop, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+						TweenMax.to(this.main, duration, {y:-1*id.offsetTop, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 							if(duration == 0) self.isSwiping = false;
 							TweenMax.delayedCall(0.4, function(){
 								self.isSwiping = false;
@@ -248,7 +247,7 @@ var MainView = View.extend({
 					// CM.App.removeEvents();
 					self.pageSwitcher.current.updateActiveView();
 					self.updateActiveNav();
-					TweenMax.to(this.main, duration, {y:0, overwrite:true, ease:Power2.easeOut, onComplete:function(){
+					TweenMax.to(this.main, duration, {y:0, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 						if(duration == 0) self.isSwiping = false;
 						TweenMax.delayedCall(0.4, function(){
 							self.isSwiping = false;
@@ -257,29 +256,6 @@ var MainView = View.extend({
 					}});
 				}
 		},
-		overlayerTo: function (){
-			let self = this,
-					body = document.querySelector('body');
-			if (CM.App._params != {} && CM.App._params.overlayer != null){
-					let url = CM.App._params.overlayer,
-							xhr = new XMLHttpRequest();
-					dom.addClass(body, 'Overlayer_open');
-					dom.addClass(self.overlayer, 'active');
-
-					xhr.open('GET', url);
-					xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-					xhr.onload = function () {
-						let data = xhr.responseText;
-						dom.removeClass(self.overlayerWrapper, 'Overlayer-loader');
-						self.overlayerInner.innerHTML = data;
-					}
-					xhr.send("action=read");
-			} else {
-				dom.removeClass(body, 'Overlayer_open');
-				dom.removeClass(self.overlayer, 'active');
-				self.overlayerInner.innerHTML = "";
-			}
-		},
 		updateActiveNav: function () {
 				let path = window.location.pathname.slice(1),
 						topnavi = this.queryAll('.Navigation a[href]'),
@@ -287,7 +263,6 @@ var MainView = View.extend({
 						if (CM.App._params != {} && CM.App._params.section != null){
 							path = `${path}?section=${CM.App._params.section}`;
 						}
-						console.log(path);
 				if(path == this.pageSwitcher.current.model.lang + "/"){
 
 					topnavi.forEach(function (aTag) {

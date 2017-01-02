@@ -1,0 +1,34 @@
+.Textbox
+	position: absolute
+	color: white
+	top: 20%
+	left: 55%
+	width: 37%
+	height: 60%
+	z-index: 103
+	overflow: hidden
+	+fontserif()
+	strong
+		+fontserifbold()
+		font-style: italic
+		text-transform: uppercase
+		font-size: 1.2em
+	&__wrapper
+		position: absolute
+		padding: 70px
+		overflow: hidden
+		background-color: black
+	&__scroller
+		position: absolute
+		right: 30px
+		top: 70px
+		bottom: 70px
+		width: 2px
+		background-color: $color-selection
+		span
+			width: 4px
+			background-color: white
+			height: 10px
+			position: absolute
+			display: block
+			margin-left: -1px
