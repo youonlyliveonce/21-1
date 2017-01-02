@@ -19,13 +19,20 @@ let Base = View.extend({
 		console.log(value)
 	},
 	handleMouseWheel: function(event){
-		let e = window.event || e || e.originalEvent;
-		let value = e.wheelDelta || -e.deltaY || -e.detail;
-		let delta = Math.max(-20, Math.min(20, value));
+		let e = window.event || event || event.originalEvent;
+		let delta = e.deltaY || e.wheelDelta;
+
+		// FF Y-Achse
+		if(e.axis == 2){
+			delta = 2*e.detail;
+		}
+		console.log(e.deltaY);
+		console.log(delta, e);
+
 		if(delta < -19){
-			this.parentview.nextSlide()
-		} else if(delta > 19) {
 			this.parentview.previousSlide()
+		} else if(delta > 19) {
+			this.parentview.nextSlide()
 		}
 	}
 })

@@ -12,10 +12,18 @@ fields:
     label: Author
     type:  text
 
-  description:
-    label: Description
+  impressum:
+    label: Impressum
     type:  textarea
 
-  copyright:
-    label: Copyright
+  legal:
+    label: Datenschutz
+    type:  textarea
+
+  urheber:
+    label: Urheberrecht
+    type:  textarea
+
+  haftung:
+    label: Haftungsausschluss
     type:  textarea

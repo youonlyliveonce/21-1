@@ -81,10 +81,10 @@ let Filtergrid = Base.extend({
 		TweenMax.to(white[0], 0.25, {drawSVG:"0% 100%", delay:0.25});
 		TweenMax.to(grey[0], 0.25, {drawSVG:"0% 0%"});
 	},
-	delayMouseWheelBreak: function(){
+	delayMouseWheelBreak: function(delay){
 		this.mousebreak = false;
 		TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
-		TweenMax.delayedCall(0.1, this.setMouseWheelBreak, [], this);
+		TweenMax.delayedCall(delay, this.setMouseWheelBreak, [], this);
 	},
 	setMouseWheelBreak: function(){
 		this.mousebreak = true;
@@ -94,49 +94,56 @@ let Filtergrid = Base.extend({
 	},
 
 	handleMouseWheel: function(event){
-		let e = window.event || e || e.originalEvent;
-		let delta = e.wheelDelta || e.deltaY || e.detail;
-				delta = -1*delta;
-
 		let self = this;
+		let e = window.event || event || event.originalEvent;
+		let delta = e.deltaY || e.wheelDelta;
+		let breakDelay = 0.1;
+
+		// FF Y-Achse
+		if(e.axis == 2){
+			delta = 3*e.detail;
+			breakDelay = 0.3;
+		}
+
 		if(delta < 0){
 			self.bottomend = false;
-			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y+(-1*delta) > 0){
+			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta > 0){
 					if(self.topend){
 						if(self.mousebreak){
 							self.parentview.previousSlide();
 						} else {
-							self.delayMouseWheelBreak();
+							self.delayMouseWheelBreak(breakDelay);
 						}
 					} else if(!self.topend){
-						self.topend = true;
+						self.delayMouseWheelBreak(breakDelay);
 						TweenMax.set(this.gridBody, {y:0});
 						self.flashBackground();
-						self.delayMouseWheelBreak();
+						self.topend = true;
 					}
 			} else {
 				self.mousebreak = false;
-				TweenMax.set(this.gridBody, {y:`+=${-1*delta}`});
+				TweenMax.set(this.gridBody, {y:`-=${delta}`});
 			}
-		} else {
+		} else if(delta > 0) {
+			// console.log("scroll gen bottom", self.topend);
 			self.topend = false;
-
 			let cH = document.body.clientHeight - self.gridFilter.clientHeight,
 					bH = self.gridBody.clientHeight,
 					dH = cH-bH;
 
-			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta < cH-bH){
+			if(self.gridBody._gsTransform && self.gridBody._gsTransform.y-delta <= cH-bH){
 				if(self.bottomend){
 					if(self.mousebreak){
 						self.parentview.nextSlide();
 					} else {
-						self.delayMouseWheelBreak();
+						self.delayMouseWheelBreak(breakDelay);
 					}
 				} else if(!self.bottomend) {
+					self.delayMouseWheelBreak(breakDelay);
 					self.bottomend = true;
 					TweenMax.set(self.gridBody, {y:dH});
 					self.flashBackground();
-					self.delayMouseWheelBreak();
+
 				}
 			} else {
 				self.mousebreak = false;

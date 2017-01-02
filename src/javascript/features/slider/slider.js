@@ -86,7 +86,6 @@ let Slider = Base.extend({
 		}}, 0.15);
 	},
 	setActiveIndex: function(newIndex){
-		console.log("setActiveIndex: ", newIndex);
 		if(this.activeindex != -1){
 			this.layer[this.activeindex].classList.remove('active');
 			this.navigation[this.activeindex].classList.remove('active');
@@ -104,6 +103,7 @@ let Slider = Base.extend({
 		}
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
 		// resize all textboxen
+
 		// this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
 	},
 	handleRightClick: function(){
@@ -130,9 +130,13 @@ let Slider = Base.extend({
 		this.swiper.slideTo(newIndex);
 	},
 	handleMouseWheel: function(event){
-		let e = window.event || e || e.originalEvent;
-		let value = e.wheelDelta || -e.deltaY || -e.detail;
-		let delta = Math.max(-20, Math.min(20, value));
+		let e = window.event || event || event.originalEvent;
+		let delta = e.deltaY || e.wheelDelta;
+
+		// FF Y-Achse
+		if(e.axis == 2){
+			delta = 3*e.detail;
+		}
 
 		if(event.target && event.target.offsetParent &&
 			( event.target.offsetParent.classList.contains('Textbox__wrapper') 
@@ -140,27 +144,27 @@ let Slider = Base.extend({
 				|| event.target.classList.contains('Textbox__body')
 				|| event.target.classList.contains('Textbox__wrapper') ) ){
 			if(delta < 0){
-				if(this.textbox._gsTransform && this.textbox._gsTransform.y+(-1*delta) > 0){
-					TweenMax.set(this.textbox, {y:0});
+				if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta > 0){
+					TweenMax.set(this.textbox, {y: 0});
 				} else {
-					TweenMax.set(this.textbox, {y:`+=${-1*delta}`});
+					TweenMax.set(this.textbox, {y:`-=${delta}`});
 				}
-			} else {
+			} else if (delta > 0) {
 				let cH = this.textbox.parentNode.clientHeight - this.textbox.parentNode.parentNode.clientHeight,
 						bH = this.textbox.parentNode.parentNode.clientHeight,
 						dH = cH-bH;
+
 				if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta < dH){
-					TweenMax.set(this.textbox, {y:dH});
+					TweenMax.set(this.textbox, {y: dH});
 				} else {
 					TweenMax.set(this.textbox, {y:`-=${delta}`});
 				}
 			}
-			// TweenMax.set(this.textbox, {y:`-=${delta}`});
 		} else {
 			if(delta < -19){
-				this.parentview.nextSlide()
-			} else if(delta > 19) {
 				this.parentview.previousSlide()
+			} else if(delta > 19) {
+				this.parentview.nextSlide()
 			}
 		}
 

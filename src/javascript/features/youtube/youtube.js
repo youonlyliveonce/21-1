@@ -55,17 +55,21 @@ let YoutubePlayer = Base.extend({
 	},
 
 	playVideo: function(){
-		this.player.playVideo();
+		if(typeof this.player.playVideo == 'function'){
+			this.player.playVideo();
+		}
 	},
 	pauseVideo: function(){
-		this.player.pauseVideo();
+		if(typeof this.player.pauseVideo == 'function'){
+			this.player.pauseVideo();
+		}
 	},
 	onActiveChange: function(model, value){
 		if(!value)
-			this.player.pauseVideo();
+			this.pauseVideo();
 		else {
 			if(this.ready){
-				this.player.playVideo();
+				this.playVideo();
 			}
 		}
 	},
