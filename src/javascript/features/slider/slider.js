@@ -12,6 +12,10 @@ let Slider = Base.extend({
 		,layer: ['array', true, function(){ return [] }]
 		,navigation: ['array', true, function(){ return [] }]
 		,textbox: ['object', true, function(){ return undefined }]
+		,textboxhandler: ['object', true, function(){ return undefined }]
+		,textboxbar: ['object', true, function(){ return undefined }]
+		,textboxfaktor: ['number', true, function(){ return 0 }]
+		,textboxes: ['array', true, function(){ return [] }]
 		,settings: ['object', true, function(){ return {
 						speed: 600,
 						// effect: 'fade',
@@ -45,6 +49,12 @@ let Slider = Base.extend({
 		}, [], this);
 		this.layer = this.queryAll('#'+this.id+' .Slider__layer div');
 		this.navigation = this.queryAll('#'+this.id+' .Contentnavigation li');
+		for(let i=0; i<this.layer.length; i++){
+			let scrollbar = this.layer[i].getElementsByClassName('Textbox__scroller')[0] || [];
+			let boxbody = this.layer[i].getElementsByClassName('Textbox__body')[0] || [];
+			let handler = typeof scrollbar.getElementsByTagName == 'function' ? scrollbar.getElementsByTagName('span')[0] : [];
+			this.textboxes.push({scrollbar:scrollbar, body:boxbody , handler:handler, faktor:0});
+		}
 		return this;
 	},
 	onActiveChange: function(view, value){
@@ -52,6 +62,7 @@ let Slider = Base.extend({
 			TweenMax.delayedCall(1.25, function(){
 				if(this.active){
 					this.bindChangeStart();
+					this.handleResize();
 				}
 			}, [], this);
 		} else {
@@ -92,7 +103,10 @@ let Slider = Base.extend({
 		}
 		this.activeindex = newIndex;
 		this.gfxIn();
-		this.textbox = (this.layer[this.activeindex].getElementsByClassName('Textbox__body')[0] == undefined) ? [] : this.layer[this.activeindex].getElementsByClassName('Textbox__body')[0];
+		this.textbox = (this.textboxes[this.activeindex].body == undefined) ? [] : this.textboxes[this.activeindex].body;
+		this.textboxhandler = (this.textboxes[this.activeindex].handler == undefined) ? [] : this.textboxes[this.activeindex].handler;
+		this.textboxbar = this.textboxes[this.activeindex].scrollbar == undefined ? [] : this.textboxes[this.activeindex].scrollbar;
+		this.textboxfaktor = this.textboxes[this.activeindex].faktor
 	},
 	handleResize: function(){
 		var newWidth = document.body.clientHeight/9*16,
@@ -103,8 +117,29 @@ let Slider = Base.extend({
 		}
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
 		// resize all textboxen
+		TweenMax.delayedCall(0.25, function(){
+			for(let i=0; i<this.textboxes.length; i++){
+				if(this.textboxes[i].scrollbar.clientHeight != undefined){
+					let tbh = this.textboxes[i].scrollbar.clientHeight;
+					let tbbh = this.textboxes[i].body.clientHeight;
+					let handlerHeight = (tbh / (tbbh/100)) * (tbh/100);
+					let faktor = (tbh / (tbbh/100)) / 100;
+					if(handlerHeight >= tbh){
+							TweenMax.to(this.textboxes[i].scrollbar, 0.25, {opacity: 0});
+							TweenMax.to(this.textboxes[i].body, 0.25, {y: 0});
+							TweenMax.to(this.textboxes[i].handler, 0.25, {y: 0});
+					} else {
+						TweenMax.to(this.textboxes[i].scrollbar, 0.25, {opacity: 1});
+						TweenMax.to(this.textboxes[i].handler, 0.25, {height:handlerHeight});
+					}
+					this.textboxes[i].faktor = faktor;
+				}
+			}
+			if(this.textboxfaktor != 0){
+				this.textboxfaktor = this.textboxes[this.activeindex].faktor
+			}
 
-		// this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
+		}, [], this);
 	},
 	handleRightClick: function(){
 		this.swiper.slideNext();
@@ -143,21 +178,27 @@ let Slider = Base.extend({
 				|| event.target.offsetParent.classList.contains('Textbox__body')
 				|| event.target.classList.contains('Textbox__body')
 				|| event.target.classList.contains('Textbox__wrapper') ) ){
-			if(delta < 0){
-				if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta > 0){
-					TweenMax.set(this.textbox, {y: 0});
-				} else {
-					TweenMax.set(this.textbox, {y:`-=${delta}`});
-				}
-			} else if (delta > 0) {
-				let cH = this.textbox.parentNode.clientHeight - this.textbox.parentNode.parentNode.clientHeight,
-						bH = this.textbox.parentNode.parentNode.clientHeight,
-						dH = cH-bH;
 
-				if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta < dH){
-					TweenMax.set(this.textbox, {y: dH});
-				} else {
-					TweenMax.set(this.textbox, {y:`-=${delta}`});
+				let cH = this.textboxbar.clientHeight,
+						bH = this.textbox.clientHeight,
+						dH = cH-bH;
+			if(bH > cH){
+				if(delta < 0){
+					if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta > 0){
+						TweenMax.set(this.textbox, {y: 0});
+						TweenMax.set(this.textboxhandler, {y: 0});
+					} else {
+						TweenMax.set(this.textbox, {y:`-=${delta}`});
+						TweenMax.set(this.textboxhandler, {y:`+=${delta*this.textboxfaktor}`});
+					}
+				} else if (delta > 0) {
+					if(this.textbox._gsTransform && this.textbox._gsTransform.y-delta < dH){
+						TweenMax.set(this.textbox, {y: dH});
+						TweenMax.set(this.textboxhandler, {y: -1*dH*this.textboxfaktor});
+					} else {
+						TweenMax.set(this.textbox, {y:`-=${delta}`});
+						TweenMax.set(this.textboxhandler, {y:`+=${delta*this.textboxfaktor}`});
+					}
 				}
 			}
 		} else {

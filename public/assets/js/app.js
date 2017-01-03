@@ -20663,6 +20663,18 @@
 			textbox: ['object', true, function () {
 				return undefined;
 			}],
+			textboxhandler: ['object', true, function () {
+				return undefined;
+			}],
+			textboxbar: ['object', true, function () {
+				return undefined;
+			}],
+			textboxfaktor: ['number', true, function () {
+				return 0;
+			}],
+			textboxes: ['array', true, function () {
+				return [];
+			}],
 			settings: ['object', true, function () {
 				return {
 					speed: 600,
@@ -20697,6 +20709,12 @@
 			}, [], this);
 			this.layer = this.queryAll('#' + this.id + ' .Slider__layer div');
 			this.navigation = this.queryAll('#' + this.id + ' .Contentnavigation li');
+			for (var i = 0; i < this.layer.length; i++) {
+				var scrollbar = this.layer[i].getElementsByClassName('Textbox__scroller')[0] || [];
+				var boxbody = this.layer[i].getElementsByClassName('Textbox__body')[0] || [];
+				var handler = typeof scrollbar.getElementsByTagName == 'function' ? scrollbar.getElementsByTagName('span')[0] : [];
+				this.textboxes.push({ scrollbar: scrollbar, body: boxbody, handler: handler, faktor: 0 });
+			}
 			return this;
 		},
 		onActiveChange: function onActiveChange(view, value) {
@@ -20704,6 +20722,7 @@
 				TweenMax.delayedCall(1.25, function () {
 					if (this.active) {
 						this.bindChangeStart();
+						this.handleResize();
 					}
 				}, [], this);
 			} else {
@@ -20744,7 +20763,10 @@
 			}
 			this.activeindex = newIndex;
 			this.gfxIn();
-			this.textbox = this.layer[this.activeindex].getElementsByClassName('Textbox__body')[0] == undefined ? [] : this.layer[this.activeindex].getElementsByClassName('Textbox__body')[0];
+			this.textbox = this.textboxes[this.activeindex].body == undefined ? [] : this.textboxes[this.activeindex].body;
+			this.textboxhandler = this.textboxes[this.activeindex].handler == undefined ? [] : this.textboxes[this.activeindex].handler;
+			this.textboxbar = this.textboxes[this.activeindex].scrollbar == undefined ? [] : this.textboxes[this.activeindex].scrollbar;
+			this.textboxfaktor = this.textboxes[this.activeindex].faktor;
 		},
 		handleResize: function handleResize() {
 			var newWidth = document.body.clientHeight / 9 * 16,
@@ -20754,8 +20776,28 @@
 			}
 			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
 			// resize all textboxen
-	
-			// this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
+			TweenMax.delayedCall(0.25, function () {
+				for (var i = 0; i < this.textboxes.length; i++) {
+					if (this.textboxes[i].scrollbar.clientHeight != undefined) {
+						var tbh = this.textboxes[i].scrollbar.clientHeight;
+						var tbbh = this.textboxes[i].body.clientHeight;
+						var handlerHeight = tbh / (tbbh / 100) * (tbh / 100);
+						var faktor = tbh / (tbbh / 100) / 100;
+						if (handlerHeight >= tbh) {
+							TweenMax.to(this.textboxes[i].scrollbar, 0.25, { opacity: 0 });
+							TweenMax.to(this.textboxes[i].body, 0.25, { y: 0 });
+							TweenMax.to(this.textboxes[i].handler, 0.25, { y: 0 });
+						} else {
+							TweenMax.to(this.textboxes[i].scrollbar, 0.25, { opacity: 1 });
+							TweenMax.to(this.textboxes[i].handler, 0.25, { height: handlerHeight });
+						}
+						this.textboxes[i].faktor = faktor;
+					}
+				}
+				if (this.textboxfaktor != 0) {
+					this.textboxfaktor = this.textboxes[this.activeindex].faktor;
+				}
+			}, [], this);
 		},
 		handleRightClick: function handleRightClick() {
 			this.swiper.slideNext();
@@ -20788,21 +20830,27 @@
 			}
 	
 			if (event.target && event.target.offsetParent && (event.target.offsetParent.classList.contains('Textbox__wrapper') || event.target.offsetParent.classList.contains('Textbox__body') || event.target.classList.contains('Textbox__body') || event.target.classList.contains('Textbox__wrapper'))) {
-				if (delta < 0) {
-					if (this.textbox._gsTransform && this.textbox._gsTransform.y - delta > 0) {
-						TweenMax.set(this.textbox, { y: 0 });
-					} else {
-						TweenMax.set(this.textbox, { y: '-=' + delta });
-					}
-				} else if (delta > 0) {
-					var cH = this.textbox.parentNode.clientHeight - this.textbox.parentNode.parentNode.clientHeight,
-					    bH = this.textbox.parentNode.parentNode.clientHeight,
-					    dH = cH - bH;
 	
-					if (this.textbox._gsTransform && this.textbox._gsTransform.y - delta < dH) {
-						TweenMax.set(this.textbox, { y: dH });
-					} else {
-						TweenMax.set(this.textbox, { y: '-=' + delta });
+				var cH = this.textboxbar.clientHeight,
+				    bH = this.textbox.clientHeight,
+				    dH = cH - bH;
+				if (bH > cH) {
+					if (delta < 0) {
+						if (this.textbox._gsTransform && this.textbox._gsTransform.y - delta > 0) {
+							TweenMax.set(this.textbox, { y: 0 });
+							TweenMax.set(this.textboxhandler, { y: 0 });
+						} else {
+							TweenMax.set(this.textbox, { y: '-=' + delta });
+							TweenMax.set(this.textboxhandler, { y: '+=' + delta * this.textboxfaktor });
+						}
+					} else if (delta > 0) {
+						if (this.textbox._gsTransform && this.textbox._gsTransform.y - delta < dH) {
+							TweenMax.set(this.textbox, { y: dH });
+							TweenMax.set(this.textboxhandler, { y: -1 * dH * this.textboxfaktor });
+						} else {
+							TweenMax.set(this.textbox, { y: '-=' + delta });
+							TweenMax.set(this.textboxhandler, { y: '+=' + delta * this.textboxfaktor });
+						}
 					}
 				}
 			} else {

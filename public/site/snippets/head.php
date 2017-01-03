@@ -31,7 +31,9 @@
 
 	<style>
 			body {
-				overflow: hidden
+				background-color: black;
+				overflow: hidden;
+				margin: 0px;
 			}
 
 			.preloader {
