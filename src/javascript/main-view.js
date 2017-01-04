@@ -180,7 +180,7 @@ var MainView = View.extend({
 		},
 		handleMouseWheel: function(event){
 			console.log(event);
-			event.preventDefault();
+			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 			if(CM.App.mainView.pageSwitcher.current && CM.App.mainView.isSwiping === false){
 				CM.App.mainView.pageSwitcher.current.handleMouseWheel(event);
 			}
