@@ -20,7 +20,8 @@
 			"entries": {
 				"app": ["./app.js"],
 				"loader": ["./loader.js"],
-				"analytics": ["./analytics.js"]
+				"analytics": ["./analytics.js"],
+				"shim": ["./shim.js"]
 			},
 			"extensions": ["js"]
 		},

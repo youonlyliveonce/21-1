@@ -78,12 +78,9 @@
 							window.CM = {};
 					}
 					window.CM.Loader = this;
-					window.onYouTubeIframeAPIReady = function () {
-							console.log("ready");
-					};
 					var scope = this;
 					head.ready(document, function () {
-							head.load(["/assets/css/app.css", "/assets/js/app.js", "//fast.fonts.com/cssapi/6536d2ad-a624-4b33-9405-4c303cfb6253.css"], CM.Loader.startApplication);
+							head.load(["/assets/css/app.css", "/assets/js/app.js", "/assets/js/shim.js", "//fast.fonts.com/cssapi/6536d2ad-a624-4b33-9405-4c303cfb6253.css"], CM.Loader.startApplication);
 					});
 			}
 	
