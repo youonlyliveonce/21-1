@@ -166,7 +166,7 @@ let Slider = Base.extend({
 	},
 	handleMouseWheel: function(event){
 		let e = window.event || event || event.originalEvent;
-		let delta = e.deltaY || e.wheelDelta;
+		let delta = e.deltaY || -1*e.wheelDelta;
 
 		// FF Y-Achse
 		if(e.axis == 2){

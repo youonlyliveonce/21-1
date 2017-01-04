@@ -20430,7 +20430,7 @@
 		},
 		handleMouseWheel: function handleMouseWheel(event) {
 			var e = window.event || event || event.originalEvent;
-			var delta = e.deltaY || e.wheelDelta;
+			var delta = e.deltaY || -1 * e.wheelDelta;
 	
 			// FF Y-Achse
 			if (e.axis == 2) {
@@ -20565,7 +20565,7 @@
 		handleMouseWheel: function handleMouseWheel(event) {
 			var self = this;
 			var e = window.event || event || event.originalEvent;
-			var delta = e.deltaY || e.wheelDelta;
+			var delta = e.deltaY || -1 * e.wheelDelta;
 			var breakDelay = 0.1;
 	
 			// FF Y-Achse
@@ -20822,7 +20822,7 @@
 		},
 		handleMouseWheel: function handleMouseWheel(event) {
 			var e = window.event || event || event.originalEvent;
-			var delta = e.deltaY || e.wheelDelta;
+			var delta = e.deltaY || -1 * e.wheelDelta;
 	
 			// FF Y-Achse
 			if (e.axis == 2) {

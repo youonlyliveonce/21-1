@@ -96,7 +96,7 @@ let Filtergrid = Base.extend({
 	handleMouseWheel: function(event){
 		let self = this;
 		let e = window.event || event || event.originalEvent;
-		let delta = e.deltaY || e.wheelDelta;
+		let delta = e.deltaY || -1*e.wheelDelta;
 		let breakDelay = 0.1;
 
 		// FF Y-Achse
