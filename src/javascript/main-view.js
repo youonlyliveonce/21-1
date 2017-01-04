@@ -179,6 +179,7 @@ var MainView = View.extend({
 			dom.addClass(body, 'Navigation--show');
 		},
 		handleMouseWheel: function(event){
+			console.log(event);
 			event.preventDefault();
 			if(CM.App.mainView.pageSwitcher.current && CM.App.mainView.isSwiping === false){
 				CM.App.mainView.pageSwitcher.current.handleMouseWheel(event);
