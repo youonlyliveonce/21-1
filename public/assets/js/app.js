@@ -24284,7 +24284,6 @@
 			_ampersandDom2.default.addClass(body, 'Navigation--show');
 		},
 		handleMouseWheel: function handleMouseWheel(event) {
-			console.log(event);
 			event.preventDefault ? event.preventDefault() : event.returnValue = false;
 			if (CM.App.mainView.pageSwitcher.current && CM.App.mainView.isSwiping === false) {
 				CM.App.mainView.pageSwitcher.current.handleMouseWheel(event);
@@ -24314,7 +24313,7 @@
 			var local = aTag.host === window.location.host;
 			if (local && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey && aTag.getAttribute("target") !== "_blank") {
 				// no link handling via Browser
-				e.preventDefault();
+				e.preventDefault ? e.preventDefault() : e.returnValue = false;
 	
 				// Update View without reloading view
 				if (CM.App._params != {} && CM.App.router.history.location.pathname == e.delegateTarget.pathname && CM.App._paramsString == params) {
