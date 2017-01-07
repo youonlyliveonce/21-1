@@ -57,6 +57,7 @@ let Slider = Base.extend({
 		}
 		return this;
 	},
+
 	onActiveChange: function(view, value){
 		if(value){
 			TweenMax.delayedCall(1.25, function(){
@@ -71,6 +72,7 @@ let Slider = Base.extend({
 			this.swiper.off('slideChangeStart');
 		}
 	},
+
 	bindChangeStart: function(){
 		let self = this;
 		if(self.swiper != undefined){
@@ -80,11 +82,13 @@ let Slider = Base.extend({
 			});
 		}
 	},
+
 	gfxIn: function(){
 		this.layer[this.activeindex].classList.add('active');
 		this.navigation[this.activeindex].classList.add('active');
 		this.gfxLinesIn(this.layer[this.activeindex]);
 	},
+
 	gfxLinesIn: function(node){
 		let lines = node.getElementsByTagName('line');
 		TweenMax.set(lines, {drawSVG:"0% 0%"});
@@ -96,6 +100,7 @@ let Slider = Base.extend({
 			}});
 		}}, 0.15);
 	},
+
 	setActiveIndex: function(newIndex){
 		if(this.activeindex != -1){
 			this.layer[this.activeindex].classList.remove('active');
@@ -108,6 +113,7 @@ let Slider = Base.extend({
 		this.textboxbar = this.textboxes[this.activeindex].scrollbar == undefined ? [] : this.textboxes[this.activeindex].scrollbar;
 		this.textboxfaktor = this.textboxes[this.activeindex].faktor
 	},
+
 	handleResize: function(){
 		var newWidth = document.body.clientHeight/9*16,
 				newHeight = document.body.clientHeight;
@@ -141,22 +147,30 @@ let Slider = Base.extend({
 
 		}, [], this);
 	},
+
 	handleRightClick: function(){
 		this.swiper.slideNext();
 	},
+
 	handleLeftClick: function(){
 		this.swiper.slidePrev();
 	},
-	handleMouseMove: function(event){
 
+	handleMouseMove: function(event){
+		let faktor = event.clientX - document.body.clientWidth/2;
+		TweenMax.set(this.swiper.slides[this.activeindex+1], {x:-0.015*faktor});
+		TweenMax.set(this.layer[this.activeindex].children, {x:0.05*faktor});
 	},
+
 	handleClickContentnavi: function(event){
 		event.preventDefault();
 		this.navigationContainer.classList.add('open');
 	},
+
 	handleClickContentnaviClose: function(event){
 		this.navigationContainer.classList.remove('open');
 	},
+
 	handleClickContentnaviItem: function(event){
 		let newIndex = Number(event.delegateTarget.getAttribute('data-index'))+1;
 		TweenMax.delayedCall(1.25, function(){
@@ -164,13 +178,14 @@ let Slider = Base.extend({
 		}, [], this);
 		this.swiper.slideTo(newIndex);
 	},
+
 	handleMouseWheel: function(event){
 		let e = window.event || event || event.originalEvent;
 		let delta = e.deltaY || -1*e.wheelDelta;
 
 		// FF Y-Achse
 		if(e.axis == 2){
-			delta = 3*e.detail;
+			delta = e.detail*e.detail*(e.detail/2);
 		}
 
 		if(event.target && event.target.offsetParent &&
@@ -208,9 +223,7 @@ let Slider = Base.extend({
 				this.parentview.nextSlide()
 			}
 		}
-
 	}
-
 })
 
 export default Slider;

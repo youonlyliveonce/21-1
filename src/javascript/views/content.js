@@ -13,7 +13,6 @@ let Content = PageView.extend({
 		,isScrollTop: ['boolean', true, false]
 		,subViews: ['array', true, function(){ return []; }]
 		,activeElement: ['object', true, function(){ return {}; }]
-		,functionStore: ['function', true, function(){ return ""; }]
 	},
 
 	events: {

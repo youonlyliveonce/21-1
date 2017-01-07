@@ -24,14 +24,12 @@ let Base = View.extend({
 
 		// FF Y-Achse
 		if(e.axis == 2){
-			delta = 2*e.detail;
+			delta = e.detail*e.detail*e.detail;
 		}
-		console.log(e.deltaY);
-		console.log(delta, e);
 
-		if(delta < -19){
+		if(delta < -17){
 			this.parentview.previousSlide()
-		} else if(delta > 19) {
+		} else if(delta > 17) {
 			this.parentview.nextSlide()
 		}
 	}

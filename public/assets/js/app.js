@@ -7590,9 +7590,6 @@
 			}],
 			activeElement: ['object', true, function () {
 				return {};
-			}],
-			functionStore: ['function', true, function () {
-				return "";
 			}]
 		},
 	
@@ -20434,14 +20431,12 @@
 	
 			// FF Y-Achse
 			if (e.axis == 2) {
-				delta = 2 * e.detail;
+				delta = e.detail * e.detail * e.detail;
 			}
-			console.log(e.deltaY);
-			console.log(delta, e);
 	
-			if (delta < -19) {
+			if (delta < -17) {
 				this.parentview.previousSlide();
-			} else if (delta > 19) {
+			} else if (delta > 17) {
 				this.parentview.nextSlide();
 			}
 		}
@@ -20480,13 +20475,14 @@
 			}],
 			topend: ['boolean', true, true],
 			bottomend: ['boolean', true, false],
-			mousebreak: ['boolean', true, false]
+			mousebreak: ['boolean', true, false],
+			timeto: ['array', true, function () {
+				return [];
+			}]
 		},
-	
 		events: {
 			'click .Portfolio__filter ul li': 'handleClickFilter'
 		},
-	
 		render: function render() {
 			this.cacheElements({
 				gridBackground: '.Portfolio__background',
@@ -20561,7 +20557,6 @@
 		flashBackground: function flashBackground() {
 			TweenMax.to(this.gridBackground, 0.15, { css: { 'opacity': 0.1 }, yoyo: true, repeat: 1 });
 		},
-	
 		handleMouseWheel: function handleMouseWheel(event) {
 			var self = this;
 			var e = window.event || event || event.originalEvent;
@@ -20570,9 +20565,16 @@
 	
 			// FF Y-Achse
 			if (e.axis == 2) {
-				delta = 3 * e.detail;
+				delta = e.detail * e.detail * (e.detail / 2);
 				breakDelay = 0.3;
 			}
+			var now = Math.floor(Date.now());
+			// if(this.timeto.length != 0){
+			// 	this.timeto.push(this.timeto[0] - now);
+			// }
+			// this.timeto[0] = now;
+	
+			// console.log(this.timeto);
 	
 			if (delta < 0) {
 				self.bottomend = false;
@@ -20717,6 +20719,7 @@
 			}
 			return this;
 		},
+	
 		onActiveChange: function onActiveChange(view, value) {
 			if (value) {
 				TweenMax.delayedCall(1.25, function () {
@@ -20731,6 +20734,7 @@
 				this.swiper.off('slideChangeStart');
 			}
 		},
+	
 		bindChangeStart: function bindChangeStart() {
 			var self = this;
 			if (self.swiper != undefined) {
@@ -20740,11 +20744,13 @@
 				});
 			}
 		},
+	
 		gfxIn: function gfxIn() {
 			this.layer[this.activeindex].classList.add('active');
 			this.navigation[this.activeindex].classList.add('active');
 			this.gfxLinesIn(this.layer[this.activeindex]);
 		},
+	
 		gfxLinesIn: function gfxLinesIn(node) {
 			var lines = node.getElementsByTagName('line');
 			TweenMax.set(lines, { drawSVG: "0% 0%" });
@@ -20756,6 +20762,7 @@
 						} });
 				} }, 0.15);
 		},
+	
 		setActiveIndex: function setActiveIndex(newIndex) {
 			if (this.activeindex != -1) {
 				this.layer[this.activeindex].classList.remove('active');
@@ -20768,6 +20775,7 @@
 			this.textboxbar = this.textboxes[this.activeindex].scrollbar == undefined ? [] : this.textboxes[this.activeindex].scrollbar;
 			this.textboxfaktor = this.textboxes[this.activeindex].faktor;
 		},
+	
 		handleResize: function handleResize() {
 			var newWidth = document.body.clientHeight / 9 * 16,
 			    newHeight = document.body.clientHeight;
@@ -20799,20 +20807,30 @@
 				}
 			}, [], this);
 		},
+	
 		handleRightClick: function handleRightClick() {
 			this.swiper.slideNext();
 		},
+	
 		handleLeftClick: function handleLeftClick() {
 			this.swiper.slidePrev();
 		},
-		handleMouseMove: function handleMouseMove(event) {},
+	
+		handleMouseMove: function handleMouseMove(event) {
+			var faktor = event.clientX - document.body.clientWidth / 2;
+			TweenMax.set(this.swiper.slides[this.activeindex + 1], { x: -0.015 * faktor });
+			TweenMax.set(this.layer[this.activeindex].children, { x: 0.05 * faktor });
+		},
+	
 		handleClickContentnavi: function handleClickContentnavi(event) {
 			event.preventDefault();
 			this.navigationContainer.classList.add('open');
 		},
+	
 		handleClickContentnaviClose: function handleClickContentnaviClose(event) {
 			this.navigationContainer.classList.remove('open');
 		},
+	
 		handleClickContentnaviItem: function handleClickContentnaviItem(event) {
 			var newIndex = Number(event.delegateTarget.getAttribute('data-index')) + 1;
 			TweenMax.delayedCall(1.25, function () {
@@ -20820,13 +20838,14 @@
 			}, [], this);
 			this.swiper.slideTo(newIndex);
 		},
+	
 		handleMouseWheel: function handleMouseWheel(event) {
 			var e = window.event || event || event.originalEvent;
 			var delta = e.deltaY || -1 * e.wheelDelta;
 	
 			// FF Y-Achse
 			if (e.axis == 2) {
-				delta = 3 * e.detail;
+				delta = e.detail * e.detail * (e.detail / 2);
 			}
 	
 			if (event.target && event.target.offsetParent && (event.target.offsetParent.classList.contains('Textbox__wrapper') || event.target.offsetParent.classList.contains('Textbox__body') || event.target.classList.contains('Textbox__body') || event.target.classList.contains('Textbox__wrapper'))) {
@@ -20861,7 +20880,6 @@
 				}
 			}
 		}
-	
 	});
 	
 	exports.default = Slider;

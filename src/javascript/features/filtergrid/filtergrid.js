@@ -10,12 +10,11 @@ let Filtergrid = Base.extend({
 		,topend: ['boolean', true, true]
 		,bottomend: ['boolean', true, false]
 		,mousebreak: ['boolean', true, false]
+		,timeto: ['array', true, function(){ return [] }]
 	},
-
 	events: {
 		'click .Portfolio__filter ul li':'handleClickFilter'
 	},
-
 	render: function(){
 		this.cacheElements({
 				gridBackground: '.Portfolio__background',
@@ -92,7 +91,6 @@ let Filtergrid = Base.extend({
 	flashBackground: function(){
 		TweenMax.to(this.gridBackground, 0.15, {css: {'opacity':0.1}, yoyo:true, repeat:1});
 	},
-
 	handleMouseWheel: function(event){
 		let self = this;
 		let e = window.event || event || event.originalEvent;
@@ -101,9 +99,16 @@ let Filtergrid = Base.extend({
 
 		// FF Y-Achse
 		if(e.axis == 2){
-			delta = 3*e.detail;
+			delta = e.detail*e.detail*(e.detail/2);
 			breakDelay = 0.3;
 		}
+		let now = Math.floor(Date.now());
+		// if(this.timeto.length != 0){
+		// 	this.timeto.push(this.timeto[0] - now);
+		// }
+		// this.timeto[0] = now;
+
+		// console.log(this.timeto);
 
 		if(delta < 0){
 			self.bottomend = false;
