@@ -47,11 +47,11 @@ let Case = Base.extend({
 	handleMouseWheel: function(event){
 		let self = this;
 		let e = window.event || event || event.originalEvent;
-		let delta = e.deltaY || e.wheelDelta;
+		let delta = e.deltaY || -1*e.wheelDelta;
 
 		// FF Y-Achse
 		if(e.axis == 2){
-			delta = 3*e.detail;
+			delta = e.detail*e.detail*(e.detail/2);
 		}
 		if(delta < 0){
 			self.bottomend = false;
