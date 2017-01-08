@@ -7695,6 +7695,12 @@
 				case 'ArrowUp':
 					this.previousSlide();
 					break;
+				case 'Down':
+					this.nextSlide();
+					break;
+				case 'Up':
+					this.previousSlide();
+					break;
 			}
 		},
 		updateActiveView: function updateActiveView() {
