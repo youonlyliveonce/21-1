@@ -191,9 +191,9 @@
 			width: 40%
 			height: 0.25rem
 			background-color: black
-			visibility: hidden
 			+noselect()
 			+transition(transform, .35s)
+			+transform(rotate(45deg))
 			&:after,
 			&:before
 				position: absolute
@@ -204,10 +204,11 @@
 				background: black
 				left: 0
 			&:after
-				+transform(rotate(45deg))
+				visibility: hidden
+				+transform(rotate(90deg))
 				+transition(transform, .5s)
 			&:before
-				+transform(rotate(-45deg))
+				+transform(rotate(-90deg))
 				+transition(transform, .5s)
 		&:hover span
 			+transform(rotate(180deg))
