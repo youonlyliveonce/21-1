@@ -122,6 +122,12 @@ let Content = PageView.extend({
 			case 'ArrowUp' :
 				this.previousSlide();
 				break;
+			case 'Left' :
+				this.activeElement.view.handleKeyDown("left");
+				break;
+			case 'Right' :
+				this.activeElement.view.handleKeyDown("right");
+				break;
 			case 'Down' :
 				this.nextSlide();
 				break;
