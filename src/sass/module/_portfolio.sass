@@ -121,9 +121,9 @@
 		a
 			display: block
 		h2
-			opacity: 0
+			opacity: 0.25
 			position: absolute
-			+transform(translateY(7px))
+			// +transform(translateY(7px))
 			top: 30px
 			z-index: 2
 			color: white
@@ -195,9 +195,9 @@
 			&:hover
 				h2
 					+transform(translateX($gap-size/2))
-					// padding-left:
+					+transition(all, 0.25s, ease-out)
 					&:after
-						+transform(translateX(0%))
+						+transform(translateX(-20%))
 				span
 					opacity: 0.4
 			>a
