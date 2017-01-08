@@ -196,7 +196,7 @@ var MainView = View.extend({
 		},
 		handleKeyDown: function(event){
 			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-			console.log(event);
+			// console.log(event);
 			if(CM.App.mainView.pageSwitcher.current){
 				CM.App.mainView.pageSwitcher.current.handleKeyDown(event);
 			}

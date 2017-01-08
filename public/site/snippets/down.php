@@ -1,3 +1,6 @@
+
+
+<?php if( $section->hasNext() ): ?>
 <div class="Button Button--down">
 	<svg version="1.1" baseProfile="tiny" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 		 x="0px" y="0px" viewBox="0 0 85.04 48.189" xml:space="preserve">
@@ -6,3 +9,8 @@
 		c-0.518-0.507-1.357-0.507-1.875,0l-5.912,5.791V9.018c0-0.717-0.594-1.298-1.326-1.298C41.725,7.72,41.132,8.301,41.132,9.018z"/>
 	</svg>
 </div>
+<?php else: ?>
+	<div class="Button Button--down">
+		THE END
+	</div>
+<?php endif; ?>

@@ -60,5 +60,5 @@
 			endforeach; ?>
 
 		</div>
-		<?php snippet('down') ?>
+		<?php snippet('down',  array('section' => $section)) ?>
 </div>

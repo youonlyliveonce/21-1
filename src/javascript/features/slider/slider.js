@@ -27,11 +27,11 @@ let Slider = Base.extend({
 	},
 
 	events: {
-		// 'click .Button--right':'handleRightClick',
-		// 'click .Button--left':'handleLeftClick',
+		'click .Button--right':'handleRightClick',
+		'click .Button--left':'handleLeftClick',
 		'mousemove .swiper-container':'handleMouseMove',
 		'click .Contentnavigation li':'handleClickContentnaviItem',
-		'click .Contentnavigation':'handleClickContentnavi',
+		// 'click .Contentnavigation':'handleClickContentnavi',
 		'click .Contentnavigation__background':'handleClickContentnaviClose',
 		'click .Button--contentnavi':'handleClickContentnavi',
 	},
@@ -159,7 +159,7 @@ let Slider = Base.extend({
 	handleMouseMove: function(event){
 		let faktor = event.clientX - document.body.clientWidth/2;
 		// TweenMax.set(this.swiper.slides[this.activeindex+1], {x:-0.015*faktor});
-		TweenMax.set(this.swiper, {x:-0.015*faktor});
+		TweenMax.set(this.swiper.container, {x:-0.015*faktor});
 		TweenMax.set(this.layer[this.activeindex].children, {x:0.05*faktor});
 	},
 

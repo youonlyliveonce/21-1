@@ -8,5 +8,5 @@
 	<div class="Videobox__body">
 
 	</div>
-	<?php snippet('down') ?>
+	<?php snippet('down',  array('section' => $section)) ?>
 </div>

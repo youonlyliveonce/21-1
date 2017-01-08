@@ -39,9 +39,13 @@
 		</div>
 		<div class="Contentnavigation">
 			<div class="Contentnavigation__background"></div>
-			<div class="Button--contentnavi">
-				<span></span>
-			</div>
+			<?php if(count($slides) > 1): ?>
+				<?php snippet('left') ?>
+				<?php snippet('right') ?>
+				<div class="Button--contentnavi">
+					<span></span>
+				</div>
+				<?php endif; ?>
 			<div class="Contentnavigation__body">
 				<ul>
 					<?php foreach($slides as $index => $slide): ?>
@@ -53,5 +57,5 @@
 				</ul>
 			</div>
 		</div>
-		<?php snippet('down') ?>
+		<?php snippet('down',  array('section' => $section)) ?>
 </div>
