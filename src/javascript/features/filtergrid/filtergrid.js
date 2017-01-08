@@ -52,14 +52,17 @@ let Filtergrid = Base.extend({
 			for(let i=0; i<this.filteritems.length; i++){
 				this.filteritems[i].classList.remove('active');
 				// this.filteritems[i].classList.add('active');
-				if(this.filteritems[i].dataset.filter != "all" && this.filteritems[i].dataset.filter != filter){
+				if(this.filteritems[i].dataset.filter != "all"){
 					this.gridBody.classList.remove(this.filteritems[i].dataset.filter);
 					this.showGreyArrow(this.filteritems[i].getElementsByClassName('check-white'), this.filteritems[i].getElementsByClassName('check-grey'));
 				}
 			}
 			target.classList.add('active');
 			this.showWhiteArrow(whiteSVGs, greySVGs);
-			this.gridBody.classList.add(filter);
+			TweenMax.delayedCall(0.75, function(){
+					this.gridBody.classList.add(filter);
+			}, [], this)
+
 
 
 			/* REDUCE */

@@ -18,6 +18,8 @@ let Base = View.extend({
 	onActiveChange: function(value){
 		console.log(value)
 	},
+	handleKeyDown: function(direction){
+	},
 	handleMouseWheel: function(event){
 		let e = window.event || event || event.originalEvent;
 		let delta = e.deltaY || -1*e.wheelDelta;

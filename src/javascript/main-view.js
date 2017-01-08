@@ -20,8 +20,9 @@ var MainView = View.extend({
 
 		/* Bind basic Events, all link clicks, toggle Navigation, etc. */
 		events: {
-				'click a[href]': 'handleLinkClick',
-				'click .Button--toggle': 'handleClickToggle',
+				'click a[href]': 'handleLinkClick'
+				,'click .Button--toggle': 'handleClickToggle'
+				,'keydown': 'handleKeyDown'
 				// 'click .Button--close': 'handleClickToggle',
 		},
 
@@ -193,8 +194,13 @@ var MainView = View.extend({
 					TweenMax.set(CM.App.mainView.main, {y:-1*id.offsetTop, overwrite:true});
 			}
 		},
-
-
+		handleKeyDown: function(event){
+			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+			console.log(event);
+			if(CM.App.mainView.pageSwitcher.current){
+				CM.App.mainView.pageSwitcher.current.handleKeyDown(event);
+			}
+		},
 		/*
 
 		Click Handler for each a[href]

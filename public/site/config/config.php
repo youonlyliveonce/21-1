@@ -28,9 +28,8 @@ make Kirby work. For more fine-grained configuration
 of the system, please check out http://getkirby.com/docs/advanced/options
 
 */
-
+thumb::$defaults['memory'] = '256MB';
 c::set('debug',true);
-
 c::set('languages', array(
 	array(
 		'code'		=> 'de',

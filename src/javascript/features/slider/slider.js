@@ -158,7 +158,8 @@ let Slider = Base.extend({
 
 	handleMouseMove: function(event){
 		let faktor = event.clientX - document.body.clientWidth/2;
-		TweenMax.set(this.swiper.slides[this.activeindex+1], {x:-0.015*faktor});
+		// TweenMax.set(this.swiper.slides[this.activeindex+1], {x:-0.015*faktor});
+		TweenMax.set(this.swiper, {x:-0.015*faktor});
 		TweenMax.set(this.layer[this.activeindex].children, {x:0.05*faktor});
 	},
 
@@ -169,6 +170,13 @@ let Slider = Base.extend({
 
 	handleClickContentnaviClose: function(event){
 		this.navigationContainer.classList.remove('open');
+	},
+	handleKeyDown: function(direction){
+		if(direction == "left"){
+			this.swiper.slidePrev();
+		}else {
+			this.swiper.slideNext();
+		}
 	},
 
 	handleClickContentnaviItem: function(event){

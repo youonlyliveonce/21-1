@@ -7681,7 +7681,22 @@
 				_ampersandDom2.default.removeClass(document.body, 'Navigation--home');
 			}
 		},
-	
+		handleKeyDown: function handleKeyDown(event) {
+			switch (event.key) {
+				case 'ArrowLeft':
+					this.activeElement.view.handleKeyDown("left");
+					break;
+				case 'ArrowRight':
+					this.activeElement.view.handleKeyDown("right");
+					break;
+				case 'ArrowDown':
+					this.nextSlide();
+					break;
+				case 'ArrowUp':
+					this.previousSlide();
+					break;
+			}
+		},
 		updateActiveView: function updateActiveView() {
 			var lastActiveElement = this.activeElement;
 	
@@ -20425,6 +20440,7 @@
 		onActiveChange: function onActiveChange(value) {
 			console.log(value);
 		},
+		handleKeyDown: function handleKeyDown(direction) {},
 		handleMouseWheel: function handleMouseWheel(event) {
 			var e = window.event || event || event.originalEvent;
 			var delta = e.deltaY || -1 * e.wheelDelta;
@@ -20519,14 +20535,16 @@
 				for (var _i = 0; _i < this.filteritems.length; _i++) {
 					this.filteritems[_i].classList.remove('active');
 					// this.filteritems[i].classList.add('active');
-					if (this.filteritems[_i].dataset.filter != "all" && this.filteritems[_i].dataset.filter != filter) {
+					if (this.filteritems[_i].dataset.filter != "all") {
 						this.gridBody.classList.remove(this.filteritems[_i].dataset.filter);
 						this.showGreyArrow(this.filteritems[_i].getElementsByClassName('check-white'), this.filteritems[_i].getElementsByClassName('check-grey'));
 					}
 				}
 				target.classList.add('active');
 				this.showWhiteArrow(whiteSVGs, greySVGs);
-				this.gridBody.classList.add(filter);
+				TweenMax.delayedCall(0.75, function () {
+					this.gridBody.classList.add(filter);
+				}, [], this);
 	
 				/* REDUCE */
 				// this.gridBody.classList.toggle(filter);
@@ -20818,7 +20836,8 @@
 	
 		handleMouseMove: function handleMouseMove(event) {
 			var faktor = event.clientX - document.body.clientWidth / 2;
-			TweenMax.set(this.swiper.slides[this.activeindex + 1], { x: -0.015 * faktor });
+			// TweenMax.set(this.swiper.slides[this.activeindex+1], {x:-0.015*faktor});
+			TweenMax.set(this.swiper, { x: -0.015 * faktor });
 			TweenMax.set(this.layer[this.activeindex].children, { x: 0.05 * faktor });
 		},
 	
@@ -20829,6 +20848,13 @@
 	
 		handleClickContentnaviClose: function handleClickContentnaviClose(event) {
 			this.navigationContainer.classList.remove('open');
+		},
+		handleKeyDown: function handleKeyDown(direction) {
+			if (direction == "left") {
+				this.swiper.slidePrev();
+			} else {
+				this.swiper.slideNext();
+			}
 		},
 	
 		handleClickContentnaviItem: function handleClickContentnaviItem(event) {
@@ -24149,7 +24175,9 @@
 		/* Bind basic Events, all link clicks, toggle Navigation, etc. */
 		events: {
 			'click a[href]': 'handleLinkClick',
-			'click .Button--toggle': 'handleClickToggle'
+			'click .Button--toggle': 'handleClickToggle',
+			'keydown': 'handleKeyDown'
+			// 'click .Button--close': 'handleClickToggle',
 		},
 	
 		/* Render Main View */
@@ -24316,7 +24344,13 @@
 				TweenMax.set(CM.App.mainView.main, { y: -1 * id.offsetTop, overwrite: true });
 			}
 		},
-	
+		handleKeyDown: function handleKeyDown(event) {
+			event.preventDefault ? event.preventDefault() : event.returnValue = false;
+			console.log(event);
+			if (CM.App.mainView.pageSwitcher.current) {
+				CM.App.mainView.pageSwitcher.current.handleKeyDown(event);
+			}
+		},
 		/*
 	 	Click Handler for each a[href]
 	 	*/

@@ -108,7 +108,22 @@ let Content = PageView.extend({
 			dom.removeClass(document.body, 'Navigation--home');
 		}
 	},
-
+	handleKeyDown: function(event){
+		switch(event.key){
+			case 'ArrowLeft' :
+				this.activeElement.view.handleKeyDown("left");
+				break;
+			case 'ArrowRight' :
+				this.activeElement.view.handleKeyDown("right");
+				break;
+			case 'ArrowDown' :
+				this.nextSlide();
+				break;
+			case 'ArrowUp' :
+				this.previousSlide();
+				break;
+		}
+	},
 	updateActiveView: function(){
 		let lastActiveElement = this.activeElement;
 

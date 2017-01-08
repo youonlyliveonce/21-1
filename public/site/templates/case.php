@@ -6,7 +6,7 @@
 	<div class="Case__body">
 	<?php if($hasvideo) : ?>
 			<div class="Videobox__background">
-					<iframe width="420" height="315" src="https://www.youtube.com/embed/<?= $page->videoid(); ?>?autoplay=1&enablejsapi=1&showinfo=0&controls=1"></iframe>
+					<iframe width="420" height="315" src="https://www.youtube.com/embed/<?= $page->videoid(); ?>?autoplay=1&enablejsapi=1&showinfo=0&controls=1&rel=0"></iframe>
 			</div>
 	<?php else: ?>
 		<?php if($isslideshow): ?>
