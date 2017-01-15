@@ -7566,6 +7566,10 @@
 	
 	var _filtergrid2 = _interopRequireDefault(_filtergrid);
 	
+	var _linkgrid = __webpack_require__(323);
+	
+	var _linkgrid2 = _interopRequireDefault(_linkgrid);
+	
 	var _slider = __webpack_require__(283);
 	
 	var _slider2 = _interopRequireDefault(_slider);
@@ -7612,8 +7616,12 @@
 							view = new _youtube2.default({ el: element, id: element.getAttribute('id'), videoid: 'videobox' + index, parentview: self });
 							view.render();
 							break;
-						case "GridView":
+						case "FilterGridView":
 							view = new _filtergrid2.default({ el: element, id: element.getAttribute('id'), parentview: self });
+							view.render();
+							break;
+						case "LinkGridView":
+							view = new _linkgrid2.default({ el: element, id: element.getAttribute('id'), parentview: self });
 							view.render();
 							break;
 						case "SliderView":
@@ -20518,13 +20526,13 @@
 		value: true
 	});
 	
-	var _base = __webpack_require__(281);
+	var _longbase = __webpack_require__(322);
 	
-	var _base2 = _interopRequireDefault(_base);
+	var _longbase2 = _interopRequireDefault(_longbase);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Filtergrid = _base2.default.extend({
+	var Filtergrid = _longbase2.default.extend({
 		props: {
 			id: ['string', true, ''],
 			filter: ['object', true, function () {
@@ -20551,18 +20559,13 @@
 			this.cacheElements({
 				gridBackground: '.Portfolio__background',
 				gridBody: '.Portfolio__body',
-				gridFilter: '.Portfolio__filter'
+				gridHead: '.Portfolio__filter'
 			});
 			this.filteritems = this.queryAll('.Portfolio__filter li');
 			this.on('change:active', this.onActiveChange, this);
 			TweenMax.to('.check-grey', 0.25, { drawSVG: "0% 0%" });
 	
 			return this;
-		},
-		onActiveChange: function onActiveChange(view, value) {
-			this.mousebreak = false;
-			this.topend = false;
-			this.bottomend = false;
 		},
 		handleClickFilter: function handleClickFilter(event) {
 			var target = event.delegateTarget,
@@ -20611,81 +20614,6 @@
 		showWhiteArrow: function showWhiteArrow(white, grey) {
 			TweenMax.to(white[0], 0.25, { drawSVG: "0% 100%", delay: 0.25 });
 			TweenMax.to(grey[0], 0.25, { drawSVG: "0% 0%" });
-		},
-		delayMouseWheelBreak: function delayMouseWheelBreak(delay) {
-			this.mousebreak = false;
-			TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
-			TweenMax.delayedCall(delay, this.setMouseWheelBreak, [], this);
-		},
-		setMouseWheelBreak: function setMouseWheelBreak() {
-			this.mousebreak = true;
-		},
-		flashBackground: function flashBackground() {
-			TweenMax.to(this.gridBackground, 0.15, { css: { 'opacity': 0.1 }, yoyo: true, repeat: 1 });
-		},
-		handleMouseWheel: function handleMouseWheel(event) {
-			var self = this;
-			var e = window.event || event || event.originalEvent;
-			var delta = e.deltaY || -1 * e.wheelDelta;
-			var breakDelay = 0.1;
-	
-			// FF Y-Achse
-			if (e.axis == 2) {
-				delta = e.detail * e.detail * (e.detail / 2);
-				breakDelay = 0.3;
-			}
-			var now = Math.floor(Date.now());
-			// if(this.timeto.length != 0){
-			// 	this.timeto.push(this.timeto[0] - now);
-			// }
-			// this.timeto[0] = now;
-	
-			// console.log(this.timeto);
-	
-			if (delta < 0) {
-				self.bottomend = false;
-				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta > 0) {
-					if (self.topend) {
-						if (self.mousebreak) {
-							self.parentview.previousSlide();
-						} else {
-							self.delayMouseWheelBreak(breakDelay);
-						}
-					} else if (!self.topend) {
-						self.delayMouseWheelBreak(breakDelay);
-						TweenMax.set(this.gridBody, { y: 0 });
-						self.flashBackground();
-						self.topend = true;
-					}
-				} else {
-					self.mousebreak = false;
-					TweenMax.set(this.gridBody, { y: '-=' + delta });
-				}
-			} else if (delta > 0) {
-				// console.log("scroll gen bottom", self.topend);
-				self.topend = false;
-				var cH = document.body.clientHeight - self.gridFilter.clientHeight,
-				    bH = self.gridBody.clientHeight,
-				    dH = cH - bH;
-	
-				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta <= cH - bH) {
-					if (self.bottomend) {
-						if (self.mousebreak) {
-							self.parentview.nextSlide();
-						} else {
-							self.delayMouseWheelBreak(breakDelay);
-						}
-					} else if (!self.bottomend) {
-						self.delayMouseWheelBreak(breakDelay);
-						self.bottomend = true;
-						TweenMax.set(self.gridBody, { y: dH });
-						self.flashBackground();
-					}
-				} else {
-					self.mousebreak = false;
-					TweenMax.set(self.gridBody, { y: '-=' + delta });
-				}
-			}
 		}
 	});
 	
@@ -33279,6 +33207,172 @@
 	  }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)(module)))
+
+/***/ },
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _base = __webpack_require__(281);
+	
+	var _base2 = _interopRequireDefault(_base);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Longbase = _base2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			isscrollable: ['boolean', true, true],
+			parentview: ['object', true, function () {
+				return {};
+			}],
+			topend: ['boolean', true, true],
+			bottomend: ['boolean', true, false],
+			mousebreak: ['boolean', true, false],
+			timeto: ['array', true, function () {
+				return [];
+			}]
+		},
+		events: {},
+		render: function render() {
+			this.on('change:active', this.onActiveChange, this);
+			return this;
+		},
+		onActiveChange: function onActiveChange(view, value) {
+			this.mousebreak = false;
+			this.topend = false;
+			this.bottomend = false;
+		},
+		delayMouseWheelBreak: function delayMouseWheelBreak(delay) {
+			this.mousebreak = false;
+			TweenMax.killDelayedCallsTo(this.setMouseWheelBreak);
+			TweenMax.delayedCall(delay, this.setMouseWheelBreak, [], this);
+		},
+		setMouseWheelBreak: function setMouseWheelBreak() {
+			this.mousebreak = true;
+		},
+		flashBackground: function flashBackground() {
+			TweenMax.to(this.gridBackground, 0.15, { css: { 'opacity': 0.1 }, yoyo: true, repeat: 1 });
+		},
+		handleMouseWheel: function handleMouseWheel(event) {
+			var self = this;
+			var e = window.event || event || event.originalEvent;
+			var delta = e.deltaY || -1 * e.wheelDelta;
+			var breakDelay = 0.1;
+	
+			// FF Y-Achse
+			if (e.axis == 2) {
+				delta = e.detail * e.detail * (e.detail / 2);
+				breakDelay = 0.3;
+			}
+			// let now = Math.floor(Date.now());
+			// if(this.timeto.length != 0){
+			// 	this.timeto.push(this.timeto[0] - now);
+			// }
+			// this.timeto[0] = now;
+	
+			// console.log(this.timeto);
+	
+			if (delta < 0) {
+				self.bottomend = false;
+				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta > 0) {
+					if (self.topend) {
+						if (self.mousebreak) {
+							self.parentview.previousSlide();
+						} else {
+							self.delayMouseWheelBreak(breakDelay);
+						}
+					} else if (!self.topend) {
+						self.delayMouseWheelBreak(breakDelay);
+						TweenMax.set(this.gridBody, { y: 0 });
+						self.flashBackground();
+						self.topend = true;
+					}
+				} else {
+					self.mousebreak = false;
+					TweenMax.set(this.gridBody, { y: '-=' + delta });
+				}
+			} else if (delta > 0) {
+				// console.log("scroll gen bottom", self.topend);
+				self.topend = false;
+				var cH = document.body.clientHeight - self.gridHead.clientHeight,
+				    bH = self.gridBody.clientHeight,
+				    dH = cH - bH;
+	
+				if (self.gridBody._gsTransform && self.gridBody._gsTransform.y - delta <= cH - bH) {
+					if (self.bottomend) {
+						if (self.mousebreak) {
+							self.parentview.nextSlide();
+						} else {
+							self.delayMouseWheelBreak(breakDelay);
+						}
+					} else if (!self.bottomend) {
+						self.delayMouseWheelBreak(breakDelay);
+						self.bottomend = true;
+						TweenMax.set(self.gridBody, { y: dH });
+						self.flashBackground();
+					}
+				} else {
+					self.mousebreak = false;
+					TweenMax.set(self.gridBody, { y: '-=' + delta });
+				}
+			}
+		}
+	});
+	
+	exports.default = Longbase;
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _longbase = __webpack_require__(322);
+	
+	var _longbase2 = _interopRequireDefault(_longbase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Linkgrid = _longbase2.default.extend({
+		props: {
+			id: ['string', true, ''],
+			isscrollable: ['boolean', true, true],
+			parentview: ['object', true, function () {
+				return {};
+			}],
+			topend: ['boolean', true, true],
+			bottomend: ['boolean', true, false],
+			mousebreak: ['boolean', true, false],
+			timeto: ['array', true, function () {
+				return [];
+			}]
+		},
+		events: {},
+		render: function render() {
+			this.cacheElements({
+				gridBackground: '.Linkgrid__background',
+				gridBody: '.Linkgrid__body',
+				gridHead: '.Linkgrid__header'
+			});
+			this.on('change:active', this.onActiveChange, this);
+			return this;
+		}
+	});
+	
+	exports.default = Linkgrid;
 
 /***/ }
 /******/ ]);

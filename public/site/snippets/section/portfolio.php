@@ -2,7 +2,7 @@
 	$filtertags = $section->children()->pluck('filtertags', ',', true);
 	$arrangements = $section->arrangement()->structure();
 ?>
-<div class="Portfolio [ Element ]" id="<?php echo $section->slug(); ?>" data-view="GridView">
+<div class="Portfolio [ Element ]" id="<?php echo $section->slug(); ?>" data-view="FilterGridView">
 	<div class="Portfolio__background"></div>
 		<div class="Portfolio__filter">
 			<ul>

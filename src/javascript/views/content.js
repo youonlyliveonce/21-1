@@ -1,7 +1,8 @@
 import PageView from './base';
 import View from 'ampersand-view';
 import YoutubeView from '../features/youtube/youtube';
-import GridView from '../features/filtergrid/filtergrid';
+import FilterGridView from '../features/filtergrid/filtergrid';
+import LinkGridView from '../features/linkgrid/linkgrid';
 import SliderView from '../features/slider/slider';
 import CaseView from '../features/case/case';
 import dom from 'ampersand-dom';
@@ -36,8 +37,12 @@ let Content = PageView.extend({
 						view = new YoutubeView({el:element, id:element.getAttribute('id'), videoid:'videobox'+index, parentview:self});
 						view.render();
 						break;
-					case "GridView" :
-						view = new GridView({el:element, id:element.getAttribute('id'), parentview:self});
+					case "FilterGridView" :
+						view = new FilterGridView({el:element, id:element.getAttribute('id'), parentview:self});
+						view.render();
+						break;
+					case "LinkGridView" :
+						view = new LinkGridView({el:element, id:element.getAttribute('id'), parentview:self});
 						view.render();
 						break;
 					case "SliderView" :

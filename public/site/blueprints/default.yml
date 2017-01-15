@@ -5,6 +5,7 @@ pages:
     - section_videobox
     - section_portfolio
     - section_slider
+    - section_clients
 
 fields:
   title: title
