@@ -7,6 +7,8 @@
 	</div>
 	<div class="Videobox__body">
 
+		<?php snippet('mute'); ?>
+
 	</div>
 	<?php snippet('down',  array('section' => $section, 'label' => 'scroll')) ?>
 </div>

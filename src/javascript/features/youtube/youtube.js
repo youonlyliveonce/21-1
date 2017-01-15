@@ -1,4 +1,5 @@
 import Base from '../base';
+import dom from 'ampersand-dom';
 
 let YoutubePlayer = Base.extend({
 	props: {
@@ -9,13 +10,17 @@ let YoutubePlayer = Base.extend({
 		,ready: ['boolean', true, false]
 		,isscrollable: ['boolean', true, false]
 		,parentview: ['object', true, function(){ return {}; }]
+		,mute: ['boolean', true, false]
 	},
-	events: {},
+	events: {
+		'click .Button--mute' : 'handleMuteClick'
+	},
 
 	render: function(){
 		let self = this;
 		this.cacheElements({
-			ratio : '.Videobox__background'
+			videobox : '.Videobox__background',
+			mutebutton: '.Button--mute'
 		});
 		if(window.YT === undefined){
 			window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
@@ -31,6 +36,7 @@ let YoutubePlayer = Base.extend({
 			})
 		}
 		this.on('change:active', this.onActiveChange, this);
+		this.on('change:mute', this.onMuteChange, this);
 
 		return this;
 	},
@@ -64,10 +70,32 @@ let YoutubePlayer = Base.extend({
 			this.player.pauseVideo();
 		}
 	},
+	muteVideo: function(){
+		if(typeof this.player.mute == 'function'){
+			this.player.mute();
+		}
+	},
+	unmuteVideo: function(){
+		if(typeof this.player.unMute == 'function'){
+			this.player.unMute();
+		}
+	},
+
+	onMuteChange: function(model, value){
+		if(value) {
+			this.muteVideo();
+			dom.addClass(this.mutebutton, 'mute');
+		} else {
+			if(this.ready){
+				this.unmuteVideo();
+				dom.removeClass(this.mutebutton, 'mute');
+			}
+		}
+	},
 	onActiveChange: function(model, value){
-		if(!value)
+		if(!value){
 			this.pauseVideo();
-		else {
+		} else {
 			if(this.ready){
 				this.playVideo();
 			}
@@ -79,6 +107,9 @@ let YoutubePlayer = Base.extend({
 	cleanup : function(){
 		this.player.destroy();
 	},
+	handleMuteClick: function(event){
+		this.mute = !this.mute;
+	},
 	handleResize: function(){
 		var newWidth = document.body.clientHeight/9*16,
 				newHeight = document.body.clientHeight;
@@ -87,7 +118,7 @@ let YoutubePlayer = Base.extend({
 			newHeight = document.body.clientWidth/16*9;
 		}
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
-		this.ratio.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
+		this.videobox.setAttribute("style", "width:"+newWidth+"px; height:"+newHeight+"px;");
 	}
 
 });

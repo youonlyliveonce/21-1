@@ -51,28 +51,33 @@
 		<div class="Case__board">
 			<?php foreach($gallery as $index => $item): ?>
 				<?php if($index == 0): ?>
-					<div class="Case__item Case__item--first">
+					<div class="Case__item Case__item--first<?php if($item['videoid'] != null ) echo ' Case__item--youtube'; ?>">
 						<div>
-							<?php if($image = $page->image($gallery[0]['img'])) echo thumb($image, array('width' => 1010, 'height' => 564, 'crop' => true)); ?>
+							<?php if($image = $page->image($gallery[0]['img'])) :
+											echo thumb($image, array('width' => 1010, 'height' => 564, 'crop' => true));
+										elseif($item['videoid'] != null ) : ?>
+											<iframe width="420" height="315" src="https://www.youtube.com/embed/<?= $item['videoid']; ?>?autoplay=0&enablejsapi=1&showinfo=0&controls=1&rel=0"></iframe>
+							<?php endif; ?>
 							<?php if($gallery[0]['caption'] != null): ?>
 								<figcaption><?= $gallery[0]['caption'] ?></figcaption>
 							<?php endif; ?>
 						</div>
 					</div>
 				<?php else: ?>
-					<div class="Case__item">
+					<div class="Case__item<?php if($item['videoid'] != null ) echo ' Case__item--first Case__item--youtube'; ?>">
 						<div>
-							<?php if($image = $page->image($gallery[$index]['img'])):
+							<?php if($image = $page->image($item['img'])):
 								echo thumb($image, array('width' => 500, 'height' => 500, 'crop' => true));
-								if($gallery[$index]['caption'] != null): ?>
-									<figcaption><?= $gallery[$index]['caption'] ?></figcaption>
+								if($item['caption'] != null): ?>
+									<figcaption><?= $item['caption'] ?></figcaption>
 								<?php endif; ?>
-							<?php endif; ?>
-							<?php if($gallery[$index]['headline'] != null): ?>
+							<?php elseif($item['videoid'] != null ) : ?>
+									<iframe width="420" height="315" src="https://www.youtube.com/embed/<?= $item['videoid']; ?>?autoplay=0&enablejsapi=1&showinfo=0&controls=1&rel=0"></iframe>
+							<?php elseif($item['headline'] != null): ?>
 								<div>
 									<article>
-										<h3><?= $gallery[$index]['headline'] ?></h3>
-										<?= kirbytext($gallery[$index]['copy']) ?>
+										<h3><?= $item['headline'] ?></h3>
+										<?= kirbytext($item['copy']) ?>
 									</article>
 								</div>
 							<?php endif; ?>

@@ -25,7 +25,8 @@ let Case = Base.extend({
 	render: function(){
 		this.cacheElements({
 				caseBody: '.Case__body',
-				ratio : '.Videobox__background'
+				caseVideo : '.Videobox__background',
+				caseBoardVideo : '.Case__item--youtube > div'
 		});
 		if(this.queryAll('#'+this.id+' .swiper-slide').length > 1){
 			TweenMax.delayedCall(0.15, function(){
@@ -38,10 +39,15 @@ let Case = Base.extend({
 	},
 	handleResize: function(){
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
-		if(this.ratio != undefined){
-			let newWidth = this.ratio.clientWidth,
+		if(this.caseVideo != undefined){
+			let newWidth = this.caseVideo.clientWidth,
 					newHeight = newWidth/16*9;
-			this.ratio.setAttribute("style", "height:"+newHeight+"px;");
+			this.caseVideo.setAttribute("style", "height:"+newHeight+"px;");
+		}
+		if(this.caseBoardVideo != undefined){
+			let newWidth = this.caseBoardVideo.clientWidth,
+					newHeight = newWidth/16*9;
+			this.caseBoardVideo.setAttribute("style", "height:"+newHeight+"px;");
 		}
 	},
 	handleMouseWheel: function(event){

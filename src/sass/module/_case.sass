@@ -1,20 +1,21 @@
 .Case
 	background-color: $color-background
-	position: relative 
-	iframe
-		position: absolute
-		top: 0
-		left: 0
-		width: 100%
-		height: 100%
-		display: block
-		border: 0
+	position: relative
+
 	.Videobox__background
 		width: 100%
 		position: relative
 		top: inherit
 		left: inherit
 		+transform(translateX(0) translateY(0))
+		iframe
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			display: block
+			border: 0
 	&__body
 		@extend .Section__body--small
 		padding-top: 80px
@@ -140,6 +141,14 @@
 			letter-spacing: 0.03em
 	&__board
 		padding: $gap-size-large 0
+		iframe
+			position: relative
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			display: block
+			border: 0
 		+bp(medium)
 			+clearfix()
 

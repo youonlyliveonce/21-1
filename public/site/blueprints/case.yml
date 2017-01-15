@@ -71,10 +71,12 @@ fields:
   moodboard:
     label: Moodboard
     type: structure
-    help: Bilder aus Dateien auswählen. Das erste Bild wird in der vollen Breite angezeigt. Alle folgenden immer mit der halben Breite.
+    help: Bilder aus Dateien auswählen. Oder Youtube ID eintragen. Das erste Element wird in der vollen Breite angezeigt. Alle folgenden immer mit der halben Breite.
     entry: >
       <u>Image</u> : {{img}}<br/>
       <u>Caption</u> : {{caption}}<br/>
+      oder<br/>
+      <u>Youtube</u> : {{videoid}}<br/>
       oder<br/>
       <u>Headline</u> : {{headline}}<br/>
       <u>Text</u> : {{copy}}<br/>
@@ -84,6 +86,9 @@ fields:
         type: image
       caption:
         label: Caption
+        type: text
+      videoid:
+        label: Youtube ID
         type: text
       headline:
         label: Überschrift Textbox
