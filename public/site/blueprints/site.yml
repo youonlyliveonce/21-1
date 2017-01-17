@@ -11,19 +11,3 @@ fields:
   author:
     label: Author
     type:  text
-
-  impressum:
-    label: Impressum
-    type:  textarea
-
-  legal:
-    label: Datenschutz
-    type:  textarea
-
-  urheber:
-    label: Urheberrecht
-    type:  textarea
-
-  haftung:
-    label: Haftungsausschluss
-    type:  textarea
