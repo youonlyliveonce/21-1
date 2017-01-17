@@ -5,6 +5,7 @@ import FilterGridView from '../features/filtergrid/filtergrid';
 import LinkGridView from '../features/linkgrid/linkgrid';
 import SliderView from '../features/slider/slider';
 import CaseView from '../features/case/case';
+import TextpageView from '../features/textbox/textbox';
 import dom from 'ampersand-dom';
 
 let Content = PageView.extend({
@@ -51,6 +52,10 @@ let Content = PageView.extend({
 						break;
 					case "CaseView" :
 						view = new CaseView({el:element, id:element.getAttribute('id'), parentview:self});
+						view.render();
+						break;
+					case "TextpageView" :
+						view = new TextpageView({el:element, id:element.getAttribute('id'), parentview:self});
 						view.render();
 						break;
 					default:

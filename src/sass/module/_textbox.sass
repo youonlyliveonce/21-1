@@ -7,6 +7,17 @@
 	height: 60%
 	z-index: 103
 	overflow: hidden
+	.Textpage &
+		width: 90%
+		max-width: $max-size - 420
+		margin: 0 auto
+		left: 50%
+		+transform(translateX(-50%))
+		.Textbox__body
+			+clearfix
+			> div
+				float: left
+				width: 50%
 	+fontserif()
 	strong
 		+fontserifbold()
@@ -15,6 +26,13 @@
 		font-size: 1.2em
 	&__body
 		position: relative
+		h1
+			+fontserifbold()
+			font-style: italic
+			text-transform: uppercase
+			letter-spacing: 0
+			font-size: 2em
+			margin-bottom: 1em
 	&__wrapper
 		position: absolute
 		padding: 70px

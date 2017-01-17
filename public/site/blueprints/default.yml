@@ -6,6 +6,7 @@ pages:
     - section_portfolio
     - section_slider
     - section_clients
+    - section_textbox
 
 fields:
   title: title

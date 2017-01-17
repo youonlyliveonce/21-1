@@ -1,0 +1,13 @@
+title: Section Textbox
+
+pages: false
+
+fields:
+  title: title
+  
+  leftbar:
+    label: Linke Spalte
+    type: textarea
+  rightbar:
+    label: Rechte Spalte
+    type: textarea

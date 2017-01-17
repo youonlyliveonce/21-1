@@ -51,7 +51,7 @@
 		<div class="Case__board">
 			<?php foreach($gallery as $index => $item): ?>
 				<?php if($index == 0): ?>
-					<div class="Case__item Case__item--first<?php if($item['videoid'] != null ) echo ' Case__item--youtube'; ?>">
+					<div class="Case__item Case__item--first<?php if(isset($item['videoid'])) echo ' Case__item--youtube'; ?>">
 						<div>
 							<?php if($image = $page->image($gallery[0]['img'])) :
 											echo thumb($image, array('width' => 1010, 'height' => 564, 'crop' => true));
@@ -64,7 +64,7 @@
 						</div>
 					</div>
 				<?php else: ?>
-					<div class="Case__item<?php if($item['videoid'] != null ) echo ' Case__item--first Case__item--youtube'; ?>">
+					<div class="Case__item<?php if(isset($item['videoid'])) echo ' Case__item--first Case__item--youtube'; ?>">
 						<div>
 							<?php if($image = $page->image($item['img'])):
 								echo thumb($image, array('width' => 500, 'height' => 500, 'crop' => true));

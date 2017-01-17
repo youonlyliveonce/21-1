@@ -10,6 +10,7 @@ fields:
   clients:
     label: Kunden
     type: structure
+    style: table
     modalsize: large
     required: true
     entry: >
