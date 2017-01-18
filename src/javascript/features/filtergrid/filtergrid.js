@@ -25,14 +25,17 @@ let Filtergrid = Base.extend({
 		this.filteritems = this.queryAll('.Portfolio__filter li');
 		this.on('change:active', this.onActiveChange, this);
 		TweenMax.to('.check-grey', 0.25, {drawSVG:"0% 0%"});
+		TweenMax.delayedCall(0.25, function(){
+			this.iso = new Isotope( '.Portfolio__mansry', {
+				itemSelector: '.Portfolio__item',
+				percentPosition: true,
+				masonry: {
+					columnWidth: '.Portfolio__sizer'
+				}
+			});
+		}, [], this);
 
-		this.iso = new Isotope( '.Portfolio__mansry', {
-			itemSelector: '.Portfolio__item',
-			percentPosition: true,
-			masonry: {
-				columnWidth: '.Portfolio__sizer'
-			}
-		});
+
 
 		return this;
 
