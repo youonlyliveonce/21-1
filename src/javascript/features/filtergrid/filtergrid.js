@@ -47,10 +47,15 @@ let Filtergrid = Base.extend({
 				this.filteritems[i].classList.remove('active');
 				this.filteritems[i].classList.add('active');
 				if(this.filteritems[i].dataset.filter != "all"){
-					this.gridBody.classList.add(this.filteritems[i].dataset.filter);
+					// this.gridBody.classList.add(this.filteritems[i].dataset.filter);
 					this.showWhiteArrow(this.filteritems[i].getElementsByClassName('check-white'), this.filteritems[i].getElementsByClassName('check-grey'));
 				}
 			}
+			this.iso.arrange({
+				filter: function( itemElem ) {
+					return true;
+				}
+			});
 		} else {
 			/* ISOLATE */
 			for(let i=0; i<this.filteritems.length; i++){
@@ -62,22 +67,12 @@ let Filtergrid = Base.extend({
 				}
 			}
 			this.iso.arrange({
-				// item element provided as argument
 				filter: function( itemElem ) {
-					// var number = itemElem.querySelector('.number').innerText;
-					// return parseInt( number, 10 ) > 50;
-					console.log(filter);
-					console.log(itemElem.classList.contains(filter));
 					return itemElem.classList.contains(filter);
 				}
 			});
 			target.classList.add('active');
 			this.showWhiteArrow(whiteSVGs, greySVGs);
-			// TweenMax.delayedCall(0.75, function(){
-			// 		this.gridBody.classList.add(filter);
-			// }, [], this)
-
-
 
 			/* REDUCE */
 			// this.gridBody.classList.toggle(filter);

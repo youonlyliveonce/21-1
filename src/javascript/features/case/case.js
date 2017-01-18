@@ -18,6 +18,8 @@ let Case = Base.extend({
 		}]
 		,topend: ['boolean', true, true]
 		,bottomend: ['boolean', true, false]
+		,caseBoardVideo: ['object', true, function(){ return undefined }]
+
 	},
 
 	events: { },
@@ -26,13 +28,13 @@ let Case = Base.extend({
 		this.cacheElements({
 				caseBody: '.Case__body',
 				caseVideo : '.Videobox__background',
-				caseBoardVideo : '.Case__item--youtube > div'
 		});
 		if(this.queryAll('#'+this.id+' .swiper-slide').length > 1){
 			TweenMax.delayedCall(0.15, function(){
 					this.swiper = new Swiper('#'+this.id+' .swiper-container', this.settings);
 			}, [], this);
 		}
+		this.caseBoardVideo = this.queryAll('.Case__item--youtube > div');
 
 		return this;
 
