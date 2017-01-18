@@ -29,6 +29,7 @@ let Filtergrid = Base.extend({
 			this.iso = new Isotope( '.Portfolio__mansry', {
 				itemSelector: '.Portfolio__item',
 				percentPosition: true,
+				stagger: 30,
 				masonry: {
 					columnWidth: '.Portfolio__sizer'
 				}
