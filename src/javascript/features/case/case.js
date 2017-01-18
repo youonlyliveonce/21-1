@@ -47,9 +47,11 @@ let Case = Base.extend({
 			this.caseVideo.setAttribute("style", "height:"+newHeight+"px;");
 		}
 		if(this.caseBoardVideo != undefined){
-			let newWidth = this.caseBoardVideo.clientWidth,
-					newHeight = newWidth/16*9;
-			this.caseBoardVideo.setAttribute("style", "height:"+newHeight+"px;");
+			for(let i=0; i<this.caseBoardVideo.length; i++){
+				let newWidth = this.caseBoardVideo[i].clientWidth,
+						newHeight = newWidth/16*9;
+				this.caseBoardVideo[i].setAttribute("style", "height:"+newHeight+"px;");
+			}
 		}
 	},
 	handleMouseWheel: function(event){
