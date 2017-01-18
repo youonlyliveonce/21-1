@@ -11,6 +11,7 @@ let Filtergrid = Base.extend({
 		,bottomend: ['boolean', true, false]
 		,mousebreak: ['boolean', true, false]
 		,timeto: ['array', true, function(){ return [] }]
+		,iso: ['object', true, function(){ return {} }]
 	},
 	events: {
 		'click .Portfolio__filter ul li':'handleClickFilter'
@@ -24,6 +25,14 @@ let Filtergrid = Base.extend({
 		this.filteritems = this.queryAll('.Portfolio__filter li');
 		this.on('change:active', this.onActiveChange, this);
 		TweenMax.to('.check-grey', 0.25, {drawSVG:"0% 0%"});
+
+		this.iso = new Isotope( '.Portfolio__mansry', {
+			itemSelector: '.Portfolio__item',
+			percentPosition: true,
+			masonry: {
+				columnWidth: '.Portfolio__sizer'
+			}
+		});
 
 		return this;
 
@@ -48,15 +57,25 @@ let Filtergrid = Base.extend({
 				this.filteritems[i].classList.remove('active');
 				// this.filteritems[i].classList.add('active');
 				if(this.filteritems[i].dataset.filter != "all"){
-					this.gridBody.classList.remove(this.filteritems[i].dataset.filter);
+					// this.gridBody.classList.remove(this.filteritems[i].dataset.filter);
 					this.showGreyArrow(this.filteritems[i].getElementsByClassName('check-white'), this.filteritems[i].getElementsByClassName('check-grey'));
 				}
 			}
+			this.iso.arrange({
+				// item element provided as argument
+				filter: function( itemElem ) {
+					// var number = itemElem.querySelector('.number').innerText;
+					// return parseInt( number, 10 ) > 50;
+					console.log(filter);
+					console.log(itemElem.classList.contains(filter));
+					return itemElem.classList.contains(filter);
+				}
+			});
 			target.classList.add('active');
 			this.showWhiteArrow(whiteSVGs, greySVGs);
-			TweenMax.delayedCall(0.75, function(){
-					this.gridBody.classList.add(filter);
-			}, [], this)
+			// TweenMax.delayedCall(0.75, function(){
+			// 		this.gridBody.classList.add(filter);
+			// }, [], this)
 
 
 

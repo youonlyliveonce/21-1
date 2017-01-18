@@ -113,11 +113,21 @@
 		&.Concept
 			.Portfolio__item.Concept
 				@extend .Portfolio__item--active
-
+	&__mansry
+		position: relative
+		+clearfix
+	&__item,
+	&__sizer
+		position: relative
+		width: 25%
 	&__item
 		position: relative
 		overflow: hidden
 		+transition(opacity, 0.3s)
+		width: 25%
+		padding-bottom: +unit(4,16)
+		+bp(medium)
+			// float: left
 		a
 			display: block
 		h2
@@ -131,7 +141,7 @@
 			+noselect
 			+transition(transform, 0.01s)
 			+fontbold
-			font-size: 3em
+			font-size: 1.3em
 			line-height: 1
 			&:after
 				content: ''
@@ -178,10 +188,6 @@
 				opacity: 0.25
 				backface-visibility: hidden
 				+transform(translateX(-50%) translateY(-50%))
-		+bp(medium)
-			float: left
-		width: 100%
-		padding-bottom: +unit(9,16)
 		&--active
 			cursor: pointer
 			h2
@@ -218,9 +224,9 @@
 				padding-bottom: +unit(4,16)
 				h2
 					font-size: 1.5em
-		&--tiny
+		&--large
 			+bp(medium)
-				width: 25%
-				padding-bottom: +unit(4,16)
+				width: 100%
+				padding-bottom: +unit(9,16)
 				h2
-					font-size: 1.3em
+					font-size: 3em

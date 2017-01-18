@@ -1,6 +1,8 @@
 <?php
 	$filtertags = $section->children()->pluck('filtertags', ',', true);
 	$arrangements = $section->arrangement()->structure();
+	$children = $section->children()->visible();
+	$snippet = 'tiny/case_teaser';
 ?>
 <div class="Portfolio [ Element ]" id="<?php echo $section->slug(); ?>" data-view="FilterGridView">
 	<div class="Portfolio__background"></div>
@@ -18,47 +20,20 @@
 			</ul>
 		</div>
 		<div class="Portfolio__body [ Film Interactive-Design Concept Animation-VFX-3D ]">
-			<?php foreach($arrangements as $arrangement):
-
-					$snippet = 'tiny/case_teaser';
-					$design = $arrangement->design();
-					$first = $site->page($section->uri().'/'.$arrangement->firstitem());
-					if($arrangement->seconditem()->isNotEmpty()):
-						$second = $site->page($section->uri().'/'.$arrangement->seconditem());
-					endif;
-					if($arrangement->thirditem()->isNotEmpty()):
-						$third = $site->page($section->uri().'/'.$arrangement->thirditem());
-					endif;
-					if($arrangement->fourthitem()->isNotEmpty()):
-						$fourth = $site->page($section->uri().'/'.$arrangement->fourthitem());
-					endif;
-
-					if($design == 'hero'):
-						snippet($snippet, array('item' => $first, 'itemclass' => '', 'thumb' => 'large'));
-					elseif($design == '1-1'):
-						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
-					elseif($design == '1-2'):
-						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
-						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
-					elseif($design == '2-1'):
-						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
-						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--medium Portfolio__item--right ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
-					elseif($design == '1-3'):
-						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $fourth, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
-					elseif($design == '3-1'):
-						 snippet($snippet, array('item' => $first, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $second, 'itemclass' => 'Portfolio__item--tiny ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $third, 'itemclass' => 'Portfolio__item--medium Portfolio__item--right ', 'thumb' => 'square'));
-						 snippet($snippet, array('item' => $fourth, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
-					endif;
-			endforeach; ?>
-
+			<div class="Portfolio__mansry">
+				<div class="Portfolio__sizer"></div>
+				<?php foreach($children as $teaser) :
+						if($teaser->teasersize() == "large") :
+							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--large ', 'thumb' => 'large'));
+						elseif($teaser->teasersize() == "medium") :
+							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
+						elseif($teaser->teasersize() == "small") :
+							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
+						else :
+							snippet($snippet, array('item' => $teaser, 'itemclass' => '', 'thumb' => 'square'));
+						endif;
+					endforeach; ?>
+			</div>
 		</div>
 		<?php snippet('down',  array('section' => $section)) ?>
 </div>

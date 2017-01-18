@@ -23,6 +23,15 @@ fields:
     type: image
     required: true
 
+  teasersize:
+    label: Teasergröße
+    type: select
+    options:
+      tiny: winzig
+      small: klein
+      medium: mittel
+      large: gross
+
   section1:
     label: Herobereich
     type: headline
