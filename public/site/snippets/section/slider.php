@@ -4,7 +4,7 @@
 
 <div class="Slider [ Element ]" id="<?php echo $section->slug(); ?>"  data-view="SliderView">
 		<div class="swiper-container">
-			<div class="Slider__layer">
+			<div class="Slider__layer <?php echo 'Slider__layer--'.$section->animation(); ?>">
 				<?php foreach($slides as $slide): ?>
 					<?php $title = str_split($slide->title()); ?>
 					<?php $subtitle = str_split($slide->subtitle()); ?>

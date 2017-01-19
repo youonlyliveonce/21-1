@@ -6,6 +6,14 @@ fields:
   title: title
 
   section: section
+
+  animation:
+    label: Animation
+    type: select
+    default: standard
+    options:
+      standard: Standard
+      swosh: Swosh
   slider:
     label: Slideelemente
     type: structure

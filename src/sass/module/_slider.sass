@@ -5,6 +5,7 @@
 		height: 100%
 		background-position: center
 		background-size: cover
+
 	&__layer
 		>div
 			&.active
@@ -75,6 +76,63 @@
 				&__scroller
 					width: 0px
 					+transition(width, 0.75s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
+		&--swosh
+			>div
+				.Textbox
+					padding-left: 100px
+					+transition(padding, .25s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
+					&__wrapper
+						opacity: 0
+						+transition(all, .25s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
+						+transform(none)
+				h1,h2,h3
+					>span
+						overflow: visible
+						>span
+							display: block
+							opacity: 0
+				h1
+					>span
+						>span
+							+transform(translateX(100px))
+				h2,h3
+					>span
+						>span
+							+transform(translateX(50px))
+
+				&.active
+					.Textbox
+						padding-left: 0px
+						+transition(padding, 1.00s,  ease-out, 0.75s)
+						&__wrapper
+							+transition(all, 1.75s,  ease-out, 0.75s)
+							opacity: 1
+					h1
+						>span
+							@for $i from 1 through 30
+								&:nth-child(#{$i})
+									>span
+										+transition(all, 1.25s, ease-out, $i*0.1s)
+					h2
+						>span
+							@for $i from 1 through 30
+								&:nth-child(#{$i})
+									>span
+										+transition(all, 1.05s, ease-out, 0.1s+$i*0.1s)
+					h3
+						>span
+							@for $i from 1 through 30
+								&:nth-child(#{$i})
+									>span
+										+transition(all, 0.75s, ease-out, 0.15s+$i*0.1s)
+					h1,h2,h3
+						span
+							opacity: 1
+							+transform(translateX(0%))
+					.Textbox
+						&__wrapper
+							opacity: 1
+							+transform(translateX(0%))
 
 .swiper-button-prev,
 .swiper-button-next
