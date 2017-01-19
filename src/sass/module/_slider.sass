@@ -79,12 +79,12 @@
 		&--swosh
 			>div
 				.Textbox
-					padding-left: 100px
-					+transition(padding, .25s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
+					// padding-left: 100px
+					// +transition(padding, .25s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
 					&__wrapper
 						opacity: 0
 						+transition(all, .25s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
-						+transform(none)
+						+transform(translateX(400px))
 				h1,h2,h3
 					>span
 						overflow: visible
@@ -102,10 +102,11 @@
 
 				&.active
 					.Textbox
-						padding-left: 0px
-						+transition(padding, 1.00s,  ease-out, 0.75s)
+						// padding-left: 0px
+						// +transition(padding, 1.00s,  ease-out, 0.75s)
 						&__wrapper
 							+transition(all, 1.75s,  ease-out, 0.75s)
+							+transform(translateX(0px))
 							opacity: 1
 					h1
 						>span
