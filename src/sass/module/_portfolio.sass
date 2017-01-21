@@ -119,15 +119,16 @@
 	&__item,
 	&__sizer
 		position: relative
-		width: 25%
+		width: 100%
+		+bp('medium')
+			width: 25%
 	&__item
 		position: relative
 		overflow: hidden
 		+transition(opacity, 0.3s)
-		width: 25%
-		padding-bottom: +unit(4,16)
+		padding-bottom: +unit(16,16)
 		+bp(medium)
-			// float: left
+			padding-bottom: +unit(4,16)
 		a
 			display: block
 		h2
@@ -215,16 +216,19 @@
 		&--right
 			float: right
 		&--medium
+			padding-bottom: +unit(16,16)
 			+bp(medium)
 				width: 50%
 				padding-bottom: +unit(8,16)
 		&--small
+			padding-bottom: +unit(9,16)
 			+bp(medium)
 				width: 50%
 				padding-bottom: +unit(4,16)
 				h2
 					font-size: 1.5em
 		&--large
+			padding-bottom: +unit(9,16)
 			+bp(medium)
 				width: 100%
 				padding-bottom: +unit(9,16)

@@ -1,13 +1,15 @@
 .Page--single
 	.Navigation
-		opacity: 0
-		+transform(translateX(0%) translateY(-100%))
-		visibility: hidden
+		+bp('medium')
+			opacity: 0
+			+transform(translateX(0%) translateY(-100%))
+			visibility: hidden
 .Page--multi
 	.Navigation
-		visibility: visible
-		opacity: 1
-		+transform(translateX(0%) translateY(0%))
+		+bp('medium')
+			visibility: visible
+			opacity: 1
+			+transform(translateX(0%) translateY(0%))
 
 .Navigation--home
 	+bp('medium')
@@ -32,10 +34,12 @@
 	z-index: 9999
 	position: absolute
 	+transition(all, 0.25s)
-	+transform(translateX(-100%))
+	+transform(translateX(100%))
 	background-color: $color-content
-	left: 0
-	right: 50%
+	top: 0%
+	bottom: 0%
+	left: 0%
+	right: 0%
 	+bp('medium')
 		+transform(translateX(0%) translateY(-100%))
 		width: 100%
@@ -46,10 +50,13 @@
 		opacity: 0
 	ul
 		text-align: left
-		padding-top: 3.4em
-		// padding-bottom: 1em
+		position: absolute
+		top: 50%
+		left: 50%
+		+transform(translateX(-50%) translateY(-50%))
 		overflow: hidden
 		+bp('medium')
+			position: relative
 			height: auto
 			text-align: center
 			margin: 50px 0 0 0
@@ -58,7 +65,10 @@
 		li
 			// letter-spacing: 0.1rem
 			cursor: pointer
-			padding-left: 1.85em
+			// padding-left: 1.85em
+			margin: 0 auto
+			text-align: center
+			padding: 20px
 			+noselect
 			+bp('medium')
 				position: relative
