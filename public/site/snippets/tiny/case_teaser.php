@@ -11,6 +11,6 @@
 			<?= thumb($item->teaserimage()->toFile(), array('width' => 1010, 'height' => 564, 'crop' => true)); ?>
 		<?php endif; ?>
 		<span></span>
-		<h2><?php echo $item->headline() ?></h2>
+		<h2><span><?php echo $item->headline() ?></span></h2>
 	</a>
 </div>

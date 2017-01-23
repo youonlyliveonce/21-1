@@ -84,7 +84,6 @@ let Slider = Base.extend({
 	},
 
 	gfxIn: function(){
-		console.log(this.layer);
 		this.layer[this.activeindex].classList.add('active');
 		this.navigation[this.activeindex].classList.add('active');
 		this.gfxLinesIn(this.layer[this.activeindex]);
@@ -161,8 +160,8 @@ let Slider = Base.extend({
 	handleMouseMove: function(event){
 		if(this.active){
 			let faktor = event.clientX - document.body.clientWidth/2;
-			TweenMax.set(this.swiper.container, {x:-0.015*faktor});
-			TweenMax.set(this.layer[this.activeindex].children, {x:0.05*faktor});
+			TweenMax.set(this.swiper.container, {x:-0.01*faktor});
+			TweenMax.set(this.layer[this.activeindex].children, {x:0.025*faktor});
 		}
 	},
 	handleClickContentnavi: function(event){

@@ -17,7 +17,7 @@
 							<div class="Textbox">
 								<div class="Textbox__wrapper">
 									<div class="Textbox__body">
-										<?= $slide->textbox()->markdown() ?>
+										<?= $slide->textbox()->kt() ?>
 									</div>
 								</div>
 								<div class="Textbox__scroller"><span></span></div>

@@ -136,6 +136,7 @@
 			position: absolute
 			// +transform(translateY(7px))
 			top: 30px
+
 			z-index: 2
 			color: white
 			max-width: 80%
@@ -144,6 +145,11 @@
 			+fontbold
 			font-size: 1.3em
 			line-height: 1
+			span
+				background-color: rgba(0,0,0,0.45)
+				padding: 0.25em
+				display: inline-block
+				+transition(all, 0.25s, ease-out)
 			&:after
 				content: ''
 				position: absolute
@@ -159,7 +165,7 @@
 				background-repeat: no-repeat
 				// background-color: black
 
-		span
+		>span
 			opacity: 0
 			position: absolute
 			z-index: 1
@@ -195,18 +201,18 @@
 				opacity: 1
 				+transition(all, 0.75s, ease-out, 1s)
 				+transform(translateY(0%))
-			span
+			>span
 				opacity: 0
 			img
 				opacity: 1
 			&:hover
 				h2
-					+transform(translateX($gap-size/2))
-					+transition(all, 0.25s, ease-out)
+					// +transform(translateX($gap-size/2))
 					&:after
-						+transform(translateX(-20%))
-				span
-					opacity: 0.4
+						+transform(translateX(50%))
+					span
+
+						padding-left: 0.5em
 			>a
 				cursor: pointer
 				left: 10px
@@ -220,6 +226,8 @@
 			+bp(medium)
 				width: 50%
 				padding-bottom: +unit(8,16)
+				h2
+					font-size: 2.5em
 		&--small
 			padding-bottom: +unit(9,16)
 			+bp(medium)

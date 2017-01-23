@@ -3,10 +3,10 @@
 		<div class="Textbox__wrapper">
 			<div class="Textbox__body">
 				<div>
-					<?= $section->leftbar()->markdown() ?>
+					<?= $section->leftbar()->kt() ?>
 				</div>
 				<div>
-					<?= $section->rightbar()->markdown() ?>
+					<?= $section->rightbar()->kt() ?>
 				</div>
 			</div>
 		</div>
