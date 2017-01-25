@@ -4,8 +4,8 @@ pages: false
 
 fields:
   title: title
-
   section: section
+  navigation: navigation
 
   videoid:
     label: Video ID

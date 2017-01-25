@@ -6,6 +6,7 @@ fields:
   title: title
 
   section: section
+  navigation: navigation
 
   animation:
     label: Animation

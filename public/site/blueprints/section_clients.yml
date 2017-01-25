@@ -2,9 +2,12 @@ title: Section Clients
 
 pages: false
 
+
+
 fields:
   title: title
   section: section
+  navigation: navigation
   scrollable: scrollable
 
   clients:

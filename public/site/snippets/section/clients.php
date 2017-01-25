@@ -12,7 +12,13 @@
 					<?php foreach($row as $item): ?>
 						<div>
 							<figure>
+								<?php if($item->link()->isNotEmpty()): ?>
+									<a href="<?= $item->link(); ?>" target="_blank">
+								<?php endif; ?>
 								<img src="<?php echo $section->image($item->logo())->url(); ?>" alt="<?php echo html($item->alttext()) ?>">
+								<?php if($item->link()->isNotEmpty()): ?>
+									</a>
+								<?php endif; ?>
 							</figure>
 						</div>
 					<?php endforeach ?>

@@ -2,6 +2,7 @@ title: Site
 
 pages:
   - default
+  - redirect
 
 fields:
   title:
