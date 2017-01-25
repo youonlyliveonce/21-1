@@ -111,11 +111,13 @@
 						height: 100%
 	&__third
 		.Navigation &
-			top: 5px
-			right: 0px
-			left: auto
+			position: relative
+			+bp(large)
+				position: absolute
+				top: 5px
+				right: 0px
+				left: auto
+				+transform(none)
 			margin: 0
-			position: absolute
 			font-size: 0.8em
 			opacity: 0.5
-			+transform(none)
