@@ -84,7 +84,6 @@ class App {
 			TweenMax.to(this.mainView.headerlogo, 0.45, {opacity:1, ease:Cubic.easeOut, delay:0.1});
 		}
 		addEvents () {
-			console.log("addEvents");
 			let self = this;
 			if(window.attachEvent) {
 				window.attachEvent('onresize', self.mainView.handleResize);

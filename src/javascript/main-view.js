@@ -161,7 +161,6 @@ var MainView = View.extend({
 		*/
 
 		handleClickToggle: function (e){
-
 			var body = document.body;
 			if( dom.hasClass(body, 'Navigation--show') || e == undefined){
 					dom.removeClass(body, 'Navigation--show');
@@ -169,12 +168,10 @@ var MainView = View.extend({
 					dom.addClass(body, 'Navigation--show');
 			}
 		},
-
 		handleClickClose: function (e){
 			var body = document.body;
 			dom.removeClass(body, 'Navigation--show');
 		},
-
 		handleClickOpen: function (e){
 			var body = document.body;
 			dom.addClass(body, 'Navigation--show');
@@ -196,7 +193,6 @@ var MainView = View.extend({
 		},
 		handleKeyDown: function(event){
 			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-			// console.log(event);
 			if(CM.App.mainView.pageSwitcher.current){
 				CM.App.mainView.pageSwitcher.current.handleKeyDown(event);
 			}
@@ -232,7 +228,7 @@ var MainView = View.extend({
 				}
 		},
 
-		scrollTo: function(duration = 1.25){
+		scrollTo: function(duration = 0.5){
 				if (CM.App._params != {} && CM.App._params.section != null){
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
@@ -242,7 +238,7 @@ var MainView = View.extend({
 						self.updateActiveNav();
 						TweenMax.to(this.main, duration, {y:-1*id.offsetTop, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 							if(duration == 0) self.isSwiping = false;
-							TweenMax.delayedCall(0.4, function(){
+							TweenMax.delayedCall(0.2, function(){
 								self.isSwiping = false;
 								// CM.App.addEvents();
 							});
@@ -255,7 +251,7 @@ var MainView = View.extend({
 					self.updateActiveNav();
 					TweenMax.to(this.main, duration, {y:0, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 						if(duration == 0) self.isSwiping = false;
-						TweenMax.delayedCall(0.4, function(){
+						TweenMax.delayedCall(0.2, function(){
 							self.isSwiping = false;
 							// CM.App.addEvents();
 						});

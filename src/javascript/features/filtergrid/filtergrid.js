@@ -45,7 +45,8 @@ let Filtergrid = Base.extend({
 		let target = event.delegateTarget,
 				whiteSVGs = event.delegateTarget.getElementsByClassName('check-white'),
 				greySVGs = event.delegateTarget.getElementsByClassName('check-grey'),
-				filter = event.delegateTarget.dataset.filter;
+				filter = event.delegateTarget.dataset.filter,
+				self = this;
 		if(filter == "all"){
 			for(let i=0; i<this.filteritems.length; i++){
 				this.filteritems[i].classList.remove('active');
@@ -75,6 +76,11 @@ let Filtergrid = Base.extend({
 					return itemElem.classList.contains(filter);
 				}
 			});
+			TweenMax.delayedCall(0.35, function(){
+				if(-1*this.gridBody._gsTransform.y > this.gridBody.clientHeight){
+					TweenMax.to(this.gridBody, 1.25, {y:0});
+				}
+			}, [], this);
 			target.classList.add('active');
 			this.showWhiteArrow(whiteSVGs, greySVGs);
 
