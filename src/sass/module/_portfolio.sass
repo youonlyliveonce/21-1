@@ -12,28 +12,39 @@
 		bottom: 0
 		opacity: 0
 	&__filter
-		height: $header-height
+		height: 100px
+		+bp(large)
+			height: $header-height
 		text-align: center
 		ul
-			padding-top: 100px
+			padding-top: 20px
+			display: block
 			text-align: center
-			display: inline-block
 			letter-spacing: 0
 			font-size: 0.9em
 			+clearfix
+			+bp(large)
+				display: inline-block
+				padding-top: 100px
 			li
 				+fontbold
 				+noselect
 				color: $color-selection
 				text-transform: uppercase
-				display: block
-				float: left
+				display: inline-block
+				width: 49%
 				padding: 0
-				margin: 0 1px 0 0
+				margin: 1px
 				cursor: pointer
 				position: relative
 				background-color: $color-background
 				z-index: 10
+				text-align: left
+				+bp(large)
+					width: inherit
+					margin: 0 1px 0 0
+					display: block
+					text-align: center
 				&:after
 					+transition(all, 0.25s)
 					content: ''
@@ -47,7 +58,7 @@
 					z-index: 1
 				svg
 					position: absolute
-					left: 15px
+					left: 10px
 					top: 10px
 					width: 11px
 					display: inline-block
@@ -56,7 +67,9 @@
 					position: relative
 					display: block
 					margin: 0
-					padding: 4px 20px 3px 40px
+					padding: 4px 10px 3px 30px
+					+bp(large)
+						padding: 4px 20px 3px 40px
 					z-index: 3
 					+transition(all, 0.4s)
 				&.active,

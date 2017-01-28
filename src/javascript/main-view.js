@@ -112,7 +112,10 @@ var MainView = View.extend({
 				this.pageSwitcher.current = view;
 
 				// Handle resize
-				view.handleResize();
+				if(!CM.App._mobile){
+					console.log("in Main View");
+					view.handleResize();
+				}
 
 				// Scroll to paramter 'section'
 				TweenMax.delayedCall(0.15, function(){ self.handleUpdateView() });
@@ -236,26 +239,38 @@ var MainView = View.extend({
 						// CM.App.removeEvents();
 						self.pageSwitcher.current.updateActiveView();
 						self.updateActiveNav();
-						TweenMax.to(this.main, duration, {y:-1*id.offsetTop, overwrite:true, ease:Expo.easeOut, onComplete:function(){
-							if(duration == 0) self.isSwiping = false;
-							TweenMax.delayedCall(0.2, function(){
+						if(CM.App._mobile){
+							TweenMax.to(document.body, duration, {scrollTo:{y:id.offsetTop}, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 								self.isSwiping = false;
-								// CM.App.addEvents();
-							});
-						}});
+							}});
+						} else {
+							TweenMax.to(this.main, duration, {y:-1*id.offsetTop, overwrite:true, ease:Expo.easeOut, onComplete:function(){
+								if(duration == 0) self.isSwiping = false;
+								TweenMax.delayedCall(0.2, function(){
+									self.isSwiping = false;
+									// CM.App.addEvents();
+								});
+							}});
+						}
 				} else {
 					let self = this;
 					self.isSwiping = true;
 					// CM.App.removeEvents();
 					self.pageSwitcher.current.updateActiveView();
 					self.updateActiveNav();
-					TweenMax.to(this.main, duration, {y:0, overwrite:true, ease:Expo.easeOut, onComplete:function(){
-						if(duration == 0) self.isSwiping = false;
-						TweenMax.delayedCall(0.2, function(){
+					if(CM.App._mobile){
+						TweenMax.to(document.body, duration, {scrollTo:{y:id.offsetTop}, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 							self.isSwiping = false;
-							// CM.App.addEvents();
-						});
-					}});
+						}});
+					} else {
+						TweenMax.to(this.main, duration, {y:0, overwrite:true, ease:Expo.easeOut, onComplete:function(){
+							if(duration == 0) self.isSwiping = false;
+							TweenMax.delayedCall(0.2, function(){
+								self.isSwiping = false;
+								// CM.App.addEvents();
+							});
+						}});
+					}
 				}
 		},
 		updateActiveNav: function () {

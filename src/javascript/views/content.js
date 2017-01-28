@@ -69,16 +69,14 @@ let Content = PageView.extend({
 		}
 
 		this.updateActiveView();
-
 		// this.hammerSwipe = new Hammer(this.el);
 		// this.hammerSwipe.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 		// this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
 		// this.hammerSwipe.on('swipedown', this.handleSwipeDown.bind(this));
-
 		// this.functionStore = this.handleMouseWheel.bind(this);
-
 	},
 	handleResize: function(){
+		console.log("handleResize: content");
 		this.subViews.forEach(function(element){
 			element.view.handleResize();
 		});

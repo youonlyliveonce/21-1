@@ -13,6 +13,8 @@ html
 	text-shadow: none
 
 body
-	overflow: hidden
-	height: 100%
+	-webkit-overflow: touch
 	background-color: black
+	+bp(large)
+		overflow: hidden
+		height: 100%

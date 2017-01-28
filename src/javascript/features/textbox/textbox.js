@@ -27,7 +27,9 @@ let Textbox = Base.extend({
 		if(value){
 			TweenMax.delayedCall(1.25, function(){
 				if(this.active){
-					this.handleResize();
+					if(!CM.App._mobile){
+						this.handleResize();
+					}
 				}
 			}, [], this);
 		} else {
@@ -61,7 +63,7 @@ let Textbox = Base.extend({
 		}
 
 	}
-	
+
 })
 
 export default Textbox;

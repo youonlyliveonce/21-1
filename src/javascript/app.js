@@ -21,6 +21,7 @@ window.lazySizesConfig.rias.widthmap = {
 class App {
 
 		_version = 1.0
+		_mobile = false
 
 		constructor (el) {
 				this._sayHello()
@@ -39,9 +40,9 @@ class App {
 				});
 		}
 		// this is the the whole app initter
-		blastoff () {
+		blastoff (options) {
 				let self = this;
-
+				this._mobile = options.mobile;
 				// Render Main View
 				this.mainView.render();
 
@@ -76,8 +77,9 @@ class App {
 
 				// we have what we need, we can now start our router and show the appropriate page
 				this.router.history.start();
-				this.addEvents();
-
+				if(!this._mobile) {
+					this.addEvents();
+				}
 		}
 		showPage() {
 			TweenMax.to(this.mainView.page, 0.35, {scale:1, ease:Cubic.easeOut});
@@ -85,6 +87,7 @@ class App {
 		}
 		addEvents () {
 			let self = this;
+
 			if(window.attachEvent) {
 				window.attachEvent('onresize', self.mainView.handleResize);
 				// IE 6/7/8

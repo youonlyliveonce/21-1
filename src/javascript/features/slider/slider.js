@@ -63,7 +63,9 @@ let Slider = Base.extend({
 			TweenMax.delayedCall(1.25, function(){
 				if(this.active){
 					this.bindChangeStart();
-					this.handleResize();
+					if(!CM.App._mobile){
+						this.handleResize();
+					}
 				}
 			}, [], this);
 		} else {
@@ -117,6 +119,7 @@ let Slider = Base.extend({
 	},
 
 	handleResize: function(){
+		console.log("handleResize");
 		var newWidth = document.body.clientHeight/9*16,
 				newHeight = document.body.clientHeight;
 		if(newWidth < document.body.clientWidth) {
