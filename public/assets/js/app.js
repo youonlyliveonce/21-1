@@ -24549,6 +24549,7 @@
 			/* Cache Elements */
 			this.cacheElements({
 				page: '.Page',
+				pageinner: '.Page__inner',
 				main: '[role="main"]',
 				header: '.Header',
 				headerlogo: '.Header__logo',
@@ -24752,7 +24753,7 @@
 					self.pageSwitcher.current.updateActiveView();
 					self.updateActiveNav();
 					if (CM.App._mobile) {
-						TweenMax.to(document.body, duration, { scrollTo: { y: id.offsetTop }, overwrite: true, ease: Expo.easeOut, onComplete: function onComplete() {
+						TweenMax.to(_this.pageinner, duration, { scrollTo: { y: id.offsetTop }, overwrite: true, ease: Expo.easeOut, onComplete: function onComplete() {
 								self.isSwiping = false;
 							} });
 					} else {
@@ -24773,7 +24774,7 @@
 					self.pageSwitcher.current.updateActiveView();
 					self.updateActiveNav();
 					if (CM.App._mobile) {
-						TweenMax.to(document.body, duration, { scrollTo: { y: id.offsetTop }, overwrite: true, ease: Expo.easeOut, onComplete: function onComplete() {
+						TweenMax.to(_this.pageinner, duration, { scrollTo: { y: id.offsetTop }, overwrite: true, ease: Expo.easeOut, onComplete: function onComplete() {
 								self.isSwiping = false;
 							} });
 					} else {

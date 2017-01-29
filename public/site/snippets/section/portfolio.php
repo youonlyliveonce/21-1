@@ -6,6 +6,7 @@
 ?>
 <div class="Portfolio [ Element ]" id="<?php echo $section->slug(); ?>" data-view="FilterGridView">
 	<div class="Portfolio__background"></div>
+		<div class="Portfolio__headline"><span><?= $section->title(); ?></span></div>
 		<div class="Portfolio__filter">
 			<ul>
 				<li data-filter="all"><span>FILTER</span></li>

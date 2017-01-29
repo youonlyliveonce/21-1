@@ -38,7 +38,7 @@
 	background-color: $color-content
 	top: 0%
 	bottom: 0%
-	left: 0%
+	left: 50%
 	right: 0%
 	+bp('large')
 		+transform(translateX(0%) translateY(-100%))
@@ -69,7 +69,7 @@
 			// padding-left: 1.85em
 			margin: 0 auto
 			text-align: center
-			padding: 20px
+			padding: 0px 10px
 			+noselect
 			+bp('large')
 				position: relative
@@ -86,9 +86,11 @@
 				font-size: 0.9em
 				line-height: 1.2
 				+transition(color, 0.25s)
-				padding: 0 0.1em
+				padding: 10px 0.1em
 				position: relative
 				overflow: hidden
+				+bp(large)
+					padding: 0 0.1em
 				span
 					position: relative
 					z-index: 10
@@ -103,20 +105,26 @@
 					z-index: 1
 					+transition(all, 0.25s)
 					background-color: white
-				&.active,
-				&:hover
+				&.active
 					color: black
 					&:before
 						top: 0
 						height: 100%
+				+bp(large)
+					&:hover
+						color: black
+						&:before
+							top: 0
+							height: 100%
 	&__third
 		.Navigation &
-			position: relative
+			position: absolute
+			top: 90%
 			+bp(large)
-				position: absolute
 				top: 5px
 				right: 0px
 				left: auto
+				bottom: auto
 				+transform(none)
 			margin: 0
 			font-size: 0.8em

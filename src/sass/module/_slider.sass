@@ -1,5 +1,32 @@
 .Slider
 	position: relative
+	overflow: hidden
+	&--textbox
+		padding-bottom: 170px
+		&::after
+			content: ''
+			display: block
+			width: 100%
+			height: 1px
+			background-color: white
+			position: absolute
+			left: 0
+			bottom: 0px
+		+bp(large)
+			padding-bottom: 0
+		.Textbox
+			height: 150px
+			+bp(large)
+				height: 60%
+	&__headline
+		@extend .Section__headline
+	&__body
+		position: relative
+		width: 100%
+		// overflow: hidden
+		+bp(large)
+			position: inherit
+			height: 100%
 	&__background
 		width: 100%
 		min-height: 320px
@@ -32,26 +59,32 @@
 				line
 					stroke-width: 1
 			h1
-				font-size: 7.5em
+				font-size: 2.5em
 				line-height: 0.8
 				top: 50%
+				+bp(large)
+					font-size: 7.5em
 				+transform(translateY(-50%))
 				>span
 					>span
 						+transition(all, 1.25s, ease-out)
 			h2
-				font-size: 3em
+				font-size: 1em
 				line-height: 0.8
 				top: 15%
 				right: 5%
+				+bp(large)
+					font-size: 3em
 				>span
 					>span
 						+transition(all, 1.05s, ease-out, 0.1s)
 			h3
-				font-size: 3em
+				font-size: 1em
 				line-height: 0.8
 				top: 80%
 				left: 10%
+				+bp(large)
+					font-size: 3em
 				>span
 					>span
 						+transition(all, 0.75s, ease-out, 0.15s)
@@ -169,7 +202,9 @@
 
 	.swiper-pagination
 		z-index: 99999
-		bottom: 70px
+		bottom: 0px
+		+bp(large)
+			bottom: 70px
 		.swiper-pagination-bullet
 			background-color: transparent
 

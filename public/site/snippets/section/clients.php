@@ -5,6 +5,7 @@
 ?>
 <div class="Linkgrid [ Element ]" id="<?php echo $section->slug(); ?>" data-view="LinkGridView">
 	<div class="Linkgrid__background"></div>
+		<div class="Linkgrid__headline"><span><?= $section->title(); ?></span></div>
 		<div class="Linkgrid__header"></div>
 		<div class="Linkgrid__body">
 			<?php foreach($clientsrows as $row): ?>

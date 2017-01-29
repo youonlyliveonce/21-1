@@ -1,5 +1,8 @@
 .Button
 	&--down
+		display: none
+		+bp(large)
+			display: block
 		bottom: 0
 		left: 50%
 		cursor: pointer
@@ -39,7 +42,11 @@
 		cursor: pointer
 		position: absolute
 		bottom: 0
-		right: 30px
+		right: 0px
+		display: none
+		+bp(large)
+			display: block
+			right: 30px
 		top: 50%
 		width: 50px
 		height: 50px
@@ -73,16 +80,18 @@
 	&--right
 		left: inherit
 		margin-top: 25px
-		right: 30px
+		right: 0px
+		+bp(large)
+			right: 30px
 	&--toggle
 		position: absolute
-		top: 0.45em
-		right: 0.5em
+		top: 0em
+		right: 0em
 		width: 50px
-		height: 48px
+		height: $logo-height
 		z-index: 99999
 		cursor: pointer
-		background-color: transparent
+		background-color: black
 		+bp('large')
 			display: none
 		span
@@ -121,7 +130,9 @@
 	&--contentnavi
 		position: absolute
 		top: 50%
-		right: 30px
+		right: 0px
+		+bp(large)
+			right: 30px
 		width: 50px
 		height: 50px
 		font-size: 8px
@@ -185,68 +196,71 @@
 					background-color: white
 					+transform(rotate(90deg))
 	&--mute
-		position: absolute
-		bottom: 40px
-		right: 55px
-		width: 50px
-		height: 50px
-		font-size: 8px
-		z-index: 99999
-		cursor: pointer
-		margin-top: -25px
-		background-color: black
-		+transition(all, .3s)
-		&:after
-			content: ''
+		display: none
+		+bp(large)
+			display: block
 			position: absolute
-			left: 0
-			top: 50%
-			bottom: 50%
-			width: 100%
-			background-color: white
-			z-index: 0
+			bottom: 40px
+			right: 55px
+			width: 50px
+			height: 50px
+			font-size: 8px
+			z-index: 99999
+			cursor: pointer
+			margin-top: -25px
+			background-color: black
 			+transition(all, .3s)
-		span
-			display: block
-			height: 100%
-			position: relative
-			z-index: 1
-		svg
-			position: absolute
-			left: 0
-			top: 0
-			bottom: 0
-			right: 0
-			width: 100%
-			height: 100%
-			path
-				fill: #fff !important
-		#sound-off
-			display: none
-		#sound-on
-			display: block
-		&:hover
-			span
-				svg
-					path
-						fill: #000 !important
 			&:after
+				content: ''
+				position: absolute
+				left: 0
+				top: 50%
+				bottom: 50%
+				width: 100%
+				background-color: white
+				z-index: 0
+				+transition(all, .3s)
+			span
+				display: block
+				height: 100%
+				position: relative
+				z-index: 1
+			svg
+				position: absolute
+				left: 0
 				top: 0
 				bottom: 0
+				right: 0
+				width: 100%
+				height: 100%
+				path
+					fill: #fff !important
 			#sound-off
-				display: block
-			#sound-on
 				display: none
-		&.mute
-			#sound-off
-				display: block
 			#sound-on
-				display: none
+				display: block
 			&:hover
+				span
+					svg
+						path
+							fill: #000 !important
+				&:after
+					top: 0
+					bottom: 0
 				#sound-off
-					display: none
-				#sound-on
 					display: block
+				#sound-on
+					display: none
+			&.mute
+				#sound-off
+					display: block
+				#sound-on
+					display: none
+				&:hover
+					#sound-off
+						display: none
+					#sound-on
+						display: block
 
 
 	&--close

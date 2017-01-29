@@ -2,6 +2,10 @@
 	background-color: $color-background
 	position: relative
 	overflow: hidden
+	&__headline
+		@extend .Section__headline
+		span
+			background-color: $color-background
 	&__background
 		background-color: #fff
 		position: absolute
@@ -12,12 +16,12 @@
 		bottom: 0
 		opacity: 0
 	&__filter
-		height: 100px
+		height: auto
+		padding: 10px
 		+bp(large)
 			height: $header-height
 		text-align: center
 		ul
-			padding-top: 20px
 			display: block
 			text-align: center
 			letter-spacing: 0
@@ -32,7 +36,7 @@
 				color: $color-selection
 				text-transform: uppercase
 				display: inline-block
-				width: 49%
+				width: 100%
 				padding: 0
 				margin: 1px
 				cursor: pointer
@@ -41,6 +45,7 @@
 				z-index: 10
 				text-align: left
 				+bp(large)
+					float: left
 					width: inherit
 					margin: 0 1px 0 0
 					display: block
@@ -147,9 +152,7 @@
 		h2
 			opacity: 0.25
 			position: absolute
-			// +transform(translateY(7px))
 			top: 30px
-
 			z-index: 2
 			color: white
 			max-width: 80%

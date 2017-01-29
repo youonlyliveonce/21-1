@@ -2,7 +2,7 @@ var config = require('../config')
 var compact = require('lodash/compact')
 
 // Grouped by what can run in parallel
-var assetTasks = ['']
+var assetTasks = ['favicons']
 var codeTasks = ['css', 'js']
 
 

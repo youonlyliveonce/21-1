@@ -17,7 +17,7 @@
 	&__background
 		position: absolute
 		left: 0%
-		right: 00%
+		right: 0%
 		top: 50%
 		bottom: 50%
 		width: 100%
@@ -37,22 +37,27 @@
 		+transform(translateY(20px))
 		+transition(all, 0.75s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
 		ul
-			padding: 38px 80px
-			width: 100%
+			padding: 10px
 			margin: 0 auto
+			width: 100%
 			text-align: center
 			background-color: black
+			+bp(large)
+				padding: 38px 80px
 			+transform(translateY(-50%))
 			li
 				display: inline-block
-				margin: 10px
+				margin: 10px 10px 0 10px
 				color: white
 				text-align: left
 				text-transform: uppercase
-				font-size: 0.85em
-				line-height: 2.5em
+				font-size: 0.65em
+				line-height: 2em
 				cursor: pointer
 				+transition(opacity, 0.75s)
+				+bp(large)
+					line-height: 2.5em
+					font-size: 0.85em
 				&:hover
 					opacity: 0.75
 				span
@@ -62,6 +67,9 @@
 					img
 						position: relative
 						z-index: 2
+						width: 120px
+						+bp(large)
+							width: auto
 					&:after,
 					&:before
 						top: 0%
