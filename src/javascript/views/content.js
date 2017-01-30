@@ -73,7 +73,7 @@ let Content = PageView.extend({
 
 		if(CM.App._mobile){
 			this.viewportInterval = setInterval(function(){
-				let viewportActive = null
+				let viewportActive = null;
 				self.subViews.forEach(function(element){
 					if(element.view.el.offsetTop-CM.App.mainView.pageinner.clientHeight/2<=CM.App.mainView.pageinner.scrollTop){
 						viewportActive = element;
@@ -92,6 +92,11 @@ let Content = PageView.extend({
 			}, 250);
 		}
 	},
+
+	killInterval: function(){
+		clearInterval(this.viewportInterval);
+	},
+
 	handleResize: function(){
 		this.subViews.forEach(function(element){
 			element.view.handleResize();
@@ -164,7 +169,12 @@ let Content = PageView.extend({
 		let lastActiveElement = this.activeElement;
 
 		if (CM.App._params != {} && CM.App._params.section != null){
-			this.activeElement = this.subViews.filter(element => { return element.id == CM.App._params.section })[0]
+			let newActiveElement = this.subViews.filter(element => { return element.id == CM.App._params.section })[0]
+			if(newActiveElement != null){
+				this.activeElement = newActiveElement
+			} else {
+				this.activeElement = this.subViews[0];
+			}
 		} else {
 			this.activeElement = this.subViews[0]
 		}

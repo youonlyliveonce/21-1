@@ -224,6 +224,7 @@ var MainView = View.extend({
 							this.handleUpdateView();
 						} else {
 							// Route
+							this.pageSwitcher.current.killInterval();
 							CM.App.navigate(path);
 						}
 						// Close Navigation
@@ -233,6 +234,7 @@ var MainView = View.extend({
 
 		scrollTo: function(duration = 0.5){
 				if (CM.App._params != {} && CM.App._params.section != null){
+						console.log(CM.App._params.section);
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
 						self.isSwiping = true;
@@ -253,13 +255,14 @@ var MainView = View.extend({
 							}});
 						}
 				} else {
+
 					let self = this;
 					self.isSwiping = true;
 					// CM.App.removeEvents();
 					self.pageSwitcher.current.updateActiveView();
 					self.updateActiveNav();
 					if(CM.App._mobile){
-						TweenMax.to(this.pageinner, duration, {scrollTo:{y:id.offsetTop}, overwrite:true, ease:Expo.easeOut, onComplete:function(){
+						TweenMax.to(this.pageinner, duration, {scrollTo:{y:0}, overwrite:true, ease:Expo.easeOut, onComplete:function(){
 							self.isSwiping = false;
 						}});
 					} else {
