@@ -77,9 +77,7 @@ class App {
 
 				// we have what we need, we can now start our router and show the appropriate page
 				this.router.history.start();
-				if(!this._mobile) {
-					this.addEvents();
-				}
+				this.addEvents();
 		}
 		showPage() {
 			TweenMax.to(this.mainView.page, 0.35, {scale:1, ease:Cubic.easeOut});
@@ -89,32 +87,22 @@ class App {
 			let self = this;
 
 			if(window.attachEvent) {
-				window.attachEvent('onresize', self.mainView.handleResize);
-				// IE 6/7/8
-				document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
+				if(!this._mobile) {
+					window.attachEvent('onresize', self.mainView.handleResize);
+					// IE 6/7/8
+					document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
+				}
 			}
 			else if(window.addEventListener) {
+				if(!this._mobile) {
 					window.addEventListener('resize', self.mainView.handleResize, true);
 					// IE9, Chrome, Safari, Opera
 					document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
 					// Firefox
 					document.body.addEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
-			}
-		}
+				} else {
 
-		removeEvents() {
-			let self = this;
-			if(window.attachEvent) {
-				window.dettachEvent('onresize', self.mainView.handleResize);
-				// IE 6/7/8
-				document.body.dettachEvent("onmousewheel", self.mainView.handleMouseWheel);
-			}
-			else if(window.addEventListener) {
-					window.removeEventListener('resize', self.mainView.handleResize, true);
-					// IE9, Chrome, Safari, Opera
-					document.body.removeEventListener('mousewheel', self.mainView.handleMouseWheel, false);
-					// Firefox
-					document.body.removeEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
+				}
 			}
 		}
 

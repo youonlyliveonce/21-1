@@ -55,7 +55,7 @@ let YoutubePlayer = Base.extend({
 
 	onPlayerReady: function(){
 		this.ready = true;
-		if(this.active){
+		if(this.active && !CM.App._mobile){
 			this.player.playVideo();
 		}
 	},
@@ -96,7 +96,7 @@ let YoutubePlayer = Base.extend({
 		if(!value){
 			this.pauseVideo();
 		} else {
-			if(this.ready){
+			if(this.ready && !CM.App._mobile){
 				this.playVideo();
 			}
 		}

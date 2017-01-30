@@ -84,6 +84,7 @@
 		+bp(large)
 			right: 30px
 	&--toggle
+
 		position: absolute
 		top: 0em
 		right: 0em
@@ -92,6 +93,8 @@
 		z-index: 99999
 		cursor: pointer
 		background-color: black
+		.Page--single &
+			display: none
 		+bp('large')
 			display: none
 		span

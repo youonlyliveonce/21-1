@@ -15,6 +15,7 @@ let Content = PageView.extend({
 		,isScrollTop: ['boolean', true, false]
 		,subViews: ['array', true, function(){ return []; }]
 		,activeElement: ['object', true, function(){ return {}; }]
+		,viewportInterval: ['number', true, 0]
 	},
 
 	events: {
@@ -69,14 +70,29 @@ let Content = PageView.extend({
 		}
 
 		this.updateActiveView();
-		// this.hammerSwipe = new Hammer(this.el);
-		// this.hammerSwipe.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
-		// this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
-		// this.hammerSwipe.on('swipedown', this.handleSwipeDown.bind(this));
-		// this.functionStore = this.handleMouseWheel.bind(this);
+
+		if(CM.App._mobile){
+			this.viewportInterval = setInterval(function(){
+				let viewportActive = null
+				self.subViews.forEach(function(element){
+					if(element.view.el.offsetTop-CM.App.mainView.pageinner.clientHeight/2<=CM.App.mainView.pageinner.scrollTop){
+						viewportActive = element;
+					};
+				});
+				if(viewportActive.view){
+					let lastActiveElement = self.activeElement;
+					viewportActive.view.active = true;
+					CM.App._params.section = viewportActive.id;
+					CM.App.mainView.updateActiveNav();
+					self.activeElement = viewportActive;
+					if(lastActiveElement.view && (lastActiveElement.view != self.activeElement.view)){
+						lastActiveElement.view.active = false;
+					}
+				}
+			}, 250);
+		}
 	},
 	handleResize: function(){
-		console.log("handleResize: content");
 		this.subViews.forEach(function(element){
 			element.view.handleResize();
 		});

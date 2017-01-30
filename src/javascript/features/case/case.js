@@ -40,17 +40,19 @@ let Case = Base.extend({
 
 	},
 	handleResize: function(){
-		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
-		if(this.caseVideo != undefined){
-			let newWidth = this.caseVideo.clientWidth,
-					newHeight = newWidth/16*9;
-			this.caseVideo.setAttribute("style", "height:"+newHeight+"px;");
-		}
-		if(this.caseBoardVideo != undefined){
-			for(let i=0; i<this.caseBoardVideo.length; i++){
-				let newWidth = this.caseBoardVideo[i].clientWidth,
+		if(!CM.App._mobile) {
+			this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
+			if(this.caseVideo != undefined){
+				let newWidth = this.caseVideo.clientWidth,
 						newHeight = newWidth/16*9;
-				this.caseBoardVideo[i].setAttribute("style", "height:"+newHeight+"px;");
+				this.caseVideo.setAttribute("style", "height:"+newHeight+"px;");
+			}
+			if(this.caseBoardVideo != undefined){
+				for(let i=0; i<this.caseBoardVideo.length; i++){
+					let newWidth = this.caseBoardVideo[i].clientWidth,
+							newHeight = newWidth/16*9;
+					this.caseBoardVideo[i].setAttribute("style", "height:"+newHeight+"px;");
+				}
 			}
 		}
 	},

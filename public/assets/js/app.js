@@ -163,9 +163,7 @@
 	
 							// we have what we need, we can now start our router and show the appropriate page
 							this.router.history.start();
-							if (!this._mobile) {
-									this.addEvents();
-							}
+							this.addEvents();
 					}
 			}, {
 					key: 'showPage',
@@ -179,31 +177,19 @@
 							var self = this;
 	
 							if (window.attachEvent) {
-									window.attachEvent('onresize', self.mainView.handleResize);
-									// IE 6/7/8
-									document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
+									if (!this._mobile) {
+											window.attachEvent('onresize', self.mainView.handleResize);
+											// IE 6/7/8
+											document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
+									}
 							} else if (window.addEventListener) {
-									window.addEventListener('resize', self.mainView.handleResize, true);
-									// IE9, Chrome, Safari, Opera
-									document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
-									// Firefox
-									document.body.addEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
-							}
-					}
-			}, {
-					key: 'removeEvents',
-					value: function removeEvents() {
-							var self = this;
-							if (window.attachEvent) {
-									window.dettachEvent('onresize', self.mainView.handleResize);
-									// IE 6/7/8
-									document.body.dettachEvent("onmousewheel", self.mainView.handleMouseWheel);
-							} else if (window.addEventListener) {
-									window.removeEventListener('resize', self.mainView.handleResize, true);
-									// IE9, Chrome, Safari, Opera
-									document.body.removeEventListener('mousewheel', self.mainView.handleMouseWheel, false);
-									// Firefox
-									document.body.removeEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
+									if (!this._mobile) {
+											window.addEventListener('resize', self.mainView.handleResize, true);
+											// IE9, Chrome, Safari, Opera
+											document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
+											// Firefox
+											document.body.addEventListener('DOMMouseScroll', self.mainView.handleMouseWheel, false);
+									} else {}
 							}
 					}
 	
@@ -7601,7 +7587,8 @@
 			}],
 			activeElement: ['object', true, function () {
 				return {};
-			}]
+			}],
+			viewportInterval: ['number', true, 0]
 		},
 	
 		events: {
@@ -7654,14 +7641,29 @@
 			}
 	
 			this.updateActiveView();
-			// this.hammerSwipe = new Hammer(this.el);
-			// this.hammerSwipe.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
-			// this.hammerSwipe.on('swipeup', this.handleSwipeUp.bind(this));
-			// this.hammerSwipe.on('swipedown', this.handleSwipeDown.bind(this));
-			// this.functionStore = this.handleMouseWheel.bind(this);
+	
+			if (CM.App._mobile) {
+				this.viewportInterval = setInterval(function () {
+					var viewportActive = null;
+					self.subViews.forEach(function (element) {
+						if (element.view.el.offsetTop - CM.App.mainView.pageinner.clientHeight / 2 <= CM.App.mainView.pageinner.scrollTop) {
+							viewportActive = element;
+						};
+					});
+					if (viewportActive.view) {
+						var lastActiveElement = self.activeElement;
+						viewportActive.view.active = true;
+						CM.App._params.section = viewportActive.id;
+						CM.App.mainView.updateActiveNav();
+						self.activeElement = viewportActive;
+						if (lastActiveElement.view && lastActiveElement.view != self.activeElement.view) {
+							lastActiveElement.view.active = false;
+						}
+					}
+				}, 250);
+			}
 		},
 		handleResize: function handleResize() {
-			console.log("handleResize: content");
 			this.subViews.forEach(function (element) {
 				element.view.handleResize();
 			});
@@ -20401,7 +20403,7 @@
 	
 		onPlayerReady: function onPlayerReady() {
 			this.ready = true;
-			if (this.active) {
+			if (this.active && !CM.App._mobile) {
 				this.player.playVideo();
 			}
 		},
@@ -20442,7 +20444,7 @@
 			if (!value) {
 				this.pauseVideo();
 			} else {
-				if (this.ready) {
+				if (this.ready && !CM.App._mobile) {
 					this.playVideo();
 				}
 			}
@@ -21236,17 +21238,19 @@
 			return this;
 		},
 		handleResize: function handleResize() {
-			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
-			if (this.caseVideo != undefined) {
-				var newWidth = this.caseVideo.clientWidth,
-				    newHeight = newWidth / 16 * 9;
-				this.caseVideo.setAttribute("style", "height:" + newHeight + "px;");
-			}
-			if (this.caseBoardVideo != undefined) {
-				for (var i = 0; i < this.caseBoardVideo.length; i++) {
-					var _newWidth = this.caseBoardVideo[i].clientWidth,
-					    _newHeight = _newWidth / 16 * 9;
-					this.caseBoardVideo[i].setAttribute("style", "height:" + _newHeight + "px;");
+			if (!CM.App._mobile) {
+				this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
+				if (this.caseVideo != undefined) {
+					var newWidth = this.caseVideo.clientWidth,
+					    newHeight = newWidth / 16 * 9;
+					this.caseVideo.setAttribute("style", "height:" + newHeight + "px;");
+				}
+				if (this.caseBoardVideo != undefined) {
+					for (var i = 0; i < this.caseBoardVideo.length; i++) {
+						var _newWidth = this.caseBoardVideo[i].clientWidth,
+						    _newHeight = _newWidth / 16 * 9;
+						this.caseBoardVideo[i].setAttribute("style", "height:" + _newHeight + "px;");
+					}
 				}
 			}
 		},
@@ -24581,13 +24585,12 @@
 					TweenMax.set(newView.el, { opacity: 0 });
 					// Set newView opacity to 0
 					// Handle resize
-					newView.handleResize();
+					if (!CM.App._mobile) {
+						newView.handleResize();
+					}
 					self.scrollTo(0);
 					TweenMax.set(self.page, { scale: 1 });
 	
-					// TweenMax.set(newView.el, {opacity:1});
-	
-					// Animate newView opacity to 1
 					TweenMax.to(newView.el, 0.8, { opacity: 1, onComplete: function onComplete() {
 							self.page.setAttribute('class', newView.model.pageClass);
 							// Scroll to paramter 'section'

@@ -67,13 +67,12 @@ var MainView = View.extend({
 								TweenMax.set(newView.el, {opacity:0});
 								// Set newView opacity to 0
 								// Handle resize
-								newView.handleResize();
+								if(!CM.App._mobile){
+									newView.handleResize();
+								}
 								self.scrollTo(0);
 								TweenMax.set(self.page, {scale:1});
 
-								// TweenMax.set(newView.el, {opacity:1});
-
-								// Animate newView opacity to 1
 								TweenMax.to(newView.el, 0.8, {opacity:1, onComplete:function(){
 									self.page.setAttribute('class', newView.model.pageClass);
 									// Scroll to paramter 'section'
