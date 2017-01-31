@@ -71,7 +71,17 @@ let Content = PageView.extend({
 
 		this.updateActiveView();
 
+
+	},
+
+	killInterval: function(){
+		clearInterval(this.viewportInterval);
+	},
+
+	startInterval: function(){
+
 		if(CM.App._mobile){
+			let self = this;
 			this.viewportInterval = setInterval(function(){
 				let viewportActive = null;
 				self.subViews.forEach(function(element){
@@ -91,10 +101,6 @@ let Content = PageView.extend({
 				}
 			}, 250);
 		}
-	},
-
-	killInterval: function(){
-		clearInterval(this.viewportInterval);
 	},
 
 	handleResize: function(){

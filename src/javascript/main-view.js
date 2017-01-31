@@ -113,7 +113,6 @@ var MainView = View.extend({
 
 				// Handle resize
 				if(!CM.App._mobile){
-					console.log("in Main View");
 					view.handleResize();
 				}
 
@@ -156,6 +155,7 @@ var MainView = View.extend({
 			Updates current View if something changes but no url
 		*/
 		handleUpdateView: function(){
+			this.pageSwitcher.current.startInterval();
 			this.scrollTo();
 		},
 

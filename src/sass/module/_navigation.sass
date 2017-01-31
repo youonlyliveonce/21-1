@@ -15,7 +15,7 @@
 
 .Navigation--home
 	+bp('large')
-		.desktop &
+		&.desktop
 			.Navigation
 				opacity: 0
 				+transform(translateX(0%) translateY(5%))
@@ -130,6 +130,7 @@
 			top: 90%
 			+bp(large)
 				.desktop &
+					position: absolute
 					top: 5px
 					right: 0px
 					left: auto
