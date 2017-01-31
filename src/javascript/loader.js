@@ -12,6 +12,7 @@ class Loader {
 			return check;
 		};
 		window.CM.Loader = this;
+		window.CM.Loader.mobile = window.mobilecheck();
 		let scope = this;
 		head.ready(document, function() {
 				head.load([	"/assets/css/app.css",
@@ -24,6 +25,9 @@ class Loader {
 	}
 	removeGFX (){
 		document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join("run"));
+		if(!CM.Loader.mobile) {
+			document.body.setAttribute("class", document.body.getAttribute("class").split("run").join("run desktop"));
+		}
 		CM.App.showPage();
 		let preloader = document.getElementsByClassName("preloader")[0];
 		if(preloader && preloader.parentNode){

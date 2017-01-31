@@ -119,7 +119,6 @@ let Slider = Base.extend({
 	},
 
 	handleResize: function(){
-		console.log("handleResize");
 		var newWidth = document.body.clientHeight/9*16,
 				newHeight = document.body.clientHeight;
 		if(newWidth < document.body.clientWidth) {
@@ -163,8 +162,8 @@ let Slider = Base.extend({
 	handleMouseMove: function(event){
 		if(this.active){
 			let faktor = event.clientX - document.body.clientWidth/2;
-			TweenMax.set(this.swiper.container, {x:-0.01*faktor});
-			TweenMax.set(this.layer[this.activeindex].children, {x:0.025*faktor});
+			TweenMax.set(this.swiper.container, {x:-0.008*faktor});
+			TweenMax.set(this.layer[this.activeindex].children, {x:0.015*faktor});
 		}
 	},
 	handleClickContentnavi: function(event){

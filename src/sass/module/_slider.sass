@@ -15,7 +15,7 @@
 		+bp(large)
 			padding-bottom: 0
 		.Textbox
-			height: 150px
+			height: 0px
 			+bp(large)
 				height: 60%
 	&__headline
@@ -23,13 +23,15 @@
 	&__body
 		position: relative
 		width: 100%
-		// overflow: hidden
 		+bp(large)
-			position: inherit
-			height: 100%
+			.desktop &
+				position: inherit
+				height: 100%
 	&__background
 		width: 100%
 		min-height: 320px
+		+bp(large)
+			min-height: 600px
 		height: 100%
 		background-position: center
 		background-size: cover
@@ -37,12 +39,17 @@
 	&__layer
 		>div
 			&.active
+
 				svg
 					opacity: 0.25
 				h1,h2,h3
 					span
 						+transform(translateX(0%))
 				.Textbox
+					z-index: 1000
+					height: 150px
+					+bp(large)
+						height: 60%
 					&__wrapper
 						+transform(translateX(0%))
 					&__scroller
@@ -169,33 +176,6 @@
 							opacity: 1
 							+transform(translateX(0%))
 
-.swiper-button-prev,
-.swiper-button-next
-	background-position: 10% 50%
-	height: 40px
-	width: 40px
-	margin-top: -20px
-	+bp(large)
-		background-size: contain
-		height: 60px
-		width: 140px
-		margin-top: -30px
-	top: 50%
-
-	+transition(all, 0.25s)
-.swiper-button-next
-	&:hover
-		right: 5px
-	right: 0px
-	+transform(translateX(55%))
-
-.swiper-button-prev
-	&:hover
-		left: 5px
-	background-position: 90% 50%
-	left: 0px
-	+transform(translateX(-55%))
-
 .swiper-container
 	width: 100%
 	height: 100%
@@ -204,7 +184,8 @@
 		z-index: 99999
 		bottom: 0px
 		+bp(large)
-			bottom: 70px
+			.desktop &
+				bottom: 70px
 		.swiper-pagination-bullet
 			background-color: transparent
 

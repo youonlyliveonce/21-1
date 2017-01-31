@@ -6,12 +6,12 @@
 	overflow: auto
 	-webkit-overflow-scrolling: touch
 	+bp(large)
-		// position: absolute
-		overflow: hidden
 		top: 20%
 		left: 55%
 		width: 37%
 		height: 60%
+		.desktop &
+			overflow: hidden
 	@media (min-height: 1050)
 		top: 30%
 		height: 40%
@@ -47,32 +47,35 @@
 		padding: 20px
 		+bp(large)
 			padding: 70px
-			position: absolute
-			height: 100%
-			overflow: hidden
 			background-color: black
+			.desktop &
+				height: 100%
+				position: absolute
+				overflow: hidden
 	&__scroller
 		display: none
 		+bp(large)
-			position: absolute
-			right: 30px
-			top: 70px
-			bottom: 70px
-			width: 4px
-			overflow: hidden
-			&::after
-				content: ''
-				height: 100%
-				width: 2px
-				background-color: $color-selection
-				position: absolute
-				left: 1px
-				z-index: 0
-			span
-				width: 4px
-				background-color: white
-				height: 10px
-				position: absolute
+			.desktop &
 				display: block
-				margin: 0
-				z-index: 1
+				position: absolute
+				right: 30px
+				top: 70px
+				bottom: 70px
+				width: 4px
+				overflow: hidden
+				&::after
+					content: ''
+					height: 100%
+					width: 2px
+					background-color: $color-selection
+					position: absolute
+					left: 1px
+					z-index: 0
+				span
+					width: 4px
+					background-color: white
+					height: 10px
+					position: absolute
+					display: block
+					margin: 0
+					z-index: 1

@@ -1,21 +1,24 @@
 .Page--single
 	.Navigation
 		+bp('large')
-			opacity: 0
-			+transform(translateX(0%) translateY(-100%))
-			visibility: hidden
+			.desktop &
+				opacity: 0
+				+transform(translateX(0%) translateY(-100%))
+				visibility: hidden
 .Page--multi
 	.Navigation
 		+bp('large')
-			visibility: visible
-			opacity: 1
-			+transform(translateX(0%) translateY(0%))
+			.desktop &
+				visibility: visible
+				opacity: 1
+				+transform(translateX(0%) translateY(0%))
 
 .Navigation--home
 	+bp('large')
-		.Navigation
-			opacity: 0
-			+transform(translateX(0%) translateY(5%))
+		.desktop &
+			.Navigation
+				opacity: 0
+				+transform(translateX(0%) translateY(5%))
 
 .Navigation--show
 	.Button--toggle
@@ -41,15 +44,16 @@
 	left: 50%
 	right: 0%
 	+bp('large')
-		+transform(translateX(0%) translateY(-100%))
-		width: 100%
-		background-color: transparent
-		top: 0
-		right: 0
-		left: 0
-		bottom: inherit
-		z-index: 1
-		opacity: 0
+		.desktop &
+			+transform(translateX(0%) translateY(-100%))
+			width: 100%
+			background-color: transparent
+			top: 0
+			right: 0
+			left: 0
+			bottom: inherit
+			z-index: 1
+			opacity: 0
 	ul
 		text-align: left
 		position: absolute
@@ -58,12 +62,13 @@
 		+transform(translateX(-50%) translateY(-50%))
 		overflow: hidden
 		+bp('large')
-			position: relative
-			height: auto
-			text-align: center
-			margin: 50px 0 0 0
-			top: 0
-			padding: 0
+			.desktop &
+				position: relative
+				height: auto
+				text-align: center
+				margin: 50px 0 0 0
+				top: 0
+				padding: 0
 		li
 			// letter-spacing: 0.1rem
 			cursor: pointer
@@ -73,10 +78,11 @@
 			padding: 0px 10px
 			+noselect
 			+bp('large')
-				position: relative
-				display: inline-block
-				margin: 0
-				padding: 0 20px
+				.desktop &
+					position: relative
+					display: inline-block
+					margin: 0
+					padding: 0 20px
 			a
 				cursor: pointer
 				+fontbold
@@ -91,7 +97,8 @@
 				position: relative
 				overflow: hidden
 				+bp(large)
-					padding: 0 0.1em
+					.desktop &
+						padding: 0 0.1em
 				span
 					position: relative
 					z-index: 10
@@ -122,11 +129,12 @@
 			position: absolute
 			top: 90%
 			+bp(large)
-				top: 5px
-				right: 0px
-				left: auto
-				bottom: auto
-				+transform(none)
+				.desktop &
+					top: 5px
+					right: 0px
+					left: auto
+					bottom: auto
+					+transform(none)
 			margin: 0
 			font-size: 0.8em
 			opacity: 0.5

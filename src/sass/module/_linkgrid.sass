@@ -23,8 +23,9 @@
 	&__header
 		// height: 10px
 		+bp(large)
-			height: $header-height
-			text-align: center
+			.desktop &
+				height: $header-height
+				text-align: center
 	&__row
 		+clearfix
 		>div
