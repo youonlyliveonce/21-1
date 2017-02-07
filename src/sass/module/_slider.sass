@@ -42,7 +42,7 @@
 
 				svg
 					opacity: 0.25
-				h1,h2,h3
+				h1,h2,h3,h4
 					span
 						+transform(translateX(0%))
 				.Textbox
@@ -95,7 +95,17 @@
 				>span
 					>span
 						+transition(all, 0.75s, ease-out, 0.15s)
-			h1, h2, h3
+			h4
+				font-size: 1em
+				line-height: 0.8
+				top: 80%
+				right: 10%
+				+bp(large)
+					font-size: 3em
+				>span
+					>span
+						+transition(all, 0.75s, ease-out, 0.15s)
+			h1, h2, h3, h4
 				z-index: 101
 				color: white
 				position: absolute
@@ -126,7 +136,7 @@
 						opacity: 0
 						+transition(all, .25s, cubic-bezier(0.000, 0.000, 0.000, 1.005))
 						+transform(translateX(400px))
-				h1,h2,h3
+				h1,h2,h3,h4
 					>span
 						overflow: visible
 						>span
@@ -136,7 +146,7 @@
 					>span
 						>span
 							+transform(translateX(100px))
-				h2,h3
+				h2,h3,h4
 					>span
 						>span
 							+transform(translateX(50px))
@@ -167,7 +177,13 @@
 								&:nth-child(#{$i})
 									>span
 										+transition(all, 0.75s, ease-out, 0.15s+$i*0.1s)
-					h1,h2,h3
+					h4
+						>span
+							@for $i from 1 through 30
+								&:nth-child(#{$i})
+									>span
+										+transition(all, 0.75s, ease-out, 0.15s+$i*0.1s)
+					h1,h2,h3,h4
 						span
 							opacity: 1
 							+transform(translateX(0%))

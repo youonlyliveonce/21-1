@@ -17,12 +17,22 @@
 		<div class="Slider__layer <?php echo 'Slider__layer--'.$section->animation(); ?>">
 			<?php foreach($slides as $slide): ?>
 				<?php $title = str_split($slide->title()); ?>
-				<?php $subtitle = str_split($slide->subtitle()); ?>
-				<?php $description = str_split($slide->description()); ?>
+				<?php if($slide->subtitle01()->isNotEmpty()){ $subtitle01 = str_split($slide->subtitle01()); } else { unset($subtitle01); } ?>
+				<?php if($slide->subtitle02()->isNotEmpty()){ $subtitle02 = str_split($slide->subtitle02()); } else { unset($subtitle02); } ?>
+				<?php if($slide->subtitle03()->isNotEmpty()){ $subtitle03 = str_split($slide->subtitle03()); } else { unset($subtitle03); } ?>
+
 				<div>
 					<h1><?php foreach($title as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h1>
-					<h2><?php foreach($subtitle as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h2>
-					<h3><?php foreach($description as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h3>
+					<?php if(isset($subtitle01)): ?>
+						<h2><?php foreach($subtitle01 as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h2>
+					<?php endif; ?>
+					<?php if(isset($subtitle02)): ?>
+						<h3><?php foreach($subtitle02 as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h3>
+					<?php endif; ?>
+					<?php if(isset($subtitle03)): ?>
+						<h4><?php foreach($subtitle03 as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h4>
+					<?php endif; ?>
+
 					<?php if($slide->textbox()->isNotEmpty()): ?>
 						<div class="Textbox">
 							<div class="Textbox__wrapper">
@@ -41,7 +51,7 @@
 			<div class="swiper-wrapper">
 			<?php foreach($slides as $slide): ?>
 				<div class="swiper-slide">
-					<div class="Slider__background" style="background-image:url(<?= $slide->background()->toFile()->url(); ?>)"> </div>
+						<div class="Slider__background" style="background-image:url(<?= $slide->background()->toFile()->url(); ?>)"> </div>
 				</div>
 			<?php endforeach; ?>
 			</div>

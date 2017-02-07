@@ -23,8 +23,9 @@ fields:
     entry: >
       Label : {{label}}<br/>
       <u>Titel</u> : {{title}}<br/>
-      <u>Subtitel</u> : {{subtitle}}<br/>
-      <u>Beschreibung</u> : {{description}}<br/>
+      <u>Subtitle 01</u> : {{subtitle01}}<br/>
+      <u>Subtitle 02</u> : {{subtitle02}}<br/>
+      <u>Subtitle 03</u> : {{subtitle03}}<br/>
       <u>Textbox</u> : {{textbox}}<br/>
       <u>Image</u> : {{background}}<br/>
     fields:
@@ -34,11 +35,15 @@ fields:
       title:
         label: Titel
         type: text
-      subtitle:
-        label: Subtitel
+        required: true
+      subtitle01:
+        label: Subtitel 01
         type: text
-      description:
-        label: Beschreibung
+      subtitle02:
+        label: Subtitel 02
+        type: text
+      subtitle03:
+        label: Subtitel 03
         type: text
       textbox:
         label: Textbox
