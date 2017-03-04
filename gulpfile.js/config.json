@@ -30,7 +30,7 @@
 			"src": "sass",
 			"dest": "css",
 			"autoprefixer": {
-				"browsers": ["last 3 version"]
+				"browsers": ["last 5 version"]
 			},
 			"sass": {
 				"indentedSyntax": true
