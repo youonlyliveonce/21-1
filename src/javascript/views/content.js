@@ -146,6 +146,7 @@ let Content = PageView.extend({
 	handleKeyDown: function(event){
 		console.log(event.key);
 		console.log(event);
+		console.log(window.event);
 		switch(event.key){
 			case 'ArrowLeft' :
 				this.activeElement.view.handleKeyDown("left");
