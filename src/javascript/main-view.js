@@ -23,7 +23,7 @@ var MainView = View.extend({
 				'click a[href]': 'handleLinkClick'
 				,'click .Button--toggle': 'handleClickToggle'
 				,'keydown': 'handleKeyDown'
-				,'keypress': 'handleKeyDown'
+				,'keyup': 'handleKeyDown'
 				// 'click .Button--close': 'handleClickToggle',
 		},
 
@@ -196,6 +196,7 @@ var MainView = View.extend({
 			}
 		},
 		handleKeyDown: function(event){
+			console.log(event);
 			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 			if(CM.App.mainView.pageSwitcher.current){
 				CM.App.mainView.pageSwitcher.current.handleKeyDown(event);
