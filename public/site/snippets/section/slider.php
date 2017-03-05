@@ -51,7 +51,8 @@
 			<div class="swiper-wrapper">
 			<?php foreach($slides as $slide): ?>
 				<div class="swiper-slide">
-						<div class="Slider__background" style="background-image:url(<?= $slide->background()->toFile()->url(); ?>)"> </div>
+						<?php if($slide->paralaxe()->isNotEmpty()) : ?><div class="Slider__paralax" style="background-image:url(<?= thumb($slide->paralaxe()->toFile(), array('width' => 1680, 'height' => 949, 'crop' => true))->url(); ?>)"> </div><?php endif; ?>
+						<div class="Slider__background" style="background-image:url(<?= thumb($slide->background()->toFile(), array('width' => 1680, 'height' => 949, 'crop' => true))->url(); ?>)"> </div>
 				</div>
 			<?php endforeach; ?>
 			</div>

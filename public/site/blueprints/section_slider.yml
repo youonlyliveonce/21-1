@@ -52,5 +52,8 @@ fields:
         label: svg
         type: textarea
       background:
-        label: Bild
+        label: Hintergrund-Bild
+        type: image
+      paralaxe:
+        label: Vordergrund-Bild
         type: image

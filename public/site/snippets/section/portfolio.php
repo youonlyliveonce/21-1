@@ -28,6 +28,8 @@
 							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--large ', 'thumb' => 'large'));
 						elseif($teaser->teasersize() == "medium") :
 							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--medium ', 'thumb' => 'square'));
+						elseif($teaser->teasersize() == "xmedium") :
+							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--xmedium ', 'thumb' => 'xrect'));
 						elseif($teaser->teasersize() == "small") :
 							snippet($snippet, array('item' => $teaser, 'itemclass' => 'Portfolio__item--small ', 'thumb' => 'rect'));
 						else :

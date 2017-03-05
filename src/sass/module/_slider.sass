@@ -35,6 +35,17 @@
 		height: 100%
 		background-position: center
 		background-size: cover
+	&__paralax
+		position: absolute
+		left: 0
+		top: 0
+		width: 100%
+		min-height: 320px
+		+bp(large)
+			min-height: 600px
+		height: 100%
+		background-position: center
+		background-size: cover
 
 	&__layer
 		>div
@@ -46,7 +57,7 @@
 					span
 						+transform(translateX(0%))
 				.Textbox
-					z-index: 1000
+					z-index: 480
 					height: 150px
 					+bp(large)
 						height: 60%
@@ -63,6 +74,7 @@
 				width: 100%
 				+transform(translateX(-50%))
 				z-index: 102
+				+noselect
 				line
 					stroke-width: 1
 			h1

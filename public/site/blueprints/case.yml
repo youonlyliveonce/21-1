@@ -30,6 +30,7 @@ fields:
       tiny: winzig
       small: klein
       medium: mittel
+      xmedium: mittel-breit
       large: gross
 
   section1:
