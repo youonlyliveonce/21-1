@@ -144,34 +144,48 @@ let Content = PageView.extend({
 		}
 	},
 	handleKeyDown: function(event){
-		console.log(event.key);
-		console.log(event);
-		console.log(window.event);
-		switch(event.key){
-			case 'ArrowLeft' :
-				this.activeElement.view.handleKeyDown("left");
-				break;
-			case 'ArrowRight' :
-				this.activeElement.view.handleKeyDown("right");
-				break;
-			case 'ArrowDown' :
-				this.nextSlide();
-				break;
-			case 'ArrowUp' :
-				this.previousSlide();
-				break;
-			case 'Left' :
-				this.activeElement.view.handleKeyDown("left");
-				break;
-			case 'Right' :
-				this.activeElement.view.handleKeyDown("right");
-				break;
-			case 'Down' :
-				this.nextSlide();
-				break;
-			case 'Up' :
-				this.previousSlide();
-				break;
+		if(event.key == undefined){
+			switch(event.keyCode){
+				case 37 :
+					this.activeElement.view.handleKeyDown("left");
+					break;
+				case 39 :
+					this.activeElement.view.handleKeyDown("right");
+					break;
+				case 40 :
+					this.nextSlide();
+					break;
+				case 38 :
+					this.previousSlide();
+					break;
+			}
+		}else {
+			switch(event.key){
+				case 'ArrowLeft' :
+					this.activeElement.view.handleKeyDown("left");
+					break;
+				case 'ArrowRight' :
+					this.activeElement.view.handleKeyDown("right");
+					break;
+				case 'ArrowDown' :
+					this.nextSlide();
+					break;
+				case 'ArrowUp' :
+					this.previousSlide();
+					break;
+				case 'Left' :
+					this.activeElement.view.handleKeyDown("left");
+					break;
+				case 'Right' :
+					this.activeElement.view.handleKeyDown("right");
+					break;
+				case 'Down' :
+					this.nextSlide();
+					break;
+				case 'Up' :
+					this.previousSlide();
+					break;
+			}
 		}
 	},
 	updateActiveView: function(){
