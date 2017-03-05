@@ -23,6 +23,7 @@ var MainView = View.extend({
 				'click a[href]': 'handleLinkClick'
 				,'click .Button--toggle': 'handleClickToggle'
 				,'keydown': 'handleKeyDown'
+				,'keypress': 'handleKeyDown'
 				// 'click .Button--close': 'handleClickToggle',
 		},
 
