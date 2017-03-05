@@ -9,6 +9,8 @@ let Slider = Base.extend({
 		,parentview: ['object', true, function(){ return {} }]
 		,swiper: ['object', true, function(){ return undefined }]
 		,activeindex: ['number', true, -1]
+		,activebackground: ['object', true, function(){ return {value:false} }]
+		,paralaxe: ['object', true, function(){ return {value:false} }]
 		,layer: ['array', true, function(){ return [] }]
 		,navigation: ['array', true, function(){ return [] }]
 		,textbox: ['object', true, function(){ return undefined }]
@@ -18,10 +20,11 @@ let Slider = Base.extend({
 		,textboxes: ['array', true, function(){ return [] }]
 		,settings: ['object', true, function(){ return {
 						speed: 600,
-						// effect: 'fade',
-						loop: true,
+						loop: false,
 						pagination: '.Slider .swiper-pagination',
-						paginationClickable: true
+						paginationClickable: true,
+						grabCursor: true,
+						touchEventsTarget: 'container'
 					}
 		}]
 	},
@@ -29,7 +32,7 @@ let Slider = Base.extend({
 	events: {
 		'click .Button--right':'handleRightClick',
 		'click .Button--left':'handleLeftClick',
-		'mousemove .swiper-container':'handleMouseMove',
+		'mousemove .Slider__body':'handleMouseMove',
 		'click .Contentnavigation li':'handleClickContentnaviItem',
 		// 'click .Contentnavigation':'handleClickContentnavi',
 		'click .Contentnavigation__background':'handleClickContentnaviClose',
@@ -43,9 +46,9 @@ let Slider = Base.extend({
 		this.on('change:active', this.onActiveChange, this);
 		TweenMax.delayedCall(0.15, function(){
 				this.swiper = new Swiper('#'+this.id+' .swiper-container', this.settings);
-				if(this.active){
-					this.bindChangeStart();
-				}
+				// if(this.active){
+				// 	this.bindChangeStart();
+				// }
 		}, [], this);
 		this.layer = this.queryAll('#'+this.id+' .Slider__layer > div');
 		this.navigation = this.queryAll('#'+this.id+' .Contentnavigation li');
@@ -106,16 +109,24 @@ let Slider = Base.extend({
 	},
 
 	setActiveIndex: function(newIndex){
+
 		if(this.activeindex != -1){
 			this.layer[this.activeindex].classList.remove('active');
 			this.navigation[this.activeindex].classList.remove('active');
 		}
 		this.activeindex = newIndex;
 		this.gfxIn();
+		if(this.query('.swiper-slide-active .Slider__paralax') != undefined){
+			this.paralaxe.value = this.query('.swiper-slide-active .Slider__paralax');
+		} else {
+			this.paralaxe.value = false;
+		}
+		this.activebackground.value = this.query('.swiper-slide-active .Slider__background');
+
 		this.textbox = (this.textboxes[this.activeindex].body == undefined) ? [] : this.textboxes[this.activeindex].body;
 		this.textboxhandler = (this.textboxes[this.activeindex].handler == undefined) ? [] : this.textboxes[this.activeindex].handler;
 		this.textboxbar = this.textboxes[this.activeindex].scrollbar == undefined ? [] : this.textboxes[this.activeindex].scrollbar;
-		this.textboxfaktor = this.textboxes[this.activeindex].faktor
+		this.textboxfaktor = this.textboxes[this.activeindex].faktor;
 	},
 
 	handleResize: function(){
@@ -162,8 +173,12 @@ let Slider = Base.extend({
 	handleMouseMove: function(event){
 		if(this.active){
 			let faktor = event.clientX - document.body.clientWidth/2;
-			TweenMax.set(this.swiper.container, {x:-0.008*faktor});
-			TweenMax.set(this.layer[this.activeindex].children, {x:0.015*faktor});
+			TweenMax.set(this.activebackground.value, {x:-0.008*faktor});
+			if(this.paralaxe.value != false){
+				TweenMax.set(this.paralaxe.value, {css:{'z-index':10, x:-0.016*faktor}});
+			}
+			/* TYPO LAYER */
+			// TweenMax.set(this.layer[this.activeindex].children, {x:0.015*faktor});
 		}
 	},
 	handleClickContentnavi: function(event){

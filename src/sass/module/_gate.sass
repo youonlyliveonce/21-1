@@ -1,0 +1,71 @@
+.Gate
+	&__body
+		position: absolute
+		top: 20%
+		left: 50%
+		width: 80%
+		+transform(translateX(-50%))
+		margin: 0
+		text-align: center
+	&__logo
+		text-align: center
+		position: relative
+		height: $logo-height
+		margin-bottom: 40px
+		svg
+			height: $logo-height
+		+bp(huge)
+			height: 1.5*$logo-height-large
+			svg
+				height: 1.5*$logo-height-large
+	&__linkbar
+		position: relative
+		span
+			display: inline-block
+			color: black
+			font-size: 0.7em
+			margin-bottom: 10px
+
+		ul
+			li
+				display: inline-block
+				line-height: 30px
+				a
+					display: inline
+					line-height: 30px
+					+transition(opacity, 0.45s)
+					&:hover
+						opacity: 0.5
+					img
+						width: auto
+						height: 20px
+						+bp(huge)
+							height: 30px
+
+				&:first-child
+					+bp(small)
+						&::after
+							position: relative
+							content: ''
+							width: 1px
+							background-color: black
+							display: inline-block
+							margin: 0 20px
+							height: 20px
+							+bp(huge)
+								height: 30px
+	&__copy
+		margin-top: 50px
+		&::before
+			content: ''
+			display: inline-block
+			height: 1px
+			width: 20px
+			background-color: black
+			margin-bottom: 10px
+
+		p
+			color: black
+			+fontserifbold
+			font-size: 1.5em
+			line-height: 1.4
