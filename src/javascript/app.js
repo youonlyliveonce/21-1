@@ -91,11 +91,16 @@ class App {
 					window.attachEvent('onresize', self.mainView.handleResize);
 					// IE 6/7/8
 					document.body.attachEvent("onmousewheel", self.mainView.handleMouseWheel);
+					window.attachEvent("keydown", self.mainView.handleKeyDown);
+
 				}
 			}
 			else if(window.addEventListener) {
 				if(!this._mobile) {
 					window.addEventListener('resize', self.mainView.handleResize, true);
+
+					window.addEventListener('keydown', self.mainView.handleKeyDown, true);
+					
 					// IE9, Chrome, Safari, Opera
 					document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
 					// Firefox
