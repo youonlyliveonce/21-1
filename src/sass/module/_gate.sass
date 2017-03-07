@@ -20,6 +20,7 @@
 				height: 1.5*$logo-height-large
 	&__linkbar
 		position: relative
+		margin-bottom: 50px
 		span
 			display: inline-block
 			color: black
@@ -55,16 +56,31 @@
 							+bp(huge)
 								height: 30px
 	&__copy
-		margin-top: 50px
+		opacity: 0
+		line-height: 0
+		height: 0px
+		transition: all 0.3s
+		.photo &
+			&--photo
+				transition: all 1.3s
+				opacity: 1
+		.cine &
+			&--cine
+				transition: all 1.3s
+				opacity: 1
 		&::before
 			content: ''
 			display: inline-block
 			height: 1px
 			width: 20px
 			background-color: black
-			margin-bottom: 10px
-
+			margin: 0
+			padding: 0
 		p
+			padding-top: 50px
+			position: absolute
+			left: 50%
+			transform: translateX(-50%)
 			color: black
 			+fontserifbold
 			font-size: 1.5em
