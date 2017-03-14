@@ -1,7 +1,7 @@
 <?php
 	$itemtags = $item->filtertags()->split(',');
 ?>
-<div class="Portfolio__item <?= $itemclass ?>[<?php foreach($itemtags as $tag){ echo " ".$tag; } ?> ]">
+<div class="Portfolio__item <?= $itemclass ?>[<?php foreach($itemtags as $tag){ echo " ".str_replace(" ", "-", $tag); } ?> ]">
 	<a href="/<?= $site->language() ?>/<?= $item->uri() ?>">
 		<?php if($thumb == 'square'): ?>
 			<?= thumb($item->teaserimage()->toFile(), array('width' => 400, 'height' => 400, 'crop' => true)); ?>

@@ -12,11 +12,11 @@ fields:
     label: Tags
     type: multiselect
     required: true
-    options:
-      Concept: Concept
-      Film: Film
-      Animation-VFX-3D: Animation/VFX/3D
-      Interactive-Design: Interactive/Design
+    options: field
+    field:
+      page: ../
+      name: availablefilter
+      seperator: ,
 
   teaserimage:
     label: Teaserbild
