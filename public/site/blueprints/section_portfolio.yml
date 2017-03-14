@@ -15,16 +15,3 @@ fields:
   availablefilter:
     label: Verfügbare Filter
     type: tags
-  filter:
-    label: Verfügbare Filter
-    type: structure
-    entry: >
-      <u>Value</u> : {{value}}
-      <u>Titel</u> : {{option}}
-    fields:
-      value:
-        label: Value
-        type: text
-      option:
-        label: Option
-        type: text
