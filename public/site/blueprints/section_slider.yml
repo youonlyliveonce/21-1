@@ -4,10 +4,8 @@ pages: false
 
 fields:
   title: title
-
   section: section
   navigation: navigation
-
   animation:
     label: Animation
     type: select
@@ -18,8 +16,8 @@ fields:
   slider:
     label: Slideelemente
     type: structure
-    modalsize: large
     required: true
+    modalsize: large
     entry: >
       Label : {{label}}<br/>
       <u>Titel</u> : {{title}}<br/>
@@ -48,6 +46,11 @@ fields:
       textbox:
         label: Textbox
         type: textarea
+        buttons:
+          - italic
+          - bold
+          - link
+          - email
       svg:
         label: svg
         type: textarea

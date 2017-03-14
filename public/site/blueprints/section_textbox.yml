@@ -10,6 +10,12 @@ fields:
   leftbar:
     label: Linke Spalte
     type: textarea
+    buttons:
+      - link
+      - email
   rightbar:
     label: Rechte Spalte
     type: textarea
+    buttons:
+      - link
+      - email

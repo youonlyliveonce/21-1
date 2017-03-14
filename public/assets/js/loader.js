@@ -96,9 +96,6 @@
 			key: "removeGFX",
 			value: function removeGFX() {
 				document.body.setAttribute("class", document.body.getAttribute("class").split("hideloader").join("run"));
-				if (!CM.Loader.mobile) {
-					document.body.setAttribute("class", document.body.getAttribute("class").split("run").join("run desktop"));
-				}
 				CM.App.showPage();
 				var preloader = document.getElementsByClassName("preloader")[0];
 				if (preloader && preloader.parentNode) {
@@ -111,8 +108,11 @@
 				if (window.CM.App == undefined) {
 					setTimeout(CM.Loader.startApplication, 500);
 				} else {
-					CM.App.blastoff({ mobile: window.mobilecheck() });
+					CM.App.blastoff({ mobile: CM.Loader.mobile });
 					document.body.setAttribute("class", document.body.getAttribute("class").split("loading").join("loaded"));
+					if (!CM.Loader.mobile) {
+						document.body.setAttribute("class", document.body.getAttribute("class").split("loaded").join("loaded desktop"));
+					}
 					setTimeout(function () {
 						document.body.setAttribute("class", document.body.getAttribute("class").split("loaded").join("hideloader"));
 					}, 500);
