@@ -32,17 +32,22 @@ fields:
         type: text
       title:
         label: Titel
+        help: $ ist ein Leerzeichen und % ist ein Umbruch
         type: text
         required: true
+
       subtitle01:
         label: Subtitel 01
         type: text
+        help: $ ist ein Leerzeichen
       subtitle02:
         label: Subtitel 02
         type: text
+        help: $ ist ein Leerzeichen
       subtitle03:
         label: Subtitel 03
         type: text
+        help: $ ist ein Leerzeichen
       textbox:
         label: Textbox
         type: textarea

@@ -24,7 +24,7 @@
 					<?php if($slide->subtitle03()->isNotEmpty()){ $subtitle03 = str_split($slide->subtitle03()); } else { unset($subtitle03); } ?>
 
 					<div>
-						<h1><?php foreach($title as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h1>
+						<h1><?php foreach($title as $item): ?><?php if($item=='%') : ?><br/><?php else: ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endif; ?><?php endforeach; ?></h1>
 						<?php if(isset($subtitle01)): ?>
 							<h2><?php foreach($subtitle01 as $item): ?><span><span class="letter"><?php if($item=='$'){ echo('&nbsp;'); }else{echo $item; }?></span></span><?php endforeach; ?></h2>
 						<?php endif; ?>
