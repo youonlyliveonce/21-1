@@ -17,7 +17,7 @@
 			} else {
 				$sections = $page->children();
 				foreach($sections as $section):
-						if($section->section()):
+						if($section->section() && $section->isVisible()):
 								$snippet = implode("/", explode("_", $section->intendedTemplate()));
 								snippet($snippet, array('section' => $section));
 						endif;
