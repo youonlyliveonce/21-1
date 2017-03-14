@@ -15,12 +15,10 @@
 					</div>
 			<?php
 			} else {
-				$sections = $page->children();
+				$sections = $page->children()->visible();
 				foreach($sections as $section):
-						if($section->section() && $section->isVisible()):
-								$snippet = implode("/", explode("_", $section->intendedTemplate()));
-								snippet($snippet, array('section' => $section));
-						endif;
+						$snippet = implode("/", explode("_", $section->intendedTemplate()));
+						snippet($snippet, array('section' => $section));
 				endforeach;
 			}
 			?>
