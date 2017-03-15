@@ -16,7 +16,17 @@ window.lazySizesConfig.rias.widthmap = {
 		940: '/large/',
 		1200: '/'
 };
+Number.prototype.toHHMMSS = function () {
+    var sec_num = parseInt(this, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return minutes+':'+seconds;
+}
 /* Class Defintion */
 class App {
 
@@ -100,7 +110,7 @@ class App {
 					window.addEventListener('resize', self.mainView.handleResize, true);
 
 					window.addEventListener('keydown', self.mainView.handleKeyDown, true);
-					
+
 					// IE9, Chrome, Safari, Opera
 					document.body.addEventListener('mousewheel', self.mainView.handleMouseWheel, false);
 					// Firefox

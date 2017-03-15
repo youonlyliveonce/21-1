@@ -6,7 +6,20 @@
 	<div class="Case__body">
 	<?php if($hasvideo) : ?>
 			<div class="Videobox__background">
-					<iframe width="420" height="315" src="https://www.youtube.com/embed/<?= $page->videoid(); ?>?autoplay=1&enablejsapi=1&showinfo=0&controls=1&rel=0"></iframe>
+					<iframe width="420" id="casevideo" height="315" src="https://www.youtube.com/embed/<?= $page->videoid(); ?>?autoplay=1&enablejsapi=1&showinfo=0&controls=0&rel=0"></iframe>
+					<div class="Videobox__player">
+						<div class="Playbar"></div>
+						<div class="Controlbar">
+							<span class="Controlbar__play"><img src="/assets/images/btn-play.svg"><img src="/assets/images/btn-pause.svg"></span>
+							<span class="Controlbar__audio"><img src="/assets/images/btn-audio-on.svg"><img src="/assets/images/btn-audio-off.svg"></span>
+							<span class="Controlbar__time"><span data-hook="current-time"></span> / <span data-hook="total-time"></span></span>
+							<span class="Controlbar__fullscreen"><img src="/assets/images/btn-fullscreen.svg"></span>
+							<span class="Controlbar__state">
+									<span class="Controlbar__state Controlbar__state--played"></span>
+									<span class="Controlbar__state Controlbar__state--loaded"></span>
+							</span>
+						</div>
+					</div>
 			</div>
 	<?php else: ?>
 		<?php if($isslideshow): ?>
