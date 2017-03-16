@@ -7868,7 +7868,7 @@
 			},
 	
 			cleanup: function cleanup() {
-					//console.log("cleanup");
+					console.log("cleanup");
 					console.log(this.subViews);
 					_underscore2.default.each(this.subViews, function (item) {
 							if (item.view && item.view.remove != undefined) {
