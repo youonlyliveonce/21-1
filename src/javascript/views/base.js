@@ -42,12 +42,6 @@ let Base = View.extend({
 
 		cleanup: function(){
 				console.log("cleanup");
-				console.log("this.subViews", this.subViews);
-				_.each(this.subViews, function(item){
-					if(item.view && item.view.remove != undefined){
-						item.view.remove();
-					}
-				})
 		},
 
 		bindSlider: function(items, settings){

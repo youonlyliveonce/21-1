@@ -7802,6 +7802,12 @@
 	
 		cleanup: function cleanup() {
 			console.log("cleanup");
+			console.log("this.subViews", this.subViews);
+			_.each(this.subViews, function (item) {
+				if (item.view && item.view.remove != undefined) {
+					item.view.remove();
+				}
+			});
 		}
 	
 	});
@@ -7869,12 +7875,6 @@
 	
 			cleanup: function cleanup() {
 					console.log("cleanup");
-					console.log("this.subViews", this.subViews);
-					_underscore2.default.each(this.subViews, function (item) {
-							if (item.view && item.view.remove != undefined) {
-									item.view.remove();
-							}
-					});
 			},
 	
 			bindSlider: function bindSlider(items, settings) {
