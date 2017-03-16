@@ -14,7 +14,7 @@
 							<span class="Controlbar__audio"><img src="/assets/images/btn-audio-on.svg"><img src="/assets/images/btn-audio-off.svg"></span>
 							<span class="Controlbar__time"><span data-hook="current-time"></span> / <span data-hook="total-time"></span></span>
 							<span class="Controlbar__fullscreen"><img src="/assets/images/btn-fullscreen.svg"></span>
-							<span class="Controlbar__state">
+							<span class="Controlbar__state Controlbar__state--clickzone">
 									<span class="Controlbar__state Controlbar__state--played"></span>
 									<span class="Controlbar__state Controlbar__state--loaded"></span>
 							</span>
