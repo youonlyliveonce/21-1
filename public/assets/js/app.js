@@ -21391,10 +21391,14 @@
 			this.currentTime.innerHTML = current.toHHMMSS();
 			TweenMax.set(this.stateLoaded, { css: { scaleX: loaded } });
 			TweenMax.set(this.statePlayed, { css: { scaleX: current / total } });
-			console.log("watch");
 		},
 		_handleStateClick: function _handleStateClick(e) {
 			var prozent = e.offsetX / this.caseVideo.offsetWidth;
+			console.log("prozent:", prozent);
+			console.log("e.offsetX:", e.offsetX);
+			console.log("this.caseVideo.offsetWidth:", this.caseVideo.offsetWidth);
+			console.log("this.player.getDuration():", this.player.getDuration());
+	
 			this.player.seekTo(this.player.getDuration() * prozent, true);
 			this.playVideo();
 			e.stopPropagation();
