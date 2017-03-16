@@ -48,24 +48,25 @@ let Case = Base.extend({
 					this.swiper = new Swiper('#'+this.id+' .swiper-container', this.settings);
 			}, [], this);
 		}
-		if(window.YT === undefined){
-			window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
-			// INSERT YOUTUBE API
-			let tag = document.createElement('script');
-					tag.src = "https://www.youtube.com/iframe_api";
-					tag.id = "youtubeapi";
-			let firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		} else {
-			TweenMax.delayedCall(0.25, function(){
-				self.onYouTubeIframeAPIReady();
-			})
+		if(this.caseVideo != undefined){
+			if(window.YT === undefined){
+				window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+				// INSERT YOUTUBE API
+				let tag = document.createElement('script');
+						tag.src = "https://www.youtube.com/iframe_api";
+						tag.id = "youtubeapi";
+				let firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+			} else {
+				TweenMax.delayedCall(0.25, function(){
+					self.onYouTubeIframeAPIReady();
+				})
+			}
+			TweenMax.set(this.stateLoaded, {transformOrigin:"0% 0%"});
+			TweenMax.set(this.statePlayed, {transformOrigin:"0% 0%"});
+			this.caseBoardVideo = this.queryAll('.Case__item--youtube > div');
+			this.on('change:mute', this.onMuteChange, this);
 		}
-		TweenMax.set(this.stateLoaded, {transformOrigin:"0% 0%"});
-		TweenMax.set(this.statePlayed, {transformOrigin:"0% 0%"});
-		this.caseBoardVideo = this.queryAll('.Case__item--youtube > div');
-
-		this.on('change:mute', this.onMuteChange, this);
 
 		return this;
 
