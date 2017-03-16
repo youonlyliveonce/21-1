@@ -1,4 +1,4 @@
-import View from './Base';
+import View from './base';
 
 let BoxBase = View.extend({
 	props: {

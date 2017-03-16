@@ -12,6 +12,7 @@ let Base = View.extend({
 	render: function(){
 		this.on('change:active', this.onActiveChange, this);
 		this.once('remove', this.cleanup, this);
+		return this;
 	},
 	handleResize: function(){
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");

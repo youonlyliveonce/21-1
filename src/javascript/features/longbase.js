@@ -12,10 +12,6 @@ let Longbase = Base.extend({
 	},
 	events: {
 	},
-	render: function(){
-		this.on('change:active', this.onActiveChange, this);
-		return this;
-	},
 	onActiveChange: function(view, value){
 		this.mousebreak = false;
 		this.topend = false;

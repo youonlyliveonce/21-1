@@ -20569,6 +20569,7 @@
 		render: function render() {
 			this.on('change:active', this.onActiveChange, this);
 			this.once('remove', this.cleanup, this);
+			return this;
 		},
 		handleResize: function handleResize() {
 			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
@@ -20760,10 +20761,6 @@
 			}]
 		},
 		events: {},
-		render: function render() {
-			this.on('change:active', this.onActiveChange, this);
-			return this;
-		},
 		onActiveChange: function onActiveChange(view, value) {
 			this.mousebreak = false;
 			this.topend = false;
@@ -21147,13 +21144,13 @@
 		value: true
 	});
 	
-	var _Base = __webpack_require__(287);
+	var _base = __webpack_require__(281);
 	
-	var _Base2 = _interopRequireDefault(_Base);
+	var _base2 = _interopRequireDefault(_base);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var BoxBase = _Base2.default.extend({
+	var BoxBase = _base2.default.extend({
 		props: {
 			id: ['string', true, ''],
 			active: ['boolean', true, true],
@@ -21211,67 +21208,7 @@
 	exports.default = BoxBase;
 
 /***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _ampersandView = __webpack_require__(158);
-	
-	var _ampersandView2 = _interopRequireDefault(_ampersandView);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Base = _ampersandView2.default.extend({
-		props: {
-			id: ['string', true, ''],
-			active: ['boolean', true, true],
-			isscrollable: ['boolean', true, false],
-			parentview: ['object', true, function () {
-				return {};
-			}]
-		},
-		events: {},
-	
-		render: function render() {
-			this.on('change:active', this.onActiveChange, this);
-			this.once('remove', this.cleanup, this);
-		},
-		handleResize: function handleResize() {
-			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
-		},
-		onActiveChange: function onActiveChange(value) {
-			console.log(value);
-		},
-		handleKeyDown: function handleKeyDown(direction) {},
-		handleMouseWheel: function handleMouseWheel(event) {
-			var e = window.event || event || event.originalEvent;
-			var delta = e.deltaY || -1 * e.wheelDelta;
-	
-			// FF Y-Achse
-			if (e.axis == 2) {
-				delta = e.detail * e.detail * e.detail;
-			}
-	
-			if (delta < -17) {
-				this.parentview.previousSlide();
-			} else if (delta > 17) {
-				this.parentview.nextSlide();
-			}
-		},
-		cleanup: function cleanup() {
-			console.log("cleanup child");
-		}
-	
-	});
-	
-	exports.default = Base;
-
-/***/ },
+/* 287 */,
 /* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
