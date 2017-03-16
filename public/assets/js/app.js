@@ -7869,9 +7869,10 @@
 	
 			cleanup: function cleanup() {
 					//console.log("cleanup");
-					_underscore2.default.each(this.subviews, function (item) {
-							if (item.remove != undefined) {
-									item.remove();
+					console.log(this.subViews);
+					_underscore2.default.each(this.subViews, function (item) {
+							if (item.view && item.view.remove != undefined) {
+									item.view.remove();
 							}
 					});
 			},
