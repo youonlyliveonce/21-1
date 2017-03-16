@@ -211,9 +211,8 @@ let Content = PageView.extend({
 				console.log("cleanup");
 				console.log("this.subViews", this.subViews);
 				_.each(this.subViews, function(item){
-					if(item.view && item.view.remove != undefined){
-						item.view.remove();
-					}
+					console.log(item)
+					item.view.remove();
 				})
 
 	}
