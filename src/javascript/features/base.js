@@ -11,6 +11,7 @@ let Base = View.extend({
 
 	render: function(){
 		this.on('change:active', this.onActiveChange, this);
+		this.once('remove', this.cleanup, this);
 	},
 	handleResize: function(){
 		this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
@@ -34,7 +35,11 @@ let Base = View.extend({
 		} else if(delta > 17) {
 			this.parentview.nextSlide()
 		}
+	},
+	cleanup: function(){
+		console.log("cleanup child");
 	}
+
 })
 
 export default Base;

@@ -207,6 +207,10 @@ let Content = PageView.extend({
 			lastActiveElement.view.active = false;
 		}
 
+	},
+
+	cleanup: function(){
+			console.log("cleanup");
 	}
 
 });

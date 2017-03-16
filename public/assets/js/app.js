@@ -7798,6 +7798,10 @@
 			if (lastActiveElement.view && lastActiveElement.view != this.activeElement.view) {
 				lastActiveElement.view.active = false;
 			}
+		},
+	
+		cleanup: function cleanup() {
+			console.log("cleanup");
 		}
 	
 	});
@@ -20555,6 +20559,7 @@
 	
 		render: function render() {
 			this.on('change:active', this.onActiveChange, this);
+			this.once('remove', this.cleanup, this);
 		},
 		handleResize: function handleResize() {
 			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
@@ -20577,7 +20582,11 @@
 			} else if (delta > 17) {
 				this.parentview.nextSlide();
 			}
+		},
+		cleanup: function cleanup() {
+			console.log("cleanup child");
 		}
+	
 	});
 	
 	exports.default = Base;
@@ -21221,6 +21230,7 @@
 	
 		render: function render() {
 			this.on('change:active', this.onActiveChange, this);
+			this.once('remove', this.cleanup, this);
 		},
 		handleResize: function handleResize() {
 			this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");
@@ -21243,7 +21253,11 @@
 			} else if (delta > 17) {
 				this.parentview.nextSlide();
 			}
+		},
+		cleanup: function cleanup() {
+			console.log("cleanup child");
 		}
+	
 	});
 	
 	exports.default = Base;
