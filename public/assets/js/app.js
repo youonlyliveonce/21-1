@@ -7869,6 +7869,11 @@
 	
 			cleanup: function cleanup() {
 					//console.log("cleanup");
+					_underscore2.default.each(this.subviews, function (item) {
+							if (item.remove != undefined) {
+									item.remove();
+							}
+					});
 			},
 	
 			bindSlider: function bindSlider(items, settings) {
