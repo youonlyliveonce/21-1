@@ -212,7 +212,7 @@ let Content = PageView.extend({
 				console.log("this.subViews", this.subViews);
 				_.each(this.subViews, function(item){
 					console.log(item)
-					item.view.remove();
+					item.view.remove(true);
 				})
 
 	}

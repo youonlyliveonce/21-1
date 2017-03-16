@@ -35,7 +35,7 @@ let Filtergrid = Base.extend({
 				}
 			});
 		}, [], this);
-
+		this.once('remove', this.cleanup, this);
 
 
 		return this;

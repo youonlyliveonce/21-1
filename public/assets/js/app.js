@@ -7808,7 +7808,7 @@
 			console.log("this.subViews", this.subViews);
 			_underscore2.default.each(this.subViews, function (item) {
 				console.log(item);
-				item.view.remove();
+				item.view.remove(true);
 			});
 		}
 	
@@ -20451,6 +20451,7 @@
 			}
 			this.on('change:active', this.onActiveChange, this);
 			this.on('change:mute', this.onMuteChange, this);
+			this.once('remove', this.cleanup, this);
 	
 			return this;
 		},
@@ -20661,6 +20662,7 @@
 					}
 				});
 			}, [], this);
+			this.once('remove', this.cleanup, this);
 	
 			return this;
 		},
@@ -20882,6 +20884,7 @@
 				gridHead: '.Linkgrid__header'
 			});
 			this.on('change:active', this.onActiveChange, this);
+			this.once('remove', this.cleanup, this);
 			return this;
 		}
 	});
@@ -20987,6 +20990,7 @@
 				var handler = typeof scrollbar.getElementsByTagName == 'function' ? scrollbar.getElementsByTagName('span')[0] : [];
 				this.textboxes.push({ scrollbar: scrollbar, body: boxbody, handler: handler, faktor: 0 });
 			}
+			this.once('remove', this.cleanup, this);
 			return this;
 		},
 	
@@ -21302,6 +21306,7 @@
 				this.caseBoardVideo = this.queryAll('.Case__item--youtube > div');
 				this.on('change:mute', this.onMuteChange, this);
 			}
+			this.once('remove', this.cleanup, this);
 	
 			return this;
 		},
@@ -21506,6 +21511,7 @@
 				'textboxhandler': '.Textbox__scroller span'
 			});
 			this.on('change:active', this.onActiveChange, this);
+			this.once('remove', this.cleanup, this);
 			return this;
 		},
 	

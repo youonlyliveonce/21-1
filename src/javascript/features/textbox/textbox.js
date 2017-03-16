@@ -20,6 +20,7 @@ let Textbox = Base.extend({
 			'textboxhandler': '.Textbox__scroller span'
 		});
 		this.on('change:active', this.onActiveChange, this);
+		this.once('remove', this.cleanup, this);
 		return this;
 	},
 

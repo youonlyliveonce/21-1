@@ -58,6 +58,7 @@ let Slider = Base.extend({
 			let handler = typeof scrollbar.getElementsByTagName == 'function' ? scrollbar.getElementsByTagName('span')[0] : [];
 			this.textboxes.push({scrollbar:scrollbar, body:boxbody , handler:handler, faktor:0});
 		}
+		this.once('remove', this.cleanup, this);
 		return this;
 	},
 

@@ -67,6 +67,7 @@ let Case = Base.extend({
 			this.caseBoardVideo = this.queryAll('.Case__item--youtube > div');
 			this.on('change:mute', this.onMuteChange, this);
 		}
+		this.once('remove', this.cleanup, this);
 
 		return this;
 

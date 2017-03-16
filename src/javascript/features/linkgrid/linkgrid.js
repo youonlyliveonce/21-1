@@ -19,6 +19,7 @@ let Linkgrid = Base.extend({
 				gridHead: '.Linkgrid__header'
 		});
 		this.on('change:active', this.onActiveChange, this);
+		this.once('remove', this.cleanup, this);
 		return this;
 
 	}

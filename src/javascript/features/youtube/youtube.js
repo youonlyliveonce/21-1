@@ -37,6 +37,7 @@ let YoutubePlayer = Base.extend({
 		}
 		this.on('change:active', this.onActiveChange, this);
 		this.on('change:mute', this.onMuteChange, this);
+		this.once('remove', this.cleanup, this);
 
 		return this;
 	},
