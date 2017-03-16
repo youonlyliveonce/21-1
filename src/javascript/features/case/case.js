@@ -151,12 +151,9 @@ let Case = Base.extend({
 				loaded = this.player.getVideoLoadedFraction();
 		// this.totalTime.innerHTML = this.player.getDuration().toHHMMSS();
 		this.currentTime.innerHTML = current.toHHMMSS();
-
 		TweenMax.set(this.stateLoaded, {css:{scaleX:loaded}});
 		TweenMax.set(this.statePlayed, {css:{scaleX:(current/total)}});
-
-
-
+		console.log("watch");
 	},
 	_handleStateClick: function(e){
 		let prozent = e.offsetX/this.caseVideo.offsetWidth;

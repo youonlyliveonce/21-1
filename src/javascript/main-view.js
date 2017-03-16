@@ -78,7 +78,7 @@ var MainView = View.extend({
 									self.page.setAttribute('class', newView.model.pageClass);
 									// Scroll to paramter 'section'
 									TweenMax.to(self.headerlogo, 0.75, {opacity:1, ease:Cubic.easeOut});
-									self.scrollTo();
+									self.scrollTo(0);
 									newView.hookAfterShow();
 								}, delay:0.3});
 						}
@@ -196,7 +196,6 @@ var MainView = View.extend({
 			}
 		},
 		handleKeyDown: function(event){
-			console.log(event);
 			event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 			if(CM.App.mainView.pageSwitcher.current){
 				CM.App.mainView.pageSwitcher.current.handleKeyDown(event);
@@ -236,7 +235,6 @@ var MainView = View.extend({
 
 		scrollTo: function(duration = 0.5){
 				if (CM.App._params != {} && CM.App._params.section != null){
-						console.log(CM.App._params.section);
 						let id = this.query('#'+CM.App._params.section);
 						let self = this;
 						self.isSwiping = true;
