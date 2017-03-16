@@ -21421,7 +21421,9 @@
 		_handleAudioClick: function _handleAudioClick() {
 			this.mute = !this.mute;
 		},
-	
+		cleanup: function cleanup() {
+			clearInterval(this.watchvideo);
+		},
 		handleResize: function handleResize() {
 			if (!CM.App._mobile) {
 				this.el.setAttribute("style", "height:" + document.body.clientHeight + "px");

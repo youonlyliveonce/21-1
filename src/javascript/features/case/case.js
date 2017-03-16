@@ -185,7 +185,9 @@ let Case = Base.extend({
 	_handleAudioClick: function(){
 		this.mute = !this.mute;
 	},
-
+	cleanup: function(){
+		clearInterval(this.watchvideo);
+	},
 	handleResize: function(){
 		if(!CM.App._mobile) {
 			this.el.setAttribute("style", "height:"+document.body.clientHeight+"px");
