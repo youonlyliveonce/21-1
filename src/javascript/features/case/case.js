@@ -158,7 +158,9 @@ let Case = Base.extend({
 	_handleStateClick: function(e){
 		let prozent = e.offsetX/this.caseVideo.offsetWidth;
 		console.log("prozent:", prozent);
+		console.log("e:", e);
 		console.log("e.offsetX:", e.offsetX);
+		console.log("e.clientX:", e.clientX);
 		console.log("this.caseVideo.offsetWidth:", this.caseVideo.offsetWidth);
 		console.log("this.player.getDuration():", this.player.getDuration());
 
