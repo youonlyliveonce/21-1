@@ -7595,6 +7595,10 @@
 	
 	var _ampersandDom2 = _interopRequireDefault(_ampersandDom);
 	
+	var _underscore = __webpack_require__(3);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Content = _base2.default.extend({
@@ -7659,7 +7663,6 @@
 					}
 				});
 			}
-	
 			this.updateActiveView();
 		},
 	
@@ -7803,7 +7806,7 @@
 		cleanup: function cleanup() {
 			console.log("cleanup");
 			console.log("this.subViews", this.subViews);
-			_.each(this.subViews, function (item) {
+			_underscore2.default.each(this.subViews, function (item) {
 				if (item.view && item.view.remove != undefined) {
 					item.view.remove();
 				}

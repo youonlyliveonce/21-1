@@ -7,6 +7,8 @@ import SliderView from '../features/slider/slider';
 import CaseView from '../features/case/case';
 import TextpageView from '../features/textbox/textbox';
 import dom from 'ampersand-dom';
+import _ from 'underscore';
+
 
 let Content = PageView.extend({
 
@@ -68,10 +70,7 @@ let Content = PageView.extend({
 				}
 			});
 		}
-
 		this.updateActiveView();
-
-
 	},
 
 	killInterval: function(){
@@ -79,7 +78,6 @@ let Content = PageView.extend({
 	},
 
 	startInterval: function(){
-
 		if(CM.App._mobile){
 			let self = this;
 			this.viewportInterval = setInterval(function(){
