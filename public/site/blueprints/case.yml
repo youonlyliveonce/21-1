@@ -8,6 +8,7 @@ fields:
   title:
     label: Title
     type: title
+  metadescription: description
   filtertags:
     label: Tags
     type: multiselect

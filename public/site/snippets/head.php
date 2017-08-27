@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 	<title><?php echo $site->title()->escape() ?> | <?php echo $page->title()->escape() ?></title>
-	<meta name="description" content="<?php echo $site->description()->html() ?>">
+	<meta name="description" content="<?php if($page->metadescription()->isNotEmpty()) { echo $page->metadescription()->html(); } else { echo $site->description()->html(); } ?>">
 	<meta name="keywords" content="<?php echo $site->keywords()->html() ?>">
 
 	<link rel="shortcut icon" href="/favicon.ico">
