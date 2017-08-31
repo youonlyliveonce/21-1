@@ -4,6 +4,7 @@ pages: false
 
 fields:
   title: title
+  preview: preview
   section: section
   navigation: navigation
 

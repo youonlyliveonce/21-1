@@ -7,6 +7,7 @@ pages: false
 fields:
   title: title
   section: section
+  preview: preview
   navigation: navigation
   scrollable: scrollable
 

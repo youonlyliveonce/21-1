@@ -6,6 +6,7 @@ pages:
 
 fields:
   title: title
+  preview: preview
   headline:
     label: Filter und Inhalte definieren sich durch die Unterseiten
     type: headline
