@@ -35,16 +35,18 @@
 			+bp(small)
 				width: 100%
 			+bp(medium)
-				width: 80%
+				width: 100%
 			+bp(large)
-				width: 80%
+				width: 100%
 			margin: 0 auto
 			position: relative
 			li
+				position: relative
 				display: inline-block
 				line-height: 30px
-				+bp(small)
-					width: 45%
+				width: 100%
+				+bp(large)
+					width: 30%
 				a
 					display: inline
 					line-height: 30px
@@ -56,25 +58,27 @@
 						height: 20px
 						+bp(huge)
 							height: 30px
-				+bp(small)
+				+bp(large)
+					text-align: center
 					&:last-child
 						text-align: left
 						padding-left: 20px
+						&:after
+							content: none
 					&:first-child
 						text-align: right
 						padding-right: 20px
-						+bp(small)
-							&::after
-								position: absolute
-								content: ''
-								right: 50%
-								top: 0
-								width: 1px
-								background-color: black
-								display: inline-block
-								height: 20px
-								+bp(huge)
-									height: 30px
+					&:after
+						position: absolute
+						top: 0
+						content: ''
+						+transform(translateX(26px))
+						width: 1px
+						background-color: black
+						display: inline-block
+						height: 20px
+						+bp(huge)
+							height: 30px
 	&__copy
 		opacity: 0
 		line-height: 0
@@ -86,6 +90,10 @@
 				opacity: 1
 		.cine &
 			&--cine
+				transition: all 1.3s
+				opacity: 1
+		.studio &
+			&--studio
 				transition: all 1.3s
 				opacity: 1
 		&::before

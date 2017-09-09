@@ -124,14 +124,14 @@ let Content = PageView.extend({
 	previousSlide: function(){
 		let index  = this.subViews.indexOf(this.activeElement);
 		if(index != 0){
-			CM.App.navigate(`/${this.model.lang}/?section=${this.subViews[index-1].view.el.getAttribute('id')}`);
+			CM.App.navigate(`/${this.model.id}?section=${this.subViews[index-1].view.el.getAttribute('id')}`);
 		}
 	},
 	nextSlide: function(){
 		// nächstes Element ermitteln
 		let index  = this.subViews.indexOf(this.activeElement);
 		if(index != this.subViews.length-1){
-			CM.App.navigate(`/${this.model.lang}/?section=${this.subViews[index+1].view.el.getAttribute('id')}`);
+			CM.App.navigate(`/${this.model.id}?section=${this.subViews[index+1].view.el.getAttribute('id')}`);
 		}
 	},
 	onFirstSubViewActiveChange: function(view, value){

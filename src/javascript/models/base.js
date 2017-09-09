@@ -14,12 +14,13 @@ let Base = Model.extend({
 				lang: ['string', true, 'de']
 		},
 		parse:function (resp, options) {
-			 var tempDom = document.createElement('document');
-			 tempDom.insertAdjacentHTML('afterbegin', resp);
-			 this.pageTitle = resp.split("<title>")[1].split("</title>")[0];
-			 this.pageContent = tempDom.querySelectorAll('.View')[0];
-			 this.pageClass = tempDom.querySelectorAll('.Page')[0].getAttribute('class');
-			 return resp;
+			console.log("id", this.id);
+			var tempDom = document.createElement('document');
+			tempDom.insertAdjacentHTML('afterbegin', resp);
+			this.pageTitle = resp.split("<title>")[1].split("</title>")[0];
+			this.pageContent = tempDom.querySelectorAll('.View')[0];
+			this.pageClass = tempDom.querySelectorAll('.Page')[0].getAttribute('class');
+			return resp;
 	 },
 		ajaxConfig: function () {
 				return {

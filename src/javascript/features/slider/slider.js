@@ -174,7 +174,9 @@ let Slider = Base.extend({
 	handleMouseMove: function(event){
 		if(this.active){
 			let faktor = event.clientX - document.body.clientWidth/2;
-			TweenMax.set(this.activebackground.value, {x:-0.008*faktor});
+			if(this.activebackground.value != false){
+				TweenMax.set(this.activebackground.value, {x:-0.008*faktor});
+			}
 			if(this.paralaxe.value != false){
 				TweenMax.set(this.paralaxe.value, {css:{'z-index':10, x:-0.016*faktor}});
 			}
