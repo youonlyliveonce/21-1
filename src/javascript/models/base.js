@@ -14,7 +14,6 @@ let Base = Model.extend({
 				lang: ['string', true, 'de']
 		},
 		parse:function (resp, options) {
-			console.log("id", this.id);
 			var tempDom = document.createElement('document');
 			tempDom.insertAdjacentHTML('afterbegin', resp);
 			this.pageTitle = resp.split("<title>")[1].split("</title>")[0];

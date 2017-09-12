@@ -208,10 +208,7 @@ let Content = PageView.extend({
 	},
 
 		cleanup: function(){
-				console.log("cleanup");
-				console.log("this.subViews", this.subViews);
 				_.each(this.subViews, function(item){
-					console.log(item)
 					item.view.remove(true);
 				})
 
