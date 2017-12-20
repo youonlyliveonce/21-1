@@ -17,7 +17,7 @@
 			} else {
 				$sections = $page->children()->visible();
 				foreach($sections as $section):
-					if((!$section->preview()->exists())||($section->preview()&&($user = $site->user()))||!$section->preview()):
+					if((!$section->preview()->exists())||($section->preview()->bool()&&($user = $site->user()))||!$section->preview()->bool()):
 						$snippet = implode("/", explode("_", $section->intendedTemplate()));
 						snippet($snippet, array('section' => $section));
 					endif;
